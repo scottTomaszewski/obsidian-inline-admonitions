@@ -7,8 +7,6 @@ import {
 	Setting
 } from 'obsidian';
 
-// Remember to rename these classes and interfaces!
-
 interface InlineAdmonitionSettings {
 	mySetting: string;
 	inlineAdmonitions: Map<string, InlineAdmonition>;
