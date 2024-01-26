@@ -1,14 +1,10 @@
 import {
 	App,
-	Editor,
-	MarkdownPreviewView,
 	MarkdownView,
 	Modal,
-	Notice,
 	Plugin,
 	PluginSettingTab,
-	Setting,
-	WorkspaceLeaf
+	Setting
 } from 'obsidian';
 
 // Remember to rename these classes and interfaces!
