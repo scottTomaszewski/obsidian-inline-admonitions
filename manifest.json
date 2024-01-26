@@ -1,7 +1,7 @@
 {
 	"id": "inline-admonition-plugin",
 	"name": "Inline Admonitions",
-	"version": "1.0.5",
+	"version": "1.0.2",
 	"minAppVersion": "0.15.0",
 	"description": "Inline callouts for Obsidian.md",
 	"author": "Scott Tomaszewski (Xentis)",
