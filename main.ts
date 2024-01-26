@@ -74,7 +74,7 @@ export default class InlineAdmonitionPlugin extends Plugin {
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, settingData);
 
 		let iads = new Map<string, InlineAdmonition>();
-		for (const identifier in settingData.inlineAdmonitions) {
+		for (const identifier in settingData?.inlineAdmonitions) {
 			let iad = settingData.inlineAdmonitions[identifier]
 			iads.set(identifier, {prefix: iad.prefix, backgroundColor: iad.backgroundColor, color: iad.color})
 		}
