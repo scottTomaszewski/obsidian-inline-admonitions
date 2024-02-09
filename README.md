@@ -16,8 +16,8 @@ And its easy to use!
 
 ## Creating a new Inline Admonition
 
-Open the "Inline Admonition" and click "Create New Inline Admonition" at the top to bring up a Modal to configure a new 
-Inline Admonition
+Open the "Inline Admonition" settings and click "Create New Inline Admonition" at the top to bring up a Modal to 
+configure a new Inline Admonition.
 
 ![admonition-modal.png](admonition-modal.png)
 
@@ -39,3 +39,9 @@ Inline Admonition
   - `endsWith`
 - Regex to trigger Inline Admonitions
 - Full CSS manipulation of 
+
+
+## Development
+
+- `npm i` to install deps
+- `npm run dev` to build and watch

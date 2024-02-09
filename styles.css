@@ -28,6 +28,13 @@ code.iad {
 	margin-left: 0.5em;
 }
 
+.iad-setting-row-title {
+	margin-right: auto;
+	text-transform: capitalize;
+	align-items: center;
+	display: flex;
+}
+
 .iad-sample-editor {
 	margin: 0.5em;
 	display: inline-block;
