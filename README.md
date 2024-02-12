@@ -72,5 +72,11 @@ Contains Inline Admonitions trigger when a codeblock contains specific text anyw
 
 ## Development
 
+### Build
+
 - `npm i` to install deps
 - `npm run dev` to build and watch
+
+### Release
+
+Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments
