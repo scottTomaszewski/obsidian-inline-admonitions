@@ -21,9 +21,42 @@ configure a new Inline Admonition.
 
 ![admonition-modal.png](admonition-modal.png)
 
-- **Prefix** is the string at the front of the codeblock used to trigger the formatting.
 - **Background Color** is the color of the Inline Admonition "bubble"
 - **Color** is the text color
+- **Type** defines how an Inline Admonition is triggered.  See the [types](#types) documentation for more details.
+
+## Types
+
+The Inline Admonition "Type" defines what triggers the codeblock to convert into an Inline Admonition.  Current supported
+Types are:
+
+- [Prefix Type](#prefix-type)
+- [Suffix Type](#suffix-type)
+- [Contains Type](#contains-type)
+
+### Prefix Type
+
+Prefix Inline Admonitions trigger when a codeblock starts with specific text.
+
+**Settings**
+
+- `prefix` defines the text at the start of the codeblock to trigger the Inline Admonition.
+
+### Suffix Type
+
+Suffix Inline Admonitions trigger when a codeblock ends with specific text.
+
+**Settings**
+
+- `suffix` defines the text at the end of the codeblock to trigger the Inline Admonition.
+
+### Contains Type
+
+Contains Inline Admonitions trigger when a codeblock contains specific text anywhere within it.
+
+**Settings**
+
+- `contains` defines the text within the codeblock to trigger the Inline Admonition.
 
 ## Notes
 
@@ -34,12 +67,8 @@ configure a new Inline Admonition.
 
 ## Future work
 
-- Alternative "basic" triggers in addition to `startsWith`
-  - `contains`
-  - `endsWith`
 - Regex to trigger Inline Admonitions
-- Full CSS manipulation of 
-
+- Full CSS manipulation of codeblocks instead of inline style attributes
 
 ## Development
 
