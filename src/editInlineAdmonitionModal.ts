@@ -84,7 +84,6 @@ export class EditInlineAdmonitionModal extends Modal {
 			.addButton(btn => btn
 				.setIcon("help-circle")
 				.onClick(() => {
-					console.log(InlineAdmonitionType.tooltip());
 					new TypeTooltipModal(this.app).open()
 				})
 			);

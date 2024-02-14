@@ -32,7 +32,6 @@ export default class InlineAdmonitionPlugin extends Plugin {
 		for (const identifier in this.settings?.inlineAdmonitions) {
 			let iad = this.settings.inlineAdmonitions[identifier]
 			let typedIAD = InlineAdmonitionType.unmarshal(iad);
-			console.log(identifier + ": " + typedIAD)
 			iads.set(typedIAD.slug, typedIAD);
 		}
 		this.settings.inlineAdmonitions = iads;
@@ -57,10 +56,8 @@ export default class InlineAdmonitionPlugin extends Plugin {
 			let iads = new Map<string, InlineAdmonition>();
 			for (const identifier in this.settings?.inlineAdmonitions) {
 				let iad = this.settings.inlineAdmonitions[identifier]
-				console.log("hello");
-				console.log(identifier + ": " + JSON.stringify(iad))
 				if (iad.type === undefined) {
-					console.log(" Setting InlineAdmonition " + identifier + " to Prefix type")
+					console.log("[Inline Admonitions] Setting InlineAdmonition " + identifier + " to Prefix type")
 					iad.type = InlineAdmonitionType.Prefix;
 				}
 				if (iad.slug === undefined) {
@@ -73,7 +70,6 @@ export default class InlineAdmonitionPlugin extends Plugin {
 			this.settings.inlineAdmonitions = iads;
 			this.settings.version = 1;
 			this.settings["mySetting"] = undefined;
-			console.log("saving...")
 			await this.saveSettings();
 		}
 	}

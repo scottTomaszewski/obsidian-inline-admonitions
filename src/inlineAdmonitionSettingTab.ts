@@ -35,7 +35,6 @@ export class InlineAdmonitionSettingTab extends PluginSettingTab {
 	private rebuildSettingRows(containerEl: HTMLElement) {
 		containerEl.findAll(".iad-setting-row").forEach(e => e.remove());
 		new Map([...this.plugin.settings.inlineAdmonitions].sort()).forEach((iad, identifier) => {
-			console.log(identifier + " - " + iad)
 			this.displaySampleIAD(containerEl, iad, identifier);
 		});
 	}
