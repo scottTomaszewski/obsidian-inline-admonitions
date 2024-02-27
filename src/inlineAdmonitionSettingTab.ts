@@ -19,7 +19,7 @@ export class InlineAdmonitionSettingTab extends PluginSettingTab {
 		// Create Inline Admonition Button
 		new Setting(containerEl)
 			.addButton(b => b
-				.setButtonText("Create New Inline Admonition")
+				.setButtonText("Create new inline admonition")
 				.onClick(async evt => {
 					EditInlineAdmonitionModal.new(this.app, async result => {
 						this.plugin.settings.inlineAdmonitions.set(result.slug, result);

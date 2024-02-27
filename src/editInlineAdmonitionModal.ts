@@ -45,7 +45,7 @@ export class EditInlineAdmonitionModal extends Modal {
 		});
 
 		new Setting(contentEl)
-			.setName("Background Color")
+			.setName("Background color")
 			.setDesc("Color of the background of the inline admonition")
 			.addColorPicker(cp => cp
 				.setValue(this.result.backgroundColor)
@@ -55,7 +55,7 @@ export class EditInlineAdmonitionModal extends Modal {
 				})
 			);
 		new Setting(contentEl)
-			.setName("Text Color")
+			.setName("Text color")
 			.setDesc("Color of the text of the inline admonition")
 			.addColorPicker(cp => cp
 				.setValue(this.result.color)
