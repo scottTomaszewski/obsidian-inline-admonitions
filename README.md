@@ -12,7 +12,7 @@ This plugin can change it to look like this:
 
 And its easy to use!
 
-![demo](./demo.gif)
+![demo](./demo.webm.mp4)
 
 ## Creating a new Inline Admonition
 

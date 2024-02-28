@@ -1,8 +1,8 @@
 // Model to edit a single Inline Admonition's settings
 import {App, Modal, Setting} from "obsidian";
-import {InlineAdmonition} from "./InlineAdmonitions/inlineAdmonition";
-import {PrefixInlineAdmonition} from "./InlineAdmonitions/prefixInlineAdmonition";
-import {InlineAdmonitionType, TypeTooltipModal} from "./InlineAdmonitions/inlineAdmonitionType";
+import {InlineAdmonition} from "../InlineAdmonitions/inlineAdmonition";
+import {PrefixInlineAdmonition} from "../InlineAdmonitions/prefixInlineAdmonition";
+import {InlineAdmonitionType, TypeTooltipModal} from "../InlineAdmonitions/inlineAdmonitionType";
 
 export class EditInlineAdmonitionModal extends Modal {
 	result: InlineAdmonition;

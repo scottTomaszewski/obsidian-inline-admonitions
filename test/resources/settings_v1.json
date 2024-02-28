@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "inlineAdmonitions": {
+    "814452b0-694a-462a-94d9-b00832807908": {
+      "backgroundColor": "#002bad",
+      "color": "#ffffff",
+      "slug": "814452b0-694a-462a-94d9-b00832807908",
+      "type": "prefix",
+      "prefix": "DC"
+    },
+    "3b6d98c0-ebcb-45eb-805e-120fae889117": {
+      "backgroundColor": "#ffffff",
+      "color": "#eb0000",
+      "slug": "3b6d98c0-ebcb-45eb-805e-120fae889117",
+      "type": "contains",
+      "contains": "sky"
+    },
+    "05671b61-ce27-4570-8263-6916bb388a36": {
+      "backgroundColor": "#eb0000",
+      "color": "#ffffff",
+      "slug": "05671b61-ce27-4570-8263-6916bb388a36",
+      "type": "prefix",
+      "prefix": "Important"
+    }
+  }
+}

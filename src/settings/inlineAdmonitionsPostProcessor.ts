@@ -1,5 +1,5 @@
 import {InlineAdmonitionSettings} from "./inlineAdmonitionSettings";
-import {InlineAdmonition} from "./InlineAdmonitions/inlineAdmonition";
+import {InlineAdmonition} from "../InlineAdmonitions/inlineAdmonition";
 
 export class InlineAdmonitionsPostProcessor {
 	settings: InlineAdmonitionSettings;

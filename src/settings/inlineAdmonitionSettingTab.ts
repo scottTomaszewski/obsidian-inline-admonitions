@@ -1,8 +1,8 @@
 // Settings
 import {App, PluginSettingTab, Setting} from "obsidian";
 import {EditInlineAdmonitionModal} from "./editInlineAdmonitionModal";
-import InlineAdmonitionPlugin from "../main";
-import {InlineAdmonition} from "./InlineAdmonitions/inlineAdmonition";
+import InlineAdmonitionPlugin from "../../main";
+import {InlineAdmonition} from "../InlineAdmonitions/inlineAdmonition";
 
 export class InlineAdmonitionSettingTab extends PluginSettingTab {
 	plugin: InlineAdmonitionPlugin;
