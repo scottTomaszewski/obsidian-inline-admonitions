@@ -18,7 +18,6 @@ export namespace InlineAdmonitionSettingsIO {
 
 		let [newSettings, dataMigrated] = migrateData(settings);
 		settings = newSettings;
-		console.log(newSettings)
 
 		let iads = new Map<string, InlineAdmonition>();
 		for (const identifier in settings.inlineAdmonitions) {
@@ -61,9 +60,7 @@ export namespace InlineAdmonitionSettingsIO {
 		if (settings.version === 1) {
 			console.log("[Inline Admonitions] Migrating settings from version 1 to 2");
 			for (const identifier in settings?.inlineAdmonitions) {
-				console.log(identifier)
 				let iad = settings.inlineAdmonitions[identifier]
-				console.log(iad)
 				if (iad.type === "prefix" && !iad.hasOwnProperty("hideTriggerString")) {
 					iad.hideTriggerString = false;
 				}
