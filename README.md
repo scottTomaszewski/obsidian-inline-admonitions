@@ -1,18 +1,13 @@
 # Inline Admonitions for Obsidian
 
+
+
 This plugin will allow you to format inline codeblocks to better stand out on the page.  For example, you may want to 
-have all inline codeblocks that start with "IMPORTANT" to have a red background.  Where a codeblock may normally look 
-like this:
-
-![no admonition](no-admonition.png)
-
-This plugin can change it to look like this:
+have all inline codeblocks that start with "IMPORTANT" to have a red background like this. 
 
 ![img.png](admonition.png)
 
-And its easy to use!
-
-![demo](./demo.webm.mp4)
+[inlineAdmonition_1.2.0.webm](https://github.com/scottTomaszewski/obsidian-inline-admonitions/assets/5295276/2a781588-cba0-4665-98c2-16d896cd2abe)
 
 ## Creating a new Inline Admonition
 
