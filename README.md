@@ -9,6 +9,20 @@ have all inline codeblocks that start with "IMPORTANT" to have a red background 
 
 [inlineAdmonition_1.2.0.webm](https://github.com/scottTomaszewski/obsidian-inline-admonitions/assets/5295276/2a781588-cba0-4665-98c2-16d896cd2abe)
 
+## Usage
+
+To add an Inline Admonition to your note, first [create a new Inline Admonition](#Creating a new Inline Admonition) of 
+the desired [type](#types).
+
+Then add an 
+[inline codeblock](https://help.obsidian.md/Editing+and+formatting/Basic+formatting+syntax#Inline+code)
+with the appropriate trigger text.  For example, a [Prefix Inline Admonition](#Prefix Type) with a prefix of `IMPORTANT` will 
+trigger when an inline codeblock starts with "IMPORTANT", like this:
+
+```
+Normal text `IMPORTANT - dont forget the milk!` and some more normal text
+```
+
 ## Creating a new Inline Admonition
 
 Open the "Inline Admonition" settings and click "Create New Inline Admonition" at the top to bring up a Modal to 
@@ -65,6 +79,8 @@ Contains Inline Admonitions trigger when a codeblock contains specific text anyw
 
 - Regex to trigger Inline Admonitions
 - Full CSS manipulation of codeblocks instead of inline style attributes
+- Support for Inline Admonotions in Live Preview view
+- Support for Inline Admonitions in Editing view
 
 ## Development
 

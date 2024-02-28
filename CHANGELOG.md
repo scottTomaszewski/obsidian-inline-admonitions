@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1
+
+- [BUGFIX] Removes debug logging
+
 ## 1.2.0
 
 - Adds support for hiding the trigger string for prefix and suffix types
