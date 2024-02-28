@@ -35,7 +35,8 @@ Prefix Inline Admonitions trigger when a codeblock starts with specific text.
 
 **Settings**
 
-- `prefix` defines the text at the start of the codeblock to trigger the Inline Admonition.
+- `Prefix` defines the text at the start of the codeblock to trigger the Inline Admonition.
+- `Hide prefix text` - if enabled, the triggering prefix text will not show in the Inline Admonition.
 
 ### Suffix Type
 
@@ -43,7 +44,8 @@ Suffix Inline Admonitions trigger when a codeblock ends with specific text.
 
 **Settings**
 
-- `suffix` defines the text at the end of the codeblock to trigger the Inline Admonition.
+- `Suffix` defines the text at the end of the codeblock to trigger the Inline Admonition.
+- `Hide suffix text` - if enabled, the triggering suffix text will not show in the Inline Admonition.
 
 ### Contains Type
 
@@ -55,7 +57,6 @@ Contains Inline Admonitions trigger when a codeblock contains specific text anyw
 
 ## Notes
 
-- This plugin is in alpha.  No promises on results...
 - The CSS of the Inline Admonitions rides on Obsidian's Tag css.  I'll clean this up in a future release.
 - Saving settings will trigger a re-render of the markdown views. Its possible to avoid this and is planned for a future release
 - Similar to Contexual Typography this plugin will give you some css classes that you can manually manipulate
