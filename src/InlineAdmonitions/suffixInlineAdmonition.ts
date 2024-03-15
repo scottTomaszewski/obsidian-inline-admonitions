@@ -31,7 +31,7 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 			data.slug);
 	}
 
-	constructor(suffix, hideTriggerString, backgroundColor, color, slug) {
+	constructor(suffix: string, hideTriggerString: boolean, backgroundColor: string, color: string, slug: string) {
 		super(backgroundColor, color, slug);
 		this.suffix = suffix;
 		this.hideTriggerString = hideTriggerString;

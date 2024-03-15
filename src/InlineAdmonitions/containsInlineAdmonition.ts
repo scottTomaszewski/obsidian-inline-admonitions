@@ -20,7 +20,7 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 		return new ContainsInlineAdmonition(data.contains, data.backgroundColor, data.color, data.slug);
 	}
 
-	constructor(contains, backgroundColor, color, slug) {
+	constructor(contains: string, backgroundColor: string, color: string, slug: string) {
 		super(backgroundColor, color, slug);
 		this.contains = contains;
 	}

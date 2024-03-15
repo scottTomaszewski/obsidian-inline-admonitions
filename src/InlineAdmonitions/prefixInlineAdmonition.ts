@@ -31,7 +31,7 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 			data.slug);
 	}
 
-	constructor(prefix, hideTriggerString, backgroundColor, color, slug) {
+	constructor(prefix: string, hideTriggerString: boolean, backgroundColor: string, color: string, slug: string) {
 		super(backgroundColor, color, slug);
 		this.prefix = prefix;
 		this.hideTriggerString = hideTriggerString;

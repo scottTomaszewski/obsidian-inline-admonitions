@@ -10,7 +10,7 @@ export abstract class InlineAdmonition {
 	type: InlineAdmonitionType;
 	slug: string;
 
-	protected constructor(backgroundColor, color, slug) {
+	protected constructor(backgroundColor: string, color: string, slug: string) {
 		this.backgroundColor = backgroundColor;
 		this.color = color;
 		this.slug = slug;
