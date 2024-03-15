@@ -2,6 +2,7 @@ import {slugify} from "../utils";
 import {InlineAdmonition} from "./inlineAdmonition";
 import {Setting} from "obsidian";
 import {InlineAdmonitionType} from "./inlineAdmonitionType";
+import {SyntaxNodeRef} from "@lezer/common";
 
 export class SuffixInlineAdmonition extends InlineAdmonition {
 	suffix: string;
@@ -45,6 +46,14 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 				codeElement.setText(codeElement.getText().replace(new RegExp(this.suffix + "$"), ""));
 			}
 		}
+	}
+
+	appliesTo(node: SyntaxNodeRef, content: string): boolean {
+		return content.endsWith(this.suffix);
+	}
+
+	cssClasses(): string {
+		return super.cssClasses() + " iad-suffix " + "iad-suffix-" + slugify(this.suffix);
 	}
 
 	sampleText() {

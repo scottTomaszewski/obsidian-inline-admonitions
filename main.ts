@@ -1,7 +1,9 @@
 import {MarkdownView, Plugin} from 'obsidian';
 import {InlineAdmonitionSettingTab} from "./src/settings/inlineAdmonitionSettingTab";
-import {InlineAdmonitionsPostProcessor} from "./src/settings/inlineAdmonitionsPostProcessor";
 import {InlineAdmonitionSettings, InlineAdmonitionSettingsIO} from "./src/settings/inlineAdmonitionSettings";
+import {InlineAdmonitionsPostProcessor} from "./src/InlineAdmonitions/inlineAdmonitionsPostProcessor";
+import {inlineAdmonitionPlugin} from "./src/InlineAdmonitions/InlineAdmonitionExtension";
+import {_setCssForClass, getCssForClass} from "./src/io/inlineAdmonitionCss";
 
 export default class InlineAdmonitionPlugin extends Plugin {
 	settings: InlineAdmonitionSettings;
@@ -13,8 +15,12 @@ export default class InlineAdmonitionPlugin extends Plugin {
 		this.registerMarkdownPostProcessor((element, context) => {
 			new InlineAdmonitionsPostProcessor(this.settings).postProcess(element, context);
 		});
+		this.registerEditorExtension(inlineAdmonitionPlugin(Array.from(this.settings.inlineAdmonitions.values())));
 
 		this.addSettingTab(new InlineAdmonitionSettingTab(this.app, this));
+		console.log(await getCssForClass(this.app, "iad"));
+		console.log("----")
+		console.log(_setCssForClass("iad", "color:blue;", ".iad { background: pink; }"));
 	}
 
 	onunload() {

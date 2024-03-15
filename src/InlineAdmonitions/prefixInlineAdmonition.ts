@@ -2,6 +2,7 @@ import {slugify} from "../utils";
 import {InlineAdmonition} from "./inlineAdmonition";
 import {Setting} from "obsidian";
 import {InlineAdmonitionType} from "./inlineAdmonitionType";
+import {SyntaxNodeRef} from "@lezer/common";
 
 export class PrefixInlineAdmonition extends InlineAdmonition {
 	prefix: string;
@@ -45,6 +46,15 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 				codeElement.setText(codeElement.getText().replace(this.prefix, ""));
 			}
 		}
+	}
+
+	appliesTo(node: SyntaxNodeRef, content: string): boolean {
+		console.log("prefix checking: " + content);
+		return content.startsWith(this.prefix);
+	}
+
+	cssClasses(): string {
+		return super.cssClasses() + " iad-prefix " + "iad-prefix-" + slugify(this.prefix);
 	}
 
 	sampleText() {

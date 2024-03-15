@@ -2,6 +2,7 @@ import {slugify} from "../utils";
 import {InlineAdmonition} from "./inlineAdmonition";
 import {Setting} from "obsidian";
 import {InlineAdmonitionType} from "./inlineAdmonitionType";
+import {SyntaxNodeRef} from "@lezer/common";
 
 export class ContainsInlineAdmonition extends InlineAdmonition {
 	contains: string;
@@ -32,6 +33,14 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 				"style",
 				`background-color: ${this.backgroundColor};color: ${this.color}`);
 		}
+	}
+
+	appliesTo(node: SyntaxNodeRef, content: string): boolean {
+		return content.contains(this.contains);
+	}
+
+	cssClasses(): string {
+		return super.cssClasses() + " iad-contains " + "iad-contains-" + slugify(this.contains);
 	}
 
 	sampleText() {
