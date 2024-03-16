@@ -2,7 +2,8 @@ import {InlineAdmonitionType} from "./inlineAdmonitionType";
 import {Setting} from "obsidian";
 import {v4 as uuidv4} from "uuid";
 import {SyntaxNodeRef} from "@lezer/common";
-import {EditorView} from "@codemirror/view";
+import {Decoration, EditorView} from "@codemirror/view";
+import {RangeSetBuilder} from "@codemirror/state";
 
 export abstract class InlineAdmonition {
 	backgroundColor: string;
@@ -18,7 +19,7 @@ export abstract class InlineAdmonition {
 
 	public abstract process(codeElement: HTMLElement);
 
-	public abstract appliesTo(node: SyntaxNodeRef, content: string): boolean;
+	public abstract applyTo(node: SyntaxNodeRef, content: string, builder: RangeSetBuilder<Decoration>);
 
 	abstract sampleText(): string;
 

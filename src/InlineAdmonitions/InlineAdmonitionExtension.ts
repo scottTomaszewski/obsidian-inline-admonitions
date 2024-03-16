@@ -30,23 +30,9 @@ export function inlineAdmonitionPlugin(admonitions: InlineAdmonition[]) {
 						to,
 						enter: (node) => {
 							if (node.type.name.startsWith("inline-code")) {
-								let {from: statementFrom, to: statementTo} = node;
-								let content = view.state.doc.sliceString(statementFrom, statementTo);
-								// console.log(node.type.name + "(" + from + ", " + to + ") - " + content);
-								for (let admonition of admonitions) {
-									if (admonition.appliesTo(node, content)) {
-										builder.add(
-											statementFrom,
-											statementTo,
-											Decoration.mark({
-												inclusive: true,
-												// attributes: {class: "iad iad-prefix " + admonition.cssClasses()},
-												attributes: {class: admonition.cssClasses()},
-												tagName: "span"
-											})
-										);
-									}
-								}
+								let content = view.state.doc.sliceString(node.from, node.to);
+								// console.log(node.type.name + "(" + node.from + ", " + node.to + ") - " + content);
+								admonitions.forEach(iad => iad.applyTo(node, content, builder));
 								return false;
 							}
 						},

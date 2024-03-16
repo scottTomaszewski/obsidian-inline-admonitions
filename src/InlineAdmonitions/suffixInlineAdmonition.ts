@@ -3,6 +3,8 @@ import {InlineAdmonition} from "./inlineAdmonition";
 import {Setting} from "obsidian";
 import {InlineAdmonitionType} from "./inlineAdmonitionType";
 import {SyntaxNodeRef} from "@lezer/common";
+import {RangeSetBuilder} from "@codemirror/state";
+import {Decoration} from "@codemirror/view";
 
 export class SuffixInlineAdmonition extends InlineAdmonition {
 	suffix: string;
@@ -48,8 +50,18 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 		}
 	}
 
-	appliesTo(node: SyntaxNodeRef, content: string): boolean {
-		return content.endsWith(this.suffix);
+	applyTo(node: SyntaxNodeRef, content: string, builder: RangeSetBuilder<Decoration>) {
+		if (content.endsWith(this.suffix)) {
+			builder.add(
+				node.from,
+				node.to,
+				Decoration.mark({
+					inclusive: true,
+					attributes: {class: this.cssClasses()},
+					tagName: "span"
+				})
+			);
+		}
 	}
 
 	cssClasses(): string {

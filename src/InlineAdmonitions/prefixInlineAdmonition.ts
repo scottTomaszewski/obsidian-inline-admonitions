@@ -3,6 +3,8 @@ import {InlineAdmonition} from "./inlineAdmonition";
 import {Setting} from "obsidian";
 import {InlineAdmonitionType} from "./inlineAdmonitionType";
 import {SyntaxNodeRef} from "@lezer/common";
+import {RangeSetBuilder} from "@codemirror/state";
+import {Decoration} from "@codemirror/view";
 
 export class PrefixInlineAdmonition extends InlineAdmonition {
 	prefix: string;
@@ -48,9 +50,29 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 		}
 	}
 
-	appliesTo(node: SyntaxNodeRef, content: string): boolean {
-		console.log("prefix checking: " + content);
-		return content.startsWith(this.prefix);
+	applyTo(node: SyntaxNodeRef, content: string, builder: RangeSetBuilder<Decoration>) {
+		if (content.startsWith(this.prefix)) {
+			builder.add(
+				node.from,
+				node.to,
+				Decoration.mark({
+					inclusive: true,
+					attributes: {class: this.cssClasses()},
+					tagName: "span"
+				})
+			);
+			// This actually works?!
+			// builder.add(
+			// 	statementFrom,
+			// 	statementFrom+3,
+			// 	Decoration.mark({
+			// 		inclusive: true,
+			// 		// attributes: {class: "iad iad-prefix " + admonition.cssClasses()},
+			// 		attributes: {style: "display: none"},
+			// 		tagName: "span"
+			// 	})
+			// );
+		}
 	}
 
 	cssClasses(): string {

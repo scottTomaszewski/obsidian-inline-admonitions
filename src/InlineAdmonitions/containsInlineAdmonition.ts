@@ -3,6 +3,8 @@ import {InlineAdmonition} from "./inlineAdmonition";
 import {Setting} from "obsidian";
 import {InlineAdmonitionType} from "./inlineAdmonitionType";
 import {SyntaxNodeRef} from "@lezer/common";
+import {RangeSetBuilder} from "@codemirror/state";
+import {Decoration} from "@codemirror/view";
 
 export class ContainsInlineAdmonition extends InlineAdmonition {
 	contains: string;
@@ -35,8 +37,18 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 		}
 	}
 
-	appliesTo(node: SyntaxNodeRef, content: string): boolean {
-		return content.contains(this.contains);
+	applyTo(node: SyntaxNodeRef, content: string, builder: RangeSetBuilder<Decoration>) {
+		if (content.contains(this.contains)) {
+			builder.add(
+				node.from,
+				node.to,
+				Decoration.mark({
+					inclusive: true,
+					attributes: {class: this.cssClasses()},
+					tagName: "span"
+				})
+			);
+		}
 	}
 
 	cssClasses(): string {
