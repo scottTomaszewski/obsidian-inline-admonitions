@@ -62,6 +62,18 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 				})
 			);
 		}
+		// Hide the prefix if necessary
+		if (this.hideTriggerString) {
+			builder.add(
+				node.to - this.suffix.length,
+				node.to,
+				Decoration.mark({
+					inclusive: true,
+					attributes: {class: "iad-hidden"},
+					tagName: "span"
+				})
+			);
+		}
 	}
 
 	cssClasses(): string {

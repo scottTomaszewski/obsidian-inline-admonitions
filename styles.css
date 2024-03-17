@@ -7,6 +7,7 @@ If your plugin does not need CSS, delete this file.
 
 */
 
+span.iad,
 code.iad {
 	background-color: var(--tag-background);
 	border: var(--tag-border-width) solid var(--tag-border-color);
