@@ -29,8 +29,7 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 
 	process(codeElement: HTMLElement) {
 		if (codeElement.innerText.contains(this.contains)) {
-			codeElement.classList.add("iad");
-			codeElement.classList.add("iad-contains-" + slugify(this.contains));
+			this.cssClasses().forEach(c => codeElement.classList.add(c));
 			codeElement.setAttribute(
 				"style",
 				`background-color: ${this.backgroundColor};color: ${this.color}`);
@@ -44,15 +43,18 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 				node.to,
 				Decoration.mark({
 					inclusive: true,
-					attributes: {class: this.cssClasses()},
+					attributes: {class: this.cssClasses().join(" ")},
 					tagName: "span"
 				})
 			);
 		}
 	}
 
-	cssClasses(): string {
-		return super.cssClasses() + " iad-contains " + "iad-contains-" + slugify(this.contains);
+	cssClasses(): string[] {
+		const classes = super.cssClasses();
+		classes.push("iad-contains")
+		classes.push("iad-contains-" + slugify(this.contains));
+		return classes;
 	}
 
 	sampleText() {

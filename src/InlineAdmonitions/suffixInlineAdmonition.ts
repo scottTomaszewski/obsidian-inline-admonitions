@@ -41,8 +41,7 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 
 	process(codeElement: HTMLElement) {
 		if (codeElement.innerText.endsWith(this.suffix)) {
-			codeElement.classList.add("iad");
-			codeElement.classList.add("iad-suffix-" + slugify(this.suffix));
+			this.cssClasses().forEach(c => codeElement.classList.add(c));
 			codeElement.setAttribute("style", `background-color: ${this.backgroundColor}; color: ${this.color};`);
 			if (this.hideTriggerString) {
 				codeElement.setText(codeElement.getText().replace(new RegExp(this.suffix + "$"), ""));
@@ -57,7 +56,7 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 				node.to,
 				Decoration.mark({
 					inclusive: true,
-					attributes: {class: this.cssClasses()},
+					attributes: {class: this.cssClasses().join(" ")},
 					tagName: "span"
 				})
 			);
@@ -76,8 +75,11 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 		}
 	}
 
-	cssClasses(): string {
-		return super.cssClasses() + " iad-suffix " + "iad-suffix-" + slugify(this.suffix);
+	cssClasses(): string[] {
+		const classes = super.cssClasses();
+		classes.push("iad-suffix")
+		classes.push("iad-suffix-" + slugify(this.suffix));
+		return classes;
 	}
 
 	sampleText() {

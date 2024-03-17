@@ -25,8 +25,8 @@ export abstract class InlineAdmonition {
 
 	abstract buildSettings(contentEl: HTMLElement, updateSampleFunction): Array<Setting>;
 
-	public cssClasses(): string {
-		return "iad";
+	public cssClasses(): string[] {
+		return ["iad"];
 	}
 
 	copySettingsTo(other: InlineAdmonition) {
