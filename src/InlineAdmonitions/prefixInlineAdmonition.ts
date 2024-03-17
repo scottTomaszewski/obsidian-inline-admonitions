@@ -61,17 +61,18 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 					tagName: "span"
 				})
 			);
-			// This actually works?!
-			// builder.add(
-			// 	statementFrom,
-			// 	statementFrom+3,
-			// 	Decoration.mark({
-			// 		inclusive: true,
-			// 		// attributes: {class: "iad iad-prefix " + admonition.cssClasses()},
-			// 		attributes: {style: "display: none"},
-			// 		tagName: "span"
-			// 	})
-			// );
+			// Hide the prefix if necessary
+			if (this.hideTriggerString) {
+				builder.add(
+					node.from,
+					node.from + this.prefix.length,
+					Decoration.mark({
+						inclusive: true,
+						attributes: {class: "iad-hidden"},
+						tagName: "span"
+					})
+				);
+			}
 		}
 	}
 
