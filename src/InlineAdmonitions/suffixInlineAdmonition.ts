@@ -42,7 +42,7 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 	process(codeElement: HTMLElement) {
 		if (codeElement.innerText.endsWith(this.suffix)) {
 			this.cssClasses().forEach(c => codeElement.classList.add(c));
-			codeElement.setAttribute("style", `background-color: ${this.backgroundColor}; color: ${this.color};`);
+			// codeElement.setAttribute("style", this.simpleStyle());
 			if (this.hideTriggerString) {
 				codeElement.setText(codeElement.getText().replace(new RegExp(this.suffix + "$"), ""));
 			}

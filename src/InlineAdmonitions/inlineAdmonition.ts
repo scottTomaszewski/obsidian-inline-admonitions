@@ -29,6 +29,10 @@ export abstract class InlineAdmonition {
 		return ["iad"];
 	}
 
+	public simpleStyle() {
+		return `background-color: ${this.backgroundColor}; color: ${this.color};`;
+	}
+
 	copySettingsTo(other: InlineAdmonition) {
 		other.backgroundColor = this.backgroundColor;
 		other.color = this.color;

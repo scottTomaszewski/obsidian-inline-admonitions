@@ -30,9 +30,7 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 	process(codeElement: HTMLElement) {
 		if (codeElement.innerText.contains(this.contains)) {
 			this.cssClasses().forEach(c => codeElement.classList.add(c));
-			codeElement.setAttribute(
-				"style",
-				`background-color: ${this.backgroundColor};color: ${this.color}`);
+			// codeElement.setAttribute("style", this.simpleStyle());
 		}
 	}
 

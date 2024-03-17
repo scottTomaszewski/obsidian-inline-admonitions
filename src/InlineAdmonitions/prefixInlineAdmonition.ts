@@ -42,7 +42,7 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 	process(codeElement: HTMLElement) {
 		if (codeElement.innerText.startsWith(this.prefix)) {
 			this.cssClasses().forEach(c => codeElement.classList.add(c));
-			codeElement.setAttribute("style", `background-color: ${this.backgroundColor}; color: ${this.color};`);
+			// codeElement.setAttribute("style", this.simpleStyle());
 			if (this.hideTriggerString) {
 				codeElement.setText(codeElement.getText().replace(this.prefix, ""));
 			}
@@ -80,7 +80,6 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 		classes.push("iad-prefix")
 		classes.push("iad-prefix-" + slugify(this.prefix));
 		return classes;
-
 	}
 
 	sampleText() {

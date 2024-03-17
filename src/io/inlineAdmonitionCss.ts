@@ -13,6 +13,10 @@ export async function setCssForClass(app: App, className: string, css: string) {
 	return writeSnippetFile(app, snippetFilename, updatedCss);
 }
 
+export async function wipeCss(app: App) {
+	return writeSnippetFile(app, snippetFilename, "");
+}
+
 // ==========
 //  INTERNAL
 // ==========
@@ -56,7 +60,8 @@ export function _setCssForClass(className: string, cssClassDeclarations: string,
 }
 
 function _makeCssRuleString(className: string, cssDeclarations: string): string {
-	return "." + className + " {\n" + cssDeclarations + "\n}";
+	// TODO - The ".iad" is here to increase the precedence.  I dont like it
+	return ".iad." + className + " {\n" + cssDeclarations + "\n}";
 }
 
 function _makeCssRule(className: string, cssDeclarations: string) {
