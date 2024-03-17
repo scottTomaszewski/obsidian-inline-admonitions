@@ -40,3 +40,10 @@ code.iad {
 	display: inline-block;
 }
 
+.iad-hidden {
+	display: none;
+}
+
+.cm-active .iad-hidden {
+	display: inline;
+}
