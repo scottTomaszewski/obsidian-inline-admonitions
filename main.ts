@@ -36,8 +36,8 @@ export default class InlineAdmonitionPlugin extends Plugin {
 	async saveSettings() {
 		const settingData = InlineAdmonitionSettingsIO.marshal(this.settings);
 		await this.saveData(settingData);
-		this.rerenderMarkdownViews();
 		await this.refreshCss();
+		this.rerenderMarkdownViews();
 	}
 
 	async refreshCss() {
