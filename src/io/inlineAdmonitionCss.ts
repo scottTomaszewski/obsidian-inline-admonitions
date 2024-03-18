@@ -38,7 +38,7 @@ function _getCssForClass(className: string, cssContent: string): string {
 	for (const rule of sheet.rules) {
 		if (rule.selectors.contains("." + className)) {
 			let classContent = "";
-			rule.declarations.forEach(dec => {
+			rule.declarations.forEach((dec: { property: string; value: string; }) => {
 				classContent += dec.property + ':' + dec.value + ';\n';
 			});
 			return classContent;

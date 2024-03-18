@@ -13,7 +13,7 @@ export namespace InlineAdmonitionSettingsIO {
 		return settingData;
 	}
 
-	export function unmarshalAndMigrate(data): [InlineAdmonitionSettings, boolean] {
+	export function unmarshalAndMigrate(data: any): [InlineAdmonitionSettings, boolean] {
 		let settings: InlineAdmonitionSettings = Object.assign({}, DEFAULT_SETTINGS, data);
 
 		const [newSettings, dataMigrated] = migrateData(settings);
@@ -21,7 +21,7 @@ export namespace InlineAdmonitionSettingsIO {
 
 		const iads = new Map<string, InlineAdmonition>();
 		for (const identifier in settings.inlineAdmonitions) {
-			const iad = settings.inlineAdmonitions[identifier]
+			const iad = settings.inlineAdmonitions.get(identifier);
 			const typedIAD = InlineAdmonitionType.unmarshal(iad);
 			iads.set(typedIAD.slug, typedIAD);
 		}
@@ -29,7 +29,7 @@ export namespace InlineAdmonitionSettingsIO {
 		return [settings, dataMigrated];
 	}
 
-	export function migrateData(settings): [any, boolean] {
+	export function migrateData(settings: InlineAdmonitionSettings): [any, boolean] {
 		let dataMigrated = false;
 
 		// Migrate to version 1
@@ -37,7 +37,7 @@ export namespace InlineAdmonitionSettingsIO {
 			console.log("[Inline Admonitions] Migrating settings from version 0 to 1");
 			const iads = new Map<string, InlineAdmonition>();
 			for (const identifier in settings?.inlineAdmonitions) {
-				const iad = settings.inlineAdmonitions[identifier]
+				const iad = settings.inlineAdmonitions.get(identifier);
 				if (iad.type === undefined) {
 					console.log("[Inline Admonitions] Setting InlineAdmonition " + identifier + " to Prefix type")
 					iad.type = InlineAdmonitionType.Prefix;
@@ -50,7 +50,7 @@ export namespace InlineAdmonitionSettingsIO {
 				iads.set(ia.slug, ia);
 			}
 			settings.inlineAdmonitions = iads;
-			settings["mySetting"] = undefined;
+			settings['mySetting'] = undefined;
 			settings.version = 1;
 			dataMigrated = true;
 		}
@@ -60,14 +60,14 @@ export namespace InlineAdmonitionSettingsIO {
 		if (settings.version === 1) {
 			console.log("[Inline Admonitions] Migrating settings from version 1 to 2");
 			for (const identifier in settings?.inlineAdmonitions) {
-				const iad = settings.inlineAdmonitions[identifier]
+				const iad = settings.inlineAdmonitions.get(identifier);
 				if (iad.type === "prefix" && !iad.hasOwnProperty("hideTriggerString")) {
 					iad.hideTriggerString = false;
 				}
 				if (iad.type === "suffix" && !iad.hasOwnProperty("hideTriggerString")) {
 					iad.hideTriggerString = false;
 				}
-				settings.inlineAdmonitions[identifier] = iad;
+				settings.inlineAdmonitions.set(identifier, iad);
 			}
 			settings.version = 2;
 			dataMigrated = true;

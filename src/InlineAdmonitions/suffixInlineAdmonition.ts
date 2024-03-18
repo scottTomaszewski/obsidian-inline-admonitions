@@ -89,7 +89,7 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 		return "sample text " + this.suffix;
 	}
 
-	buildSettings(contentEl: HTMLElement, updateSampleFunction): Setting[] {
+	buildSettings(contentEl: HTMLElement, updateSampleFunction: () => void): Setting[] {
 		const results = new Array<Setting>();
 
 		results.push(new Setting(contentEl)

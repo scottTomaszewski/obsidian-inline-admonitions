@@ -89,7 +89,7 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 		return this.prefix + " sample text";
 	}
 
-	buildSettings(contentEl: HTMLElement, updateSampleFunction): Setting[] {
+	buildSettings(contentEl: HTMLElement, updateSampleFunction: () => void): Setting[] {
 		const results = new Array<Setting>();
 
 		results.push(new Setting(contentEl)

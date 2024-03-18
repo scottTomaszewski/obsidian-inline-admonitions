@@ -59,7 +59,7 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 		return "sample " + this.contains + " text";
 	}
 
-	buildSettings(contentEl: HTMLElement, updateSampleFunction): Setting[] {
+	buildSettings(contentEl: HTMLElement, updateSampleFunction: () => void): Setting[] {
 		const results = new Array<Setting>();
 		results.push(new Setting(contentEl)
 			.setName("Contains")
