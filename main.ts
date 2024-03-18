@@ -3,7 +3,7 @@ import {InlineAdmonitionSettingTab} from "./src/settings/inlineAdmonitionSetting
 import {InlineAdmonitionSettings, InlineAdmonitionSettingsIO} from "./src/settings/inlineAdmonitionSettings";
 import {InlineAdmonitionsPostProcessor} from "./src/InlineAdmonitions/inlineAdmonitionsPostProcessor";
 import {inlineAdmonitionPlugin} from "./src/InlineAdmonitions/InlineAdmonitionExtension";
-import {_setCssForClass, cssFileContents, getCssForClass, setCssForClass, wipeCss} from "./src/io/inlineAdmonitionCss";
+import {setCssForClass, wipeCss} from "./src/io/inlineAdmonitionCss";
 
 export default class InlineAdmonitionPlugin extends Plugin {
 	settings: InlineAdmonitionSettings;
@@ -24,8 +24,8 @@ export default class InlineAdmonitionPlugin extends Plugin {
 	}
 
 	async loadSettings() {
-		let settingData = await this.loadData();
-		let [settings, dataMigrated] = InlineAdmonitionSettingsIO.unmarshalAndMigrate(settingData);
+		const settingData = await this.loadData();
+		const [settings, dataMigrated] = InlineAdmonitionSettingsIO.unmarshalAndMigrate(settingData);
 		this.settings = settings;
 		if (dataMigrated) {
 			await this.saveSettings();
@@ -41,10 +41,8 @@ export default class InlineAdmonitionPlugin extends Plugin {
 	}
 
 	async refreshCss() {
-		// TODO - are we okay with this?
-		// TODO - if so, I need to add a "DO NOT MODIFY" warning to the top of the css file
 		await wipeCss(this.app);
-		for (let iad of this.settings.inlineAdmonitions.values()) {
+		for (const iad of this.settings.inlineAdmonitions.values()) {
 			// console.log("setting " + iad.cssClasses().last() + " to " + iad.simpleStyle());
 			await setCssForClass(this.app, iad.cssClasses().last(), iad.simpleStyle());
 		}

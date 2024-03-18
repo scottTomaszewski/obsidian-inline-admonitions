@@ -8,7 +8,7 @@ export interface InlineAdmonitionSettings {
 
 export namespace InlineAdmonitionSettingsIO {
 	export function marshal(settings: InlineAdmonitionSettings) {
-		let settingData = Object.assign({}, DEFAULT_SETTINGS, settings);
+		const settingData = Object.assign({}, DEFAULT_SETTINGS, settings);
 		settingData.inlineAdmonitions = Object.fromEntries(settings.inlineAdmonitions.entries());
 		return settingData;
 	}
@@ -16,13 +16,13 @@ export namespace InlineAdmonitionSettingsIO {
 	export function unmarshalAndMigrate(data): [InlineAdmonitionSettings, boolean] {
 		let settings: InlineAdmonitionSettings = Object.assign({}, DEFAULT_SETTINGS, data);
 
-		let [newSettings, dataMigrated] = migrateData(settings);
+		const [newSettings, dataMigrated] = migrateData(settings);
 		settings = newSettings;
 
-		let iads = new Map<string, InlineAdmonition>();
+		const iads = new Map<string, InlineAdmonition>();
 		for (const identifier in settings.inlineAdmonitions) {
-			let iad = settings.inlineAdmonitions[identifier]
-			let typedIAD = InlineAdmonitionType.unmarshal(iad);
+			const iad = settings.inlineAdmonitions[identifier]
+			const typedIAD = InlineAdmonitionType.unmarshal(iad);
 			iads.set(typedIAD.slug, typedIAD);
 		}
 		settings.inlineAdmonitions = iads;
@@ -35,9 +35,9 @@ export namespace InlineAdmonitionSettingsIO {
 		// Migrate to version 1
 		if (settings.version == undefined || settings.version === 0) {
 			console.log("[Inline Admonitions] Migrating settings from version 0 to 1");
-			let iads = new Map<string, InlineAdmonition>();
+			const iads = new Map<string, InlineAdmonition>();
 			for (const identifier in settings?.inlineAdmonitions) {
-				let iad = settings.inlineAdmonitions[identifier]
+				const iad = settings.inlineAdmonitions[identifier]
 				if (iad.type === undefined) {
 					console.log("[Inline Admonitions] Setting InlineAdmonition " + identifier + " to Prefix type")
 					iad.type = InlineAdmonitionType.Prefix;
@@ -46,7 +46,7 @@ export namespace InlineAdmonitionSettingsIO {
 					iad.slug = InlineAdmonition.generateSlug();
 				}
 
-				let ia = InlineAdmonitionType.unmarshal(iad);
+				const ia = InlineAdmonitionType.unmarshal(iad);
 				iads.set(ia.slug, ia);
 			}
 			settings.inlineAdmonitions = iads;
@@ -60,7 +60,7 @@ export namespace InlineAdmonitionSettingsIO {
 		if (settings.version === 1) {
 			console.log("[Inline Admonitions] Migrating settings from version 1 to 2");
 			for (const identifier in settings?.inlineAdmonitions) {
-				let iad = settings.inlineAdmonitions[identifier]
+				const iad = settings.inlineAdmonitions[identifier]
 				if (iad.type === "prefix" && !iad.hasOwnProperty("hideTriggerString")) {
 					iad.hideTriggerString = false;
 				}

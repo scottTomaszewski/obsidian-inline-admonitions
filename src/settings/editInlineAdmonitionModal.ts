@@ -25,11 +25,11 @@ export class EditInlineAdmonitionModal extends Modal {
 	}
 
 	onOpen() {
-		let {contentEl} = this;
+		const {contentEl} = this;
 
 		contentEl.createEl("br");
 
-		let submitSetting = new Setting(contentEl)
+		const submitSetting = new Setting(contentEl)
 			.addButton((btn) => btn
 				.setButtonText("Submit")
 				.setCta()
@@ -76,7 +76,7 @@ export class EditInlineAdmonitionModal extends Modal {
 				.setValue(this.result.type)
 				.onChange(value => {
 					this.clearTypeSettings();
-					let old = this.result;
+					const old = this.result;
 					this.result = InlineAdmonitionType.createFrom(value);
 					old.copySettingsTo(this.result)
 					this.appendTypeSettings(contentEl);
@@ -101,12 +101,12 @@ export class EditInlineAdmonitionModal extends Modal {
 		this.typeSettings.forEach(value => value.settingEl.remove());
 	}
 
-	private appendTypeSettings(contentEl) {
+	private appendTypeSettings(contentEl: HTMLElement) {
 		this.typeSettings = this.result.buildSettings(contentEl, () => this.updateSample());
 	}
 
 	onClose() {
-		let {contentEl} = this;
+		const {contentEl} = this;
 		contentEl.empty();
 	}
 }

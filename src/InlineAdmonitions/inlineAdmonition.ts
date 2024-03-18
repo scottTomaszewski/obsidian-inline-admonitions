@@ -2,7 +2,7 @@ import {InlineAdmonitionType} from "./inlineAdmonitionType";
 import {Setting} from "obsidian";
 import {v4 as uuidv4} from "uuid";
 import {SyntaxNodeRef} from "@lezer/common";
-import {Decoration, EditorView} from "@codemirror/view";
+import {Decoration} from "@codemirror/view";
 import {RangeSetBuilder} from "@codemirror/state";
 
 export abstract class InlineAdmonition {
@@ -17,9 +17,9 @@ export abstract class InlineAdmonition {
 		this.slug = slug;
 	}
 
-	public abstract process(codeElement: HTMLElement);
+	public abstract process(codeElement: HTMLElement): void;
 
-	public abstract applyTo(node: SyntaxNodeRef, content: string, builder: RangeSetBuilder<Decoration>);
+	public abstract applyTo(node: SyntaxNodeRef, content: string, builder: RangeSetBuilder<Decoration>): void;
 
 	abstract sampleText(): string;
 

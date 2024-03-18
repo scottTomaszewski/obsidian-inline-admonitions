@@ -41,7 +41,7 @@ export class InlineAdmonitionSettingTab extends PluginSettingTab {
 
 	// Renders a single Inline Admonition "sample" with options
 	private displaySampleIAD(containerEl: HTMLElement, iad: InlineAdmonition, identifier: string) {
-		let row: HTMLElement = containerEl.createDiv();
+		const row: HTMLElement = containerEl.createDiv();
 		row.addClass("iad-setting-row")
 
 		row.createSpan({
@@ -56,7 +56,7 @@ export class InlineAdmonitionSettingTab extends PluginSettingTab {
 			attr: {"style": `background-color: ${iad.backgroundColor}; color: ${iad.color}; margin: 0.5em;`}
 		});
 
-		let editButton = row.createEl("button", {text: "Edit"})
+		const editButton = row.createEl("button", {text: "Edit"})
 		editButton.addEventListener("click", evt => {
 			EditInlineAdmonitionModal.edit(this.app, iad, async result => {
 				// if the iad prefix changed, we need to kill the original
@@ -67,7 +67,7 @@ export class InlineAdmonitionSettingTab extends PluginSettingTab {
 			}).open();
 		});
 
-		let deleteButton = row.createEl("button", {text: "Delete"})
+		const deleteButton = row.createEl("button", {text: "Delete"})
 		deleteButton.addEventListener("click", async evt => {
 			this.plugin.settings.inlineAdmonitions.delete(identifier);
 			await this.plugin.saveSettings();

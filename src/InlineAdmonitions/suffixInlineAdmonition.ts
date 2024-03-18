@@ -90,7 +90,7 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 	}
 
 	buildSettings(contentEl: HTMLElement, updateSampleFunction): Setting[] {
-		let results = new Array<Setting>();
+		const results = new Array<Setting>();
 
 		results.push(new Setting(contentEl)
 			.setName("Suffix")

@@ -32,12 +32,12 @@ async function cssFileContents(app: App): Promise<string> {
 // Gets the css declarations for the className in entire cssContent (css file)
 function _getCssForClass(className: string, cssContent: string): string {
 	// TODO - add source
-	let obj = css.parse(cssContent, {});
-	let sheet = obj.stylesheet;
+	const obj = css.parse(cssContent, {});
+	const sheet = obj.stylesheet;
 
 	for (const rule of sheet.rules) {
 		if (rule.selectors.contains("." + className)) {
-			let classContent: string = "";
+			let classContent = "";
 			rule.declarations.forEach(dec => {
 				classContent += dec.property + ':' + dec.value + ';\n';
 			});
@@ -50,8 +50,8 @@ function _getCssForClass(className: string, cssContent: string): string {
 // Sets the css declarations for the className to cssClassContent within the cssFileContent
 export function _setCssForClass(className: string, cssClassDeclarations: string, cssFileContent: string): string {
 	// TODO - add source
-	let fileObj = css.parse(cssFileContent, {});
-	let fileSheet = fileObj.stylesheet;
+	const fileObj = css.parse(cssFileContent, {});
+	const fileSheet = fileObj.stylesheet;
 
 	for (const rule of fileSheet.rules) {
 		if (rule.selectors && rule.selectors.contains("." + className)) {
@@ -69,6 +69,6 @@ function _makeCssRuleString(className: string, cssDeclarations: string): string 
 }
 
 function _makeCssRule(className: string, cssDeclarations: string) {
-	let cssString = _makeCssRuleString(className, cssDeclarations);
+	const cssString = _makeCssRuleString(className, cssDeclarations);
 	return css.parse(cssString, {}).stylesheet.rules[0];
 }

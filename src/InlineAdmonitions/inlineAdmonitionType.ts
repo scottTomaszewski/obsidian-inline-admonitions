@@ -8,7 +8,6 @@ export enum InlineAdmonitionType {
 	Prefix = "prefix",
 	Suffix = "suffix",
 	Contains = "contains",
-	tooltip
 }
 
 export namespace InlineAdmonitionType {
@@ -44,7 +43,7 @@ export namespace InlineAdmonitionType {
 	}
 
 	export function unmarshal(data: any) {
-		let type = from(data.type)
+		const type = from(data.type)
 		switch (type) {
 			case InlineAdmonitionType.Prefix:
 				return PrefixInlineAdmonition.unmarshal(data);
@@ -71,7 +70,7 @@ The "type" defines what triggers an Inline Admonition
 export class TypeTooltipModal extends Modal {
 	onOpen() {
 		super.onOpen();
-		let {contentEl} = this;
+		const {contentEl} = this;
 		contentEl.createDiv({
 			text: InlineAdmonitionType.tooltip(),
 			attr: {"style": "white-space: pre-wrap;"}

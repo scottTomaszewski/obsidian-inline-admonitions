@@ -24,13 +24,13 @@ export function inlineAdmonitionPlugin(admonitions: InlineAdmonition[]) {
 			buildDecorations(view: EditorView): DecorationSet {
 				const builder = new RangeSetBuilder<Decoration>();
 
-				for (let {from, to} of view.visibleRanges) {
+				for (const {from, to} of view.visibleRanges) {
 					syntaxTree(view.state).iterate({
 						from,
 						to,
 						enter: (node) => {
 							if (node.type.name.startsWith("inline-code")) {
-								let content = view.state.doc.sliceString(node.from, node.to);
+								const content = view.state.doc.sliceString(node.from, node.to);
 								// console.log(node.type.name + "(" + node.from + ", " + node.to + ") - " + content);
 								admonitions.forEach(iad => iad.applyTo(node, content, builder));
 								return false;
