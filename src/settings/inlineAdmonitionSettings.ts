@@ -21,7 +21,7 @@ export namespace InlineAdmonitionSettingsIO {
 
 		const iads = new Map<string, InlineAdmonition>();
 		for (const identifier in settings.inlineAdmonitions) {
-			const iad = settings.inlineAdmonitions.get(identifier);
+			const iad = settings.inlineAdmonitions[identifier];
 			const typedIAD = InlineAdmonitionType.unmarshal(iad);
 			iads.set(typedIAD.slug, typedIAD);
 		}
@@ -37,7 +37,7 @@ export namespace InlineAdmonitionSettingsIO {
 			console.log("[Inline Admonitions] Migrating settings from version 0 to 1");
 			const iads = new Map<string, InlineAdmonition>();
 			for (const identifier in settings?.inlineAdmonitions) {
-				const iad = settings.inlineAdmonitions.get(identifier);
+				const iad = settings.inlineAdmonitions[identifier];
 				if (iad.type === undefined) {
 					console.log("[Inline Admonitions] Setting InlineAdmonition " + identifier + " to Prefix type")
 					iad.type = InlineAdmonitionType.Prefix;
@@ -60,14 +60,14 @@ export namespace InlineAdmonitionSettingsIO {
 		if (settings.version === 1) {
 			console.log("[Inline Admonitions] Migrating settings from version 1 to 2");
 			for (const identifier in settings?.inlineAdmonitions) {
-				const iad = settings.inlineAdmonitions.get(identifier);
+				const iad = settings.inlineAdmonitions[identifier];
 				if (iad.type === "prefix" && !iad.hasOwnProperty("hideTriggerString")) {
 					iad.hideTriggerString = false;
 				}
 				if (iad.type === "suffix" && !iad.hasOwnProperty("hideTriggerString")) {
 					iad.hideTriggerString = false;
 				}
-				settings.inlineAdmonitions.set(identifier, iad);
+				settings.inlineAdmonitions[identifier] = iad;
 			}
 			settings.version = 2;
 			dataMigrated = true;
