@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.2 
+
+- [BUGFIX] Correctly enables css on plugin load
+
 ## 1.3.1 
 
 - Enables the custom css file, although there is a known issue with the css snippet being enabled, but not picked up
