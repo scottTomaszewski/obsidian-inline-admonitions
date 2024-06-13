@@ -1,7 +1,5 @@
 # Inline Admonitions for Obsidian
 
-
-
 This plugin will allow you to format inline codeblocks to better stand out on the page.  For example, you may want to 
 have all inline codeblocks that start with "IMPORTANT" to have a red background like this. 
 
@@ -83,6 +81,8 @@ Contains Inline Admonitions trigger when a codeblock contains specific text anyw
 - Support for Inline Admonitions in Editing view
 
 ## Development
+
+See the [changelog](CHANGELOG.md) for changes 
 
 ### Build
 

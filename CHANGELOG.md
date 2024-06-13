@@ -1,7 +1,8 @@
 # Changelog
 
-## 1.2.1
+## 1.3.0
 
+- Adds support for Live Preview
 - [BUGFIX] Removes debug logging
 
 ## 1.2.0
