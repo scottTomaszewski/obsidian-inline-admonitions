@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.1 
+
+- Enables the custom css file, although there is a known issue with the css snippet being enabled, but not picked up
+
 ## 1.3.0
 
 - Adds support for Live Preview
