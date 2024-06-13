@@ -12,18 +12,35 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 
 	// TODO - I dont like this...
 	static create() {
-		return new ContainsInlineAdmonition("", "#f1f1f1", "#000000", InlineAdmonition.generateSlug());
+		return new ContainsInlineAdmonition(
+			"",
+			"#f1f1f1",
+			100,
+			"#000000",
+			100,
+			InlineAdmonition.generateSlug());
 	}
 
 	static unmarshal(data: any): ContainsInlineAdmonition {
 		if (data.type != InlineAdmonitionType.Contains) {
 			throw new Error("Cannot unmarshal data into ContainsInlineAdmonition: Wrong type: " + data.type);
 		}
-		return new ContainsInlineAdmonition(data.contains, data.backgroundColor, data.color, data.slug);
+		return new ContainsInlineAdmonition(
+			data.contains,
+			data.backgroundColor,
+			data.bgColorOpacityPercent,
+			data.color,
+			data.colorOpacityPercent,
+			data.slug);
 	}
 
-	constructor(contains: string, backgroundColor: string, color: string, slug: string) {
-		super(backgroundColor, color, slug);
+	constructor(contains: string,
+				backgroundColor: string,
+				bgColorOpacityPercent: number,
+				color: string,
+				colorOpacityPercent: number,
+				slug: string) {
+		super(backgroundColor, bgColorOpacityPercent, color, colorOpacityPercent, slug);
 		this.contains = contains;
 	}
 
@@ -51,6 +68,7 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 	cssClasses(): string[] {
 		const classes = super.cssClasses();
 		classes.push("iad-contains")
+		//  TODO - pretty sure these all fail
 		classes.push("iad-contains-" + slugify(this.contains));
 		return classes;
 	}

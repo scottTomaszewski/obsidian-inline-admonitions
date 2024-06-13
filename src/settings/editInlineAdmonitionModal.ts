@@ -41,7 +41,7 @@ export class EditInlineAdmonitionModal extends Modal {
 		this.sample = submitSetting.nameEl.createEl("code", {
 			text: this.result.sampleText(),
 			cls: "iad iad-sample iad-sample-editor iad-" + this.result.slug,
-			attr: {"style": `background-color: ${this.result.backgroundColor}; color: ${this.result.color};`}
+			attr: {"style": this.result.simpleStyle()}
 		});
 
 		new Setting(contentEl)
@@ -55,6 +55,16 @@ export class EditInlineAdmonitionModal extends Modal {
 				})
 			);
 		new Setting(contentEl)
+			.setName("Background opacity (0% - 100%)")
+			.setDesc("Percentage of opacity to apply to the background color. 0% is fully transparent.")
+			.addSlider(s => s
+				.setLimits(0, 100, 1)
+				.setValue(this.result.bgColorOpacityPercent)
+				.onChange(val => {
+					this.result.bgColorOpacityPercent = val;
+					this.updateSample();
+				}));
+		new Setting(contentEl)
 			.setName("Text color")
 			.setDesc("Color of the text of the inline admonition")
 			.addColorPicker(cp => cp
@@ -64,7 +74,16 @@ export class EditInlineAdmonitionModal extends Modal {
 					this.updateSample();
 				})
 			);
-
+		new Setting(contentEl)
+			.setName("Text color opacity (0% - 100%)")
+			.setDesc("Percentage of opacity to apply to the text color. 0% is fully transparent.")
+			.addSlider(s => s
+				.setLimits(0, 100, 1)
+				.setValue(this.result.colorOpacityPercent)
+				.onChange(val => {
+					this.result.colorOpacityPercent = val;
+					this.updateSample();
+				}));
 		new Setting(contentEl)
 			.setName("Type")
 			.setDesc("The way the Inline Admonition is triggered")
@@ -94,7 +113,7 @@ export class EditInlineAdmonitionModal extends Modal {
 	private updateSample() {
 		this.sample.setText(this.result.sampleText());
 		// TODO - I think this should be extracted out somewhere?
-		this.sample.setAttr("style", `background-color: ${this.result.backgroundColor}; color: ${this.result.color}; margin: 0.5em;`);
+		this.sample.setAttr("style", this.result.simpleStyle() + `margin: 0.5em;`);
 	}
 
 	private clearTypeSettings() {

@@ -4,16 +4,26 @@ import {v4 as uuidv4} from "uuid";
 import {SyntaxNodeRef} from "@lezer/common";
 import {Decoration} from "@codemirror/view";
 import {RangeSetBuilder} from "@codemirror/state";
+import {appendOpacityToHexColor} from "../utils";
 
 export abstract class InlineAdmonition {
 	backgroundColor: string;
+	bgColorOpacityPercent: number;
 	color: string;
+	colorOpacityPercent: number;
 	type: InlineAdmonitionType;
 	slug: string;
 
-	protected constructor(backgroundColor: string, color: string, slug: string) {
+	protected constructor(
+		backgroundColor: string,
+		bgColorOpacityPercent: number,
+		color: string,
+		colorOpacityPercent: number,
+		slug: string) {
 		this.backgroundColor = backgroundColor;
+		this.bgColorOpacityPercent = bgColorOpacityPercent;
 		this.color = color;
+		this.colorOpacityPercent = colorOpacityPercent;
 		this.slug = slug;
 	}
 
@@ -30,16 +40,26 @@ export abstract class InlineAdmonition {
 	}
 
 	public simpleStyle() {
-		return `background-color: ${this.backgroundColor}; color: ${this.color};`;
+		return `background-color: ${this.evalBackgroundColor()}; color: ${this.evalColor()};`;
 	}
 
 	copySettingsTo(other: InlineAdmonition) {
 		other.backgroundColor = this.backgroundColor;
+		other.bgColorOpacityPercent = this.bgColorOpacityPercent;
 		other.color = this.color;
+		other.colorOpacityPercent = this.colorOpacityPercent;
 	}
 
 	public toString = (): string => {
-		return "InlineAdmonition(" + this.backgroundColor + ", " + this.type + ")"
+		return "InlineAdmonition(" + this.evalBackgroundColor() + ", " + this.type + ")"
+	}
+
+	private evalBackgroundColor() {
+		return appendOpacityToHexColor(this.backgroundColor, this.bgColorOpacityPercent);
+	}
+
+	private evalColor() {
+		return appendOpacityToHexColor(this.color, this.colorOpacityPercent);
 	}
 
 	static generateSlug(): string {

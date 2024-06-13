@@ -79,9 +79,8 @@ Contains Inline Admonitions trigger when a codeblock contains specific text anyw
 ## Future work
 
 - Regex to trigger Inline Admonitions
-- Full CSS manipulation of codeblocks instead of inline style attributes
-- Support for Inline Admonotions in Live Preview view
-- Support for Inline Admonitions in Editing view
+- Additional admonitions styles (rounded corners, etc)
+- More comprehensive CSS editing in the settings UI
 
 ## Development
 

@@ -17,7 +17,9 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 			"",
 			false,
 			"#f1f1f1",
+			100,
 			"#000000",
+			100,
 			InlineAdmonition.generateSlug());
 	}
 
@@ -29,12 +31,20 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 			data.prefix,
 			data.hideTriggerString,
 			data.backgroundColor,
+			data.bgColorOpacityPercent,
 			data.color,
+			data.colorOpacityPercent,
 			data.slug);
 	}
 
-	constructor(prefix: string, hideTriggerString: boolean, backgroundColor: string, color: string, slug: string) {
-		super(backgroundColor, color, slug);
+	constructor(prefix: string,
+				hideTriggerString: boolean,
+				backgroundColor: string,
+				bgColorOpacityPercent: number,
+				color: string,
+				colorOpacityPercent: number,
+				slug: string) {
+		super(backgroundColor, bgColorOpacityPercent, color, colorOpacityPercent, slug);
 		this.prefix = prefix;
 		this.hideTriggerString = hideTriggerString;
 	}

@@ -53,7 +53,7 @@ export class InlineAdmonitionSettingTab extends PluginSettingTab {
 			text: iad.sampleText(),
 			cls: "iad iad-sample iad-" + iad.slug,
 			parent: row,
-			attr: {"style": `background-color: ${iad.backgroundColor}; color: ${iad.color}; margin: 0.5em;`}
+			attr: {"style": iad.simpleStyle() + `; margin: 0.5em;`}
 		});
 
 		const editButton = row.createEl("button", {text: "Edit"})
