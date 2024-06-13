@@ -1,4 +1,4 @@
-import {readSnippetFile, writeSnippetFile} from "./snippets";
+import {createSnippetFile, readSnippetFile, writeSnippetFile} from "./snippets";
 import {App} from "obsidian";
 import * as css from "css";
 
@@ -23,7 +23,7 @@ export async function setCssForClass(app: App, className: string, css: string) {
 }
 
 export async function wipeCss(app: App) {
-	return writeSnippetFile(app, snippetFilename, header);
+	return createSnippetFile(app, snippetFilename, header);
 }
 
 // ==========

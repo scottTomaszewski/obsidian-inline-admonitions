@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.3
+
+- [BUGFIX] Avoids crash when css file is missing on first startup
+
 ## 1.4.2
 
 - [BUGFIX] Avoids css class names resolving to the same value
