@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.4.3
+## 1.4.4
 
 - [BUGFIX] Avoids crash when css file is missing on first startup
 
