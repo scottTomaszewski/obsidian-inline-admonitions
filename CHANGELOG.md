@@ -1,6 +1,10 @@
 # Changelog
 
-## 1.4.0
+## 1.4.2
+
+- [BUGFIX] Avoids css class names resolving to the same value
+
+## 1.4.1
 
 - Adds support for changing opacity of background and text colors
   - Note: there is a bit of a performance impact of this feature. Will address in a patch
@@ -8,6 +12,7 @@
 Known Issues:
 
 - Multiple non-alphanumeric trigger text inline admonitions are overloading themselves.
+  - Update: fixed in 1.4.2
 
 ## 1.3.2 
 

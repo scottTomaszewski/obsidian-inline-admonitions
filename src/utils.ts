@@ -9,6 +9,38 @@ export function slugify(str: any) {
 		.replace(/-+/g, '-'); // remove consecutive hyphens
 }
 
+// Function to encode arbitrary characters into a valid format
+export function encodeChar(char: string): string {
+	const charCode = char.charCodeAt(0);
+	return `_x${charCode.toString(16).padStart(4, '0')}_`;
+}
+
+/**
+ * Sanitizes a string to create a valid CSS class name.
+ * @param input - The input string to be sanitized.
+ * @returns A valid CSS class name.
+ */
+export function sanitizeClassName(input: string): string {
+	// Ensure the input is a string and trim whitespace
+	input = input.trim();
+
+	// Add underscore prefix if the first character is invalid
+	if (!/^[a-zA-Z_]/.test(input.charAt(0))) {
+		input = '_' + input;
+	}
+	return input.split('').map(char => {
+		// Valid characters for CSS class names
+		if (/^[a-zA-Z0-9\-_]$/.test(char)) {
+			return char;
+		} else {
+			// Encode any invalid characters
+			return encodeChar(char);
+		}
+	}).join('');
+}
+
+
+
 export function appendOpacityToHexColor(hexColor: string, opacityPercent: number): string {
 	// Cleanup and remove leading #
 	const hexCode = hexColor

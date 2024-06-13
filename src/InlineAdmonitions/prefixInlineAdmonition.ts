@@ -1,4 +1,4 @@
-import {slugify} from "../utils";
+import {sanitizeClassName, slugify} from "../utils";
 import {InlineAdmonition} from "./inlineAdmonition";
 import {Setting} from "obsidian";
 import {InlineAdmonitionType} from "./inlineAdmonitionType";
@@ -88,7 +88,7 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 	cssClasses(): string[] {
 		const classes = super.cssClasses();
 		classes.push("iad-prefix")
-		classes.push("iad-prefix-" + slugify(this.prefix));
+		classes.push("iad-prefix-" + sanitizeClassName(this.prefix));
 		return classes;
 	}
 
