@@ -7,9 +7,6 @@ have all inline codeblocks that start with "IMPORTANT" to have a red background 
 
 [inlineAdmonition_1.2.0.webm](https://github.com/scottTomaszewski/obsidian-inline-admonitions/assets/5295276/2a781588-cba0-4665-98c2-16d896cd2abe)
 
-IMPORTANT: if the CSS for your inline admonition isnt loading, please reload obsidian.  Its a known issue that im 
-seeking a solution for.
-
 ## Usage
 
 To add an Inline Admonition to your note, first [create a new Inline Admonition](#Creating a new Inline Admonition) of 
@@ -81,6 +78,10 @@ Contains Inline Admonitions trigger when a codeblock contains specific text anyw
 - Regex to trigger Inline Admonitions
 - Additional admonitions styles (rounded corners, etc)
 - More comprehensive CSS editing in the settings UI
+
+### Known Issues
+
+- Newly created inline admonitions might not render in Live Preview.  Reload the app as a workaround
 
 ## Development
 

@@ -29,7 +29,7 @@ export function inlineAdmonitionPlugin(admonitions: InlineAdmonition[]) {
 						from,
 						to,
 						enter: (node) => {
-							if (node.type.name.startsWith("inline-code")) {
+							if (node.type.name.contains("inline-code")) {
 								const content = view.state.doc.sliceString(node.from, node.to);
 								// console.log(node.type.name + "(" + node.from + ", " + node.to + ") - " + content);
 								admonitions.forEach(iad => iad.applyTo(node, content, builder));

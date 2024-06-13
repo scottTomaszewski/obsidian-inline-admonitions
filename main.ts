@@ -15,6 +15,7 @@ export default class InlineAdmonitionPlugin extends Plugin {
 		this.registerMarkdownPostProcessor((element, context) => {
 			new InlineAdmonitionsPostProcessor(this.settings).postProcess(element, context);
 		});
+		// TODO - this fails on first created iad?
 		this.registerEditorExtension(inlineAdmonitionPlugin(Array.from(this.settings.inlineAdmonitions.values())));
 
 		this.addSettingTab(new InlineAdmonitionSettingTab(this.app, this));

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.5 
+
+- [BUGFIX] Correctly triggers inline admonitions in Live Preview
+
 ## 1.4.4
 
 - [BUGFIX] Avoids crash when css file is missing on first startup
