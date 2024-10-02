@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.4.6
+
+- Attempts to fix Inline-Admonitions failing in Live Preview on first install
+
 ## 1.4.5 
 
 - [BUGFIX] Correctly triggers inline admonitions in Live Preview
