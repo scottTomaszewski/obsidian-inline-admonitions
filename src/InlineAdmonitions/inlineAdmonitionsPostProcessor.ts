@@ -11,7 +11,7 @@ export class InlineAdmonitionsPostProcessor {
 
 	postProcess(element: HTMLElement, context: MarkdownPostProcessorContext) {
 		element.findAll("code").forEach(codeblock => {
-			this.settings.inlineAdmonitions.forEach((iad: InlineAdmonition) => iad.process(codeblock));
+			this.settings.inlineAdmonitions.forEach((iad: InlineAdmonition) => iad.process(codeblock, context.sourcePath));
 		});
 	}
 }

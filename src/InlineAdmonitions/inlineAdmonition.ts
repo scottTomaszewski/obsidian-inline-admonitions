@@ -27,7 +27,7 @@ export abstract class InlineAdmonition {
 		this.slug = slug;
 	}
 
-	public abstract process(codeElement: HTMLElement): void;
+	public abstract process(codeElement: HTMLElement, sourcePath: string): void;
 
 	public abstract applyTo(node: SyntaxNodeRef, content: string, builder: RangeSetBuilder<Decoration>): void;
 
