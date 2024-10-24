@@ -39,3 +39,9 @@ code.iad {
 .cm-active .iad-hidden {
 	display: inline;
 }
+
+/* P0f91 */
+.admonition-icon {
+	margin-right: 0.5em;
+	font-size: 1.2em;
+}

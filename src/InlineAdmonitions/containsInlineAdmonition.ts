@@ -8,11 +8,13 @@ import {Decoration} from "@codemirror/view";
 
 export class ContainsInlineAdmonition extends InlineAdmonition {
 	contains: string;
+	icon: string; // New property for icon
 	type = InlineAdmonitionType.Contains;
 
 	// TODO - I dont like this...
 	static create() {
 		return new ContainsInlineAdmonition(
+			"",
 			"",
 			"#f1f1f1",
 			100,
@@ -27,6 +29,7 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 		}
 		return new ContainsInlineAdmonition(
 			data.contains,
+			data.icon,
 			data.backgroundColor,
 			data.bgColorOpacityPercent,
 			data.color,
@@ -35,6 +38,7 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 	}
 
 	constructor(contains: string,
+				icon: string,
 				backgroundColor: string,
 				bgColorOpacityPercent: number,
 				color: string,
@@ -42,12 +46,19 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 				slug: string) {
 		super(backgroundColor, bgColorOpacityPercent, color, colorOpacityPercent, slug);
 		this.contains = contains;
+		this.icon = icon;
 	}
 
 	process(codeElement: HTMLElement) {
 		if (codeElement.innerText.contains(this.contains)) {
 			this.cssClasses().forEach(c => codeElement.classList.add(c));
 			// codeElement.setAttribute("style", this.simpleStyle());
+			if (this.icon) {
+				const iconElement = document.createElement("span");
+				iconElement.classList.add("admonition-icon");
+				iconElement.innerText = this.icon;
+				codeElement.prepend(iconElement);
+			}
 		}
 	}
 
@@ -62,6 +73,23 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 					tagName: "span"
 				})
 			);
+			// Add the icon if necessary
+			if (this.icon) {
+				builder.add(
+					node.from,
+					node.from,
+					Decoration.widget({
+						widget: {
+							toDOM: () => {
+								const iconElement = document.createElement("span");
+								iconElement.classList.add("admonition-icon");
+								iconElement.innerText = this.icon;
+								return iconElement;
+							}
+						}
+					})
+				);
+			}
 		}
 	}
 
@@ -86,6 +114,17 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 				.setValue(this.contains)
 				.onChange((value) => {
 					this.contains = value;
+					updateSampleFunction();
+				})
+			));
+		results.push(new Setting(contentEl)
+			.setName("Icon")
+			.setDesc("Select an icon to include at the beginning of the inline admonition")
+			.addText(text => text
+				.setPlaceholder("Enter icon name")
+				.setValue(this.icon || "")
+				.onChange(value => {
+					this.icon = value;
 					updateSampleFunction();
 				})
 			));

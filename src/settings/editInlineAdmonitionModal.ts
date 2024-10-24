@@ -1,4 +1,3 @@
-// Model to edit a single Inline Admonition's settings
 import {App, Modal, Setting} from "obsidian";
 import {InlineAdmonition} from "../InlineAdmonitions/inlineAdmonition";
 import {PrefixInlineAdmonition} from "../InlineAdmonitions/prefixInlineAdmonition";
@@ -107,13 +106,27 @@ export class EditInlineAdmonitionModal extends Modal {
 				})
 			);
 
+		new Setting(contentEl)
+			.setName("Icon")
+			.setDesc("Select an icon to include at the beginning of the inline admonition")
+			.addText(text => text
+				.setPlaceholder("Enter icon name")
+				.setValue(this.result.icon || "")
+				.onChange(value => {
+					this.result.icon = value;
+					this.updateSample();
+				})
+			);
+
 		this.appendTypeSettings(contentEl);
 	}
 
 	private updateSample() {
 		this.sample.setText(this.result.sampleText());
-		// TODO - I think this should be extracted out somewhere?
 		this.sample.setAttr("style", this.result.simpleStyle() + `margin: 0.5em;`);
+		if (this.result.icon) {
+			this.sample.prepend(createSpan({ cls: "admonition-icon", text: this.result.icon }));
+		}
 	}
 
 	private clearTypeSettings() {

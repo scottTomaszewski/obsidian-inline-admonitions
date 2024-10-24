@@ -9,6 +9,7 @@ import {Decoration} from "@codemirror/view";
 export class SuffixInlineAdmonition extends InlineAdmonition {
 	suffix: string;
 	hideTriggerString: boolean;
+	icon: string; // New property for icon
 	type = InlineAdmonitionType.Suffix;
 
 	// TODO - I dont like this...
@@ -16,6 +17,7 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 		return new SuffixInlineAdmonition(
 			"",
 			false,
+			 "",
 			"#f1f1f1",
 			100,
 			"#000000",
@@ -30,6 +32,7 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 		return new SuffixInlineAdmonition(
 			data.suffix,
 			data.hideTriggerString,
+			data.icon,
 			data.backgroundColor,
 			data.bgColorOpacityPercent,
 			data.color,
@@ -39,6 +42,7 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 
 	constructor(suffix: string,
 				hideTriggerString: boolean,
+				icon: string,
 				backgroundColor: string,
 				bgColorOpacityPercent: number,
 				color: string,
@@ -47,6 +51,7 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 		super(backgroundColor, bgColorOpacityPercent, color, colorOpacityPercent, slug);
 		this.suffix = suffix;
 		this.hideTriggerString = hideTriggerString;
+		this.icon = icon;
 	}
 
 	process(codeElement: HTMLElement) {
@@ -55,6 +60,12 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 			// codeElement.setAttribute("style", this.simpleStyle());
 			if (this.hideTriggerString) {
 				codeElement.setText(codeElement.getText().replace(new RegExp(this.suffix + "$"), ""));
+			}
+			if (this.icon) {
+				const iconElement = document.createElement("span");
+				iconElement.classList.add("admonition-icon");
+				iconElement.innerText = this.icon;
+				codeElement.prepend(iconElement);
 			}
 		}
 	}
@@ -80,6 +91,23 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 					inclusive: true,
 					attributes: {class: "iad-hidden"},
 					tagName: "span"
+				})
+			);
+		}
+		// Add the icon if necessary
+		if (this.icon) {
+			builder.add(
+				node.from,
+				node.from,
+				Decoration.widget({
+					widget: {
+						toDOM: () => {
+							const iconElement = document.createElement("span");
+							iconElement.classList.add("admonition-icon");
+							iconElement.innerText = this.icon;
+							return iconElement;
+						}
+					}
 				})
 			);
 		}
@@ -125,6 +153,18 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 				})
 			)
 		);
+
+		results.push(new Setting(contentEl)
+			.setName("Icon")
+			.setDesc("Select an icon to include at the beginning of the inline admonition")
+			.addText(text => text
+				.setPlaceholder("Enter icon name")
+				.setValue(this.icon || "")
+				.onChange(value => {
+					this.icon = value;
+					updateSampleFunction();
+				})
+			));
 
 		return results;
 	}

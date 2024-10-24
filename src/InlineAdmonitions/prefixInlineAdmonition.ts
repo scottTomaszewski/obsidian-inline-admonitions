@@ -9,6 +9,7 @@ import {Decoration} from "@codemirror/view";
 export class PrefixInlineAdmonition extends InlineAdmonition {
 	prefix: string;
 	hideTriggerString: boolean;
+	icon: string; // New property for icon
 	type = InlineAdmonitionType.Prefix;
 
 	// TODO - I dont like this...
@@ -16,6 +17,7 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 		return new PrefixInlineAdmonition(
 			"",
 			false,
+			 "",
 			"#f1f1f1",
 			100,
 			"#000000",
@@ -30,6 +32,7 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 		return new PrefixInlineAdmonition(
 			data.prefix,
 			data.hideTriggerString,
+			data.icon,
 			data.backgroundColor,
 			data.bgColorOpacityPercent,
 			data.color,
@@ -39,6 +42,7 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 
 	constructor(prefix: string,
 				hideTriggerString: boolean,
+				icon: string,
 				backgroundColor: string,
 				bgColorOpacityPercent: number,
 				color: string,
@@ -47,6 +51,7 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 		super(backgroundColor, bgColorOpacityPercent, color, colorOpacityPercent, slug);
 		this.prefix = prefix;
 		this.hideTriggerString = hideTriggerString;
+		this.icon = icon;
 	}
 
 	process(codeElement: HTMLElement) {
@@ -55,6 +60,12 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 			// codeElement.setAttribute("style", this.simpleStyle());
 			if (this.hideTriggerString) {
 				codeElement.setText(codeElement.getText().replace(this.prefix, ""));
+			}
+			if (this.icon) {
+				const iconElement = document.createElement("span");
+				iconElement.classList.add("admonition-icon");
+				iconElement.innerText = this.icon;
+				codeElement.prepend(iconElement);
 			}
 		}
 	}
@@ -79,6 +90,23 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 						inclusive: true,
 						attributes: {class: "iad-hidden"},
 						tagName: "span"
+					})
+				);
+			}
+			// Add the icon if necessary
+			if (this.icon) {
+				builder.add(
+					node.from,
+					node.from,
+					Decoration.widget({
+						widget: {
+							toDOM: () => {
+								const iconElement = document.createElement("span");
+								iconElement.classList.add("admonition-icon");
+								iconElement.innerText = this.icon;
+								return iconElement;
+							}
+						}
 					})
 				);
 			}
