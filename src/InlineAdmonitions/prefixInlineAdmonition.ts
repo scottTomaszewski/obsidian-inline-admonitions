@@ -5,6 +5,7 @@ import {InlineAdmonitionType} from "./inlineAdmonitionType";
 import {SyntaxNodeRef} from "@lezer/common";
 import {RangeSetBuilder} from "@codemirror/state";
 import {Decoration} from "@codemirror/view";
+import {MarkdownRendererSingleton} from "../io/MarkdownRenderer";
 
 export class PrefixInlineAdmonition extends InlineAdmonition {
 	prefix: string;
@@ -49,13 +50,17 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 		this.hideTriggerString = hideTriggerString;
 	}
 
-	process(codeElement: HTMLElement) {
+	process(codeElement: HTMLElement, sourcePath: string) {
 		if (codeElement.innerText.startsWith(this.prefix)) {
 			this.cssClasses().forEach(c => codeElement.classList.add(c));
 			// codeElement.setAttribute("style", this.simpleStyle());
+			let contents = codeElement.getText();
+			codeElement.empty();
 			if (this.hideTriggerString) {
-				codeElement.setText(codeElement.getText().replace(this.prefix, ""));
+				contents = contents.replace(this.prefix, "");
 			}
+			contents = ":LiCheckCircle: " + contents;
+			MarkdownRendererSingleton.getInstance().renderMD(contents, codeElement, sourcePath);
 		}
 	}
 

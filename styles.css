@@ -11,6 +11,11 @@ code.iad {
 	line-height: 1;
 }
 
+span.iad > p,
+code.iad > p {
+	display: inline;
+}
+
 .iad-setting-row {
 	display: flex;
 	justify-content: end;

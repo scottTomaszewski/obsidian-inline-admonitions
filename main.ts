@@ -5,6 +5,7 @@ import { InlineAdmonitionSettings, InlineAdmonitionSettingsIO } from "./src/sett
 import { InlineAdmonitionsPostProcessor } from "./src/InlineAdmonitions/inlineAdmonitionsPostProcessor";
 import { inlineAdmonitionPlugin } from "./src/InlineAdmonitions/InlineAdmonitionExtension";
 import { setCssForClass, wipeCss } from "./src/io/inlineAdmonitionCss";
+import {MarkdownRendererSingleton} from "./src/io/MarkdownRenderer";
 
 export default class InlineAdmonitionPlugin extends Plugin {
 	settings: InlineAdmonitionSettings;
@@ -15,11 +16,16 @@ export default class InlineAdmonitionPlugin extends Plugin {
 		this.inlineAdmonitionCompartment = new Compartment();
 		await this.loadSettings();
 
+		// Initialize for embedded markdown rendering
+		MarkdownRendererSingleton.getInstance().initialize(this);
+
+		// Register Extensions for Live Preview
 		const extension = this.inlineAdmonitionCompartment.of(
 			inlineAdmonitionPlugin(Array.from(this.settings.inlineAdmonitions.values()))
 		);
 		this.registerEditorExtension(extension);
 
+		// Register MarkdownProcessors for normal rendering
 		this.registerMarkdownPostProcessor((element, context) => {
 			new InlineAdmonitionsPostProcessor(this.settings).postProcess(element, context);
 		});
