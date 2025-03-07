@@ -9,7 +9,7 @@ import {Decoration} from "@codemirror/view";
 export class SuffixInlineAdmonition extends InlineAdmonition {
 	suffix: string;
 	hideTriggerString: boolean;
-	prefixIcon: string; // New property for icon
+	prefixIcon: string;
 	type = InlineAdmonitionType.Suffix;
 
 	// TODO - I dont like this...
@@ -17,7 +17,7 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 		return new SuffixInlineAdmonition(
 			"",
 			false,
-			 "",
+			"",
 			"#f1f1f1",
 			100,
 			"#000000",
@@ -94,23 +94,6 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 				})
 			);
 		}
-		// Add the icon if necessary
-		if (this.prefixIcon) {
-			builder.add(
-				node.from,
-				node.from,
-				Decoration.widget({
-					widget: {
-						toDOM: () => {
-							const iconElement = document.createElement("span");
-							iconElement.classList.add("admonition-icon");
-							iconElement.innerText = this.prefixIcon;
-							return iconElement;
-						}
-					}
-				})
-			);
-		}
 	}
 
 	cssClasses(): string[] {
@@ -153,18 +136,6 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 				})
 			)
 		);
-
-		results.push(new Setting(contentEl)
-			.setName("Icon")
-			.setDesc("Select an icon to include at the beginning of the inline admonition")
-			.addText(text => text
-				.setPlaceholder("Enter icon name")
-				.setValue(this.prefixIcon || "")
-				.onChange(value => {
-					this.prefixIcon = value;
-					updateSampleFunction();
-				})
-			));
 
 		return results;
 	}

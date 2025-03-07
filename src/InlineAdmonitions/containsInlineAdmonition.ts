@@ -1,6 +1,6 @@
 import {sanitizeClassName, slugify} from "../utils";
 import {InlineAdmonition} from "./inlineAdmonition";
-import {Setting} from "obsidian";
+import {setIcon, Setting} from "obsidian";
 import {InlineAdmonitionType} from "./inlineAdmonitionType";
 import {SyntaxNodeRef} from "@lezer/common";
 import {RangeSetBuilder} from "@codemirror/state";
@@ -8,7 +8,7 @@ import {Decoration} from "@codemirror/view";
 
 export class ContainsInlineAdmonition extends InlineAdmonition {
 	contains: string;
-	prefixIcon: string; // New property for icon
+	prefixIcon: string;
 	type = InlineAdmonitionType.Contains;
 
 	// TODO - I dont like this...
@@ -56,7 +56,7 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 			if (this.prefixIcon) {
 				const iconElement = document.createElement("span");
 				iconElement.classList.add("admonition-icon");
-				iconElement.innerText = this.prefixIcon;
+				setIcon(iconElement, this.prefixIcon);
 				codeElement.prepend(iconElement);
 			}
 		}
@@ -73,23 +73,6 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 					tagName: "span"
 				})
 			);
-			// Add the icon if necessary
-			if (this.prefixIcon) {
-				builder.add(
-					node.from,
-					node.from,
-					Decoration.widget({
-						widget: {
-							toDOM: () => {
-								const iconElement = document.createElement("span");
-								iconElement.classList.add("admonition-icon");
-								iconElement.innerText = this.prefixIcon;
-								return iconElement;
-							}
-						}
-					})
-				);
-			}
 		}
 	}
 
@@ -114,17 +97,6 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 				.setValue(this.contains)
 				.onChange((value) => {
 					this.contains = value;
-					updateSampleFunction();
-				})
-			));
-		results.push(new Setting(contentEl)
-			.setName("Icon")
-			.setDesc("Select an icon to include at the beginning of the inline admonition")
-			.addText(text => text
-				.setPlaceholder("Enter icon name")
-				.setValue(this.prefixIcon || "")
-				.onChange(value => {
-					this.prefixIcon = value;
 					updateSampleFunction();
 				})
 			));

@@ -5,7 +5,6 @@ import {InlineAdmonitionType} from "./inlineAdmonitionType";
 import {SyntaxNodeRef} from "@lezer/common";
 import {RangeSetBuilder} from "@codemirror/state";
 import {Decoration} from "@codemirror/view";
-import {MarkdownRendererSingleton} from "../io/MarkdownRenderer";
 
 export class PrefixInlineAdmonition extends InlineAdmonition {
 	prefix: string;
@@ -67,11 +66,6 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 				iconElement.classList.add("admonition-icon");
 				setIcon(iconElement, this.prefixIcon);
 				codeElement.prepend(iconElement);
-
-				// let contents = codeElement.getText();
-				// codeElement.empty();
-				// contents = ":" + this.prefixIcon + ": " + contents;
-				// MarkdownRendererSingleton.getInstance().renderMD(contents, codeElement, sourcePath);
 			}
 		}
 	}
@@ -81,35 +75,25 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 			builder.add(
 				node.from,
 				node.to,
-				Decoration.replace({
+				Decoration.mark({
 					inclusive: true,
-					widget: {
-						// This method will replace the entire range [node.from, node.to]
-						// with a <span> that includes both icon and text
-						toDOM: () => {
-							const outerSpan = document.createElement("span");
-							outerSpan.classList.add(...this.cssClasses());
-
-							// Add icon if we have one
-							if (this.prefixIcon) {
-								const iconSpan = document.createElement("span");
-								iconSpan.classList.add("admonition-icon");
-								setIcon(iconSpan, this.prefixIcon);
-								outerSpan.appendChild(iconSpan);
-							}
-
-							// If hideTriggerString is on, skip over the prefix in the displayed text
-							let textToShow = content;
-							if (this.hideTriggerString) {
-								textToShow = textToShow.slice(this.prefix.length);
-							}
-							outerSpan.appendChild(document.createTextNode(textToShow));
-
-							return outerSpan;
-						}
-					}
+					attributes: {class: this.cssClasses().join(" ")},
+					tagName: "span",
 				})
 			);
+
+			// Hide the prefix if necessary
+			if (this.hideTriggerString) {
+				builder.add(
+					node.from,
+					node.from + this.prefix.length,
+					Decoration.mark({
+						inclusive: true,
+						attributes: {class: "iad-hidden"},
+						tagName: "span"
+					})
+				);
+			}
 		}
 	}
 
