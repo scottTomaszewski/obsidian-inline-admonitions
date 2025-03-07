@@ -11,19 +11,28 @@ export class IconSelectionModal extends Modal {
 	}
 
 	onOpen() {
-		const { contentEl } = this;
+		const {contentEl} = this;
 		contentEl.empty();
-		contentEl.createEl('h2', { text: 'Select an Icon' });
+		contentEl.createEl('h2', {text: 'Select an Icon'});
+
+		// TODO - add search
+		// TODO - add button to clear icon (no icon)
+
+		contentEl.createEl('button', {text: "No Icon"})
+			.addEventListener('click', () => {
+				this.onSelect("");
+				this.close();
+			});
 
 		const iconList = this.getAvailableIcons();
 
-		const iconGrid = contentEl.createDiv({ cls: 'icon-grid' });
+		const iconGrid = contentEl.createDiv({cls: 'icon-grid'});
 
 		iconList.forEach((iconName) => {
-			const iconButton = iconGrid.createEl('button', { cls: 'icon-button' });
+			const iconButton = iconGrid.createEl('button', {cls: 'icon-button'});
 			iconButton.setAttr('aria-label', iconName);
 
-			const iconEl = iconButton.createDiv({ cls: 'icon' });
+			const iconEl = iconButton.createDiv({cls: 'icon'});
 			setIcon(iconEl, iconName);
 
 			iconButton.addEventListener('click', () => {
@@ -60,7 +69,7 @@ export class IconSelectionModal extends Modal {
 	}
 
 	onClose() {
-		const { contentEl } = this;
+		const {contentEl} = this;
 		contentEl.empty();
 	}
 
