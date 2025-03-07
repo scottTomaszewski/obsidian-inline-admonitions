@@ -1,6 +1,6 @@
 import {sanitizeClassName, slugify} from "../utils";
 import {InlineAdmonition} from "./inlineAdmonition";
-import {Setting} from "obsidian";
+import {setIcon, Setting} from "obsidian";
 import {InlineAdmonitionType} from "./inlineAdmonitionType";
 import {SyntaxNodeRef} from "@lezer/common";
 import {RangeSetBuilder} from "@codemirror/state";
@@ -9,7 +9,6 @@ import {Decoration} from "@codemirror/view";
 export class SuffixInlineAdmonition extends InlineAdmonition {
 	suffix: string;
 	hideTriggerString: boolean;
-	prefixIcon: string;
 	type = InlineAdmonitionType.Suffix;
 
 	// TODO - I dont like this...
@@ -17,12 +16,13 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 		return new SuffixInlineAdmonition(
 			"",
 			false,
-			"",
 			"#f1f1f1",
 			100,
 			"#000000",
 			100,
-			InlineAdmonition.generateSlug());
+			InlineAdmonition.generateSlug(),
+			"",
+			"");
 	}
 
 	static unmarshal(data: any): SuffixInlineAdmonition {
@@ -32,26 +32,27 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 		return new SuffixInlineAdmonition(
 			data.suffix,
 			data.hideTriggerString,
-			data.icon,
 			data.backgroundColor,
 			data.bgColorOpacityPercent,
 			data.color,
 			data.colorOpacityPercent,
-			data.slug);
+			data.slug,
+			data.prefixIcon,
+			data.suffixIcon);
 	}
 
 	constructor(suffix: string,
 				hideTriggerString: boolean,
-				icon: string,
 				backgroundColor: string,
 				bgColorOpacityPercent: number,
 				color: string,
 				colorOpacityPercent: number,
-				slug: string) {
-		super(backgroundColor, bgColorOpacityPercent, color, colorOpacityPercent, slug);
+				slug: string,
+				prefixIcon: string,
+				suffixIcon: string) {
+		super(backgroundColor, bgColorOpacityPercent, color, colorOpacityPercent, slug, prefixIcon, suffixIcon);
 		this.suffix = suffix;
 		this.hideTriggerString = hideTriggerString;
-		this.prefixIcon = icon;
 	}
 
 	process(codeElement: HTMLElement) {
@@ -63,9 +64,15 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 			}
 			if (this.prefixIcon) {
 				const iconElement = document.createElement("span");
-				iconElement.classList.add("admonition-icon");
+				iconElement.classList.add("admonition-icon-left");
 				iconElement.innerText = this.prefixIcon;
 				codeElement.prepend(iconElement);
+			}
+			if (this.suffixIcon) {
+				const iconElement = document.createElement("span");
+				iconElement.classList.add("admonition-icon-right");
+				setIcon(iconElement, this.suffixIcon);
+				codeElement.append(iconElement);
 			}
 		}
 	}

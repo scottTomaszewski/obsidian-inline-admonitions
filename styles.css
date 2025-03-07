@@ -49,12 +49,18 @@ code.iad > p {
 	display: inline;
 }
 
-/* P0f91 */
-.admonition-icon {
+.admonition-icon-left {
 	display: inline-flex;
 	align-items: center;
 	height: var(--tag-size);
 	margin-right: 0.5em;
+}
+
+.admonition-icon-right {
+	display: inline-flex;
+	align-items: center;
+	height: var(--tag-size);
+	margin-left: 0.5em;
 }
 
 .admonition-icon svg {

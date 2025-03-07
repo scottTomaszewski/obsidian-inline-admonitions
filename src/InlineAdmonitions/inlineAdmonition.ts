@@ -14,6 +14,7 @@ export abstract class InlineAdmonition {
 	type: InlineAdmonitionType;
 	slug: string;
 	prefixIcon: string;
+	suffixIcon: string;
 
 	protected constructor(
 		backgroundColor: string,
@@ -21,13 +22,15 @@ export abstract class InlineAdmonition {
 		color: string,
 		colorOpacityPercent: number,
 		slug: string,
-		icon: string) {
+		prefixIcon: string,
+		suffixIcon: string) {
 		this.backgroundColor = backgroundColor;
 		this.bgColorOpacityPercent = bgColorOpacityPercent;
 		this.color = color;
 		this.colorOpacityPercent = colorOpacityPercent;
 		this.slug = slug;
-		this.prefixIcon = icon;
+		this.prefixIcon = prefixIcon;
+		this.suffixIcon = suffixIcon;
 	}
 
 	public abstract process(codeElement: HTMLElement): void;
@@ -51,7 +54,8 @@ export abstract class InlineAdmonition {
 		other.bgColorOpacityPercent = this.bgColorOpacityPercent;
 		other.color = this.color;
 		other.colorOpacityPercent = this.colorOpacityPercent;
-		other.prefixIcon = this.prefixIcon
+		other.prefixIcon = this.prefixIcon;
+		other.suffixIcon = this.suffixIcon;
 	}
 
 	public toString = (): string => {

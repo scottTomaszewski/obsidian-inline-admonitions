@@ -8,19 +8,19 @@ import {Decoration} from "@codemirror/view";
 
 export class ContainsInlineAdmonition extends InlineAdmonition {
 	contains: string;
-	prefixIcon: string;
 	type = InlineAdmonitionType.Contains;
 
 	// TODO - I dont like this...
 	static create() {
 		return new ContainsInlineAdmonition(
 			"",
-			"",
 			"#f1f1f1",
 			100,
 			"#000000",
 			100,
-			InlineAdmonition.generateSlug());
+			InlineAdmonition.generateSlug(),
+			"",
+			"");
 	}
 
 	static unmarshal(data: any): ContainsInlineAdmonition {
@@ -29,35 +29,44 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 		}
 		return new ContainsInlineAdmonition(
 			data.contains,
-			data.icon,
 			data.backgroundColor,
 			data.bgColorOpacityPercent,
 			data.color,
 			data.colorOpacityPercent,
-			data.slug);
+			data.slug,
+			data.prefixIcon,
+			data.suffixIcon);
 	}
 
 	constructor(contains: string,
-				icon: string,
 				backgroundColor: string,
 				bgColorOpacityPercent: number,
 				color: string,
 				colorOpacityPercent: number,
-				slug: string) {
-		super(backgroundColor, bgColorOpacityPercent, color, colorOpacityPercent, slug);
+				slug: string,
+				prefixIcon: string,
+				suffixIcon: string) {
+		super(backgroundColor, bgColorOpacityPercent, color, colorOpacityPercent, slug, prefixIcon, suffixIcon);
 		this.contains = contains;
-		this.prefixIcon = icon;
 	}
 
 	process(codeElement: HTMLElement) {
 		if (codeElement.innerText.contains(this.contains)) {
 			this.cssClasses().forEach(c => codeElement.classList.add(c));
 			// codeElement.setAttribute("style", this.simpleStyle());
+
+			// TODO - margin on left vs right
 			if (this.prefixIcon) {
 				const iconElement = document.createElement("span");
-				iconElement.classList.add("admonition-icon");
+				iconElement.classList.add("admonition-icon-left");
 				setIcon(iconElement, this.prefixIcon);
 				codeElement.prepend(iconElement);
+			}
+			if (this.suffixIcon) {
+				const iconElement = document.createElement("span");
+				iconElement.classList.add("admonition-icon-right");
+				setIcon(iconElement, this.suffixIcon);
+				codeElement.append(iconElement);
 			}
 		}
 	}

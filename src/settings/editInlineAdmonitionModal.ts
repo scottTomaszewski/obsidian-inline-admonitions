@@ -1,4 +1,4 @@
-import {App, Modal, Setting} from "obsidian";
+import {App, Modal, setIcon, Setting} from "obsidian";
 import {InlineAdmonition} from "../InlineAdmonitions/inlineAdmonition";
 import {PrefixInlineAdmonition} from "../InlineAdmonitions/prefixInlineAdmonition";
 import {InlineAdmonitionType, TypeTooltipModal} from "../InlineAdmonitions/inlineAdmonitionType";
@@ -108,7 +108,7 @@ export class EditInlineAdmonitionModal extends Modal {
 			);
 
 		new Setting(contentEl)
-			.setName("Icon")
+			.setName("Prefix Icon")
 			.setDesc("Select an icon to include at the beginning of the inline admonition")
 			.addButton(btn => {
 					if (this.result.prefixIcon) {
@@ -133,6 +133,33 @@ export class EditInlineAdmonitionModal extends Modal {
 						});
 				}
 			);
+		new Setting(contentEl)
+			.setName("Suffix Icon")
+			.setDesc("Select an icon to include at the end of the inline admonition")
+			.addButton(btn => {
+					if (this.result.suffixIcon) {
+						btn.setIcon(this.result.suffixIcon);
+					} else {
+						btn.setButtonText("Icon...");
+					}
+					return btn
+						.onClick(() => {
+							new IconSelectionModal(this.app, this.result.suffixIcon, async (selectedIcon: string) => {
+								if (selectedIcon !== "") {
+									this.result.suffixIcon = selectedIcon;
+									btn.setIcon(selectedIcon);
+									this.updateSample();
+								} else {
+									this.result.suffixIcon = undefined;
+									btn.setButtonText("Icon...")
+									this.updateSample();
+								}
+
+							}).open();
+						});
+				}
+			);
+
 
 		this.appendTypeSettings(contentEl);
 	}
@@ -140,8 +167,18 @@ export class EditInlineAdmonitionModal extends Modal {
 	private updateSample() {
 		this.sample.setText(this.result.sampleText());
 		this.sample.setAttr("style", this.result.simpleStyle() + `margin: 0.5em;`);
+		// TODO - these dont work
 		if (this.result.prefixIcon) {
-			this.sample.prepend(createSpan({cls: "admonition-icon", text: this.result.prefixIcon}));
+			const iconElement = document.createElement("span");
+			iconElement.classList.add("admonition-icon");
+			setIcon(iconElement, this.result.prefixIcon);
+			this.sample.prepend(iconElement);
+		}
+		if (this.result.suffixIcon) {
+			const iconElement = document.createElement("span");
+			iconElement.classList.add("admonition-icon");
+			setIcon(iconElement, this.result.suffixIcon);
+			this.sample.append(iconElement);
 		}
 	}
 

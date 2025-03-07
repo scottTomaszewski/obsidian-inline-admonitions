@@ -16,7 +16,6 @@ export class IconSelectionModal extends Modal {
 		contentEl.createEl('h2', {text: 'Select an Icon'});
 
 		// TODO - add search
-		// TODO - add button to clear icon (no icon)
 
 		contentEl.createEl('button', {text: "No Icon"})
 			.addEventListener('click', () => {

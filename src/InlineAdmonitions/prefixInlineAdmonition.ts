@@ -21,6 +21,7 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 			"#000000",
 			100,
 			InlineAdmonition.generateSlug(),
+			"",
 			"");
 	}
 
@@ -36,7 +37,8 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 			data.color,
 			data.colorOpacityPercent,
 			data.slug,
-			data.icon);
+			data.prefixIcon,
+			data.suffixIcon);
 	}
 
 	constructor(prefix: string,
@@ -46,11 +48,11 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 				color: string,
 				colorOpacityPercent: number,
 				slug: string,
-				prefixIcon: string) {
-		super(backgroundColor, bgColorOpacityPercent, color, colorOpacityPercent, slug, prefixIcon);
+				prefixIcon: string,
+				suffixIcon: string) {
+		super(backgroundColor, bgColorOpacityPercent, color, colorOpacityPercent, slug, prefixIcon, suffixIcon);
 		this.prefix = prefix;
 		this.hideTriggerString = hideTriggerString;
-		this.prefixIcon = prefixIcon;
 	}
 
 	process(codeElement: HTMLElement, sourcePath: string) {
@@ -63,9 +65,15 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 
 			if (this.prefixIcon) {
 				const iconElement = document.createElement("span");
-				iconElement.classList.add("admonition-icon");
+				iconElement.classList.add("admonition-icon-left");
 				setIcon(iconElement, this.prefixIcon);
 				codeElement.prepend(iconElement);
+			}
+			if (this.suffixIcon) {
+				const iconElement = document.createElement("span");
+				iconElement.classList.add("admonition-icon-right");
+				setIcon(iconElement, this.suffixIcon);
+				codeElement.append(iconElement);
 			}
 		}
 	}
