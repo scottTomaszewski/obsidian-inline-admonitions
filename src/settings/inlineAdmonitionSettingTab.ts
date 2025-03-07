@@ -49,12 +49,8 @@ export class InlineAdmonitionSettingTab extends PluginSettingTab {
 			cls: "iad-setting-row-title"
 		});
 
-		row.createEl("code", {
-			text: iad.sampleText(),
-			cls: "iad iad-sample iad-" + iad.slug,
-			parent: row,
-			attr: {"style": iad.simpleStyle() + `; margin: 0.5em;`}
-		});
+		const sample = row.createEl("code", { text: iad.sampleText(), attr: {"style": `margin: 0.5em;`}});
+		iad.process(sample);
 
 		const editButton = row.createEl("button", {text: "Edit"})
 		editButton.addEventListener("click", evt => {

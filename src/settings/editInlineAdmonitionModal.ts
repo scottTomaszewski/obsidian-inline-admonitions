@@ -38,11 +38,8 @@ export class EditInlineAdmonitionModal extends Modal {
 					this.onSubmit(this.result);
 				}))
 
-		this.sample = submitSetting.nameEl.createEl("code", {
-			text: this.result.sampleText(),
-			cls: "iad iad-sample iad-sample-editor iad-" + this.result.slug,
-			attr: {"style": this.result.simpleStyle()}
-		});
+		this.sample = submitSetting.nameEl.createEl("code", {attr: {"style": `margin: 0.5em;`}});
+		this.updateSample();
 
 		new Setting(contentEl)
 			.setName("Background color")
@@ -164,20 +161,7 @@ export class EditInlineAdmonitionModal extends Modal {
 
 	private updateSample() {
 		this.sample.setText(this.result.sampleText());
-		this.sample.setAttr("style", this.result.simpleStyle() + `margin: 0.5em;`);
-		// TODO - these dont work
-		if (this.result.prefixIcon) {
-			const iconElement = document.createElement("span");
-			iconElement.classList.add("admonition-icon");
-			setIcon(iconElement, this.result.prefixIcon);
-			this.sample.prepend(iconElement);
-		}
-		if (this.result.suffixIcon) {
-			const iconElement = document.createElement("span");
-			iconElement.classList.add("admonition-icon");
-			setIcon(iconElement, this.result.suffixIcon);
-			this.sample.append(iconElement);
-		}
+		this.result.process(this.sample);
 	}
 
 	private clearTypeSettings() {

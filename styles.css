@@ -25,7 +25,7 @@ code.iad > p {
 	justify-content: end;
 }
 
-.iad-setting-row * {
+.iad-setting-row > * {
 	margin-left: 0.5em;
 }
 
