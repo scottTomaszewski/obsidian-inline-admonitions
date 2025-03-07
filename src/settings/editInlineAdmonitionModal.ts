@@ -85,29 +85,6 @@ export class EditInlineAdmonitionModal extends Modal {
 					this.updateSample();
 				}));
 		new Setting(contentEl)
-			.setName("Type")
-			.setDesc("The way the Inline Admonition is triggered")
-			.setTooltip(InlineAdmonitionType.tooltip())
-			.addDropdown(dc => dc
-				.addOption(InlineAdmonitionType.Prefix, InlineAdmonitionType.Prefix)
-				.addOption(InlineAdmonitionType.Suffix, InlineAdmonitionType.Suffix)
-				.addOption(InlineAdmonitionType.Contains, InlineAdmonitionType.Contains)
-				.setValue(this.result.type)
-				.onChange(value => {
-					this.clearTypeSettings();
-					const old = this.result;
-					this.result = InlineAdmonitionType.createFrom(value);
-					old.copySettingsTo(this.result)
-					this.appendTypeSettings(contentEl);
-				}))
-			.addButton(btn => btn
-				.setIcon("help-circle")
-				.onClick(() => {
-					new TypeTooltipModal(this.app).open()
-				})
-			);
-
-		new Setting(contentEl)
 			.setName("Prefix Icon")
 			.setDesc("Select an icon to include at the beginning of the inline admonition")
 			.addButton(btn => {
@@ -159,7 +136,28 @@ export class EditInlineAdmonitionModal extends Modal {
 						});
 				}
 			);
-
+		new Setting(contentEl)
+			.setName("Type")
+			.setDesc("The way the Inline Admonition is triggered")
+			.setTooltip(InlineAdmonitionType.tooltip())
+			.addDropdown(dc => dc
+				.addOption(InlineAdmonitionType.Prefix, InlineAdmonitionType.Prefix)
+				.addOption(InlineAdmonitionType.Suffix, InlineAdmonitionType.Suffix)
+				.addOption(InlineAdmonitionType.Contains, InlineAdmonitionType.Contains)
+				.setValue(this.result.type)
+				.onChange(value => {
+					this.clearTypeSettings();
+					const old = this.result;
+					this.result = InlineAdmonitionType.createFrom(value);
+					old.copySettingsTo(this.result)
+					this.appendTypeSettings(contentEl);
+				}))
+			.addButton(btn => btn
+				.setIcon("help-circle")
+				.onClick(() => {
+					new TypeTooltipModal(this.app).open()
+				})
+			);
 
 		this.appendTypeSettings(contentEl);
 	}
