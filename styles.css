@@ -12,6 +12,7 @@ code.iad {
 	line-height: 1;
 	display: inline-flex;
 	align-items: center;
+	vertical-align: middle
 }
 
 span.iad > p,
