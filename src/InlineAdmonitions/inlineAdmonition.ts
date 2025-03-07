@@ -51,6 +51,7 @@ export abstract class InlineAdmonition {
 		other.bgColorOpacityPercent = this.bgColorOpacityPercent;
 		other.color = this.color;
 		other.colorOpacityPercent = this.colorOpacityPercent;
+		other.prefixIcon = this.prefixIcon
 	}
 
 	public toString = (): string => {

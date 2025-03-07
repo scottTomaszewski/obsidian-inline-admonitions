@@ -110,19 +110,13 @@ export class EditInlineAdmonitionModal extends Modal {
 		new Setting(contentEl)
 			.setName("Icon")
 			.setDesc("Select an icon to include at the beginning of the inline admonition")
-			.addText(text => text
-				.setPlaceholder("Enter icon name")
-				.setValue(this.result.prefixIcon || "")
-				.onChange(value => {
-					this.result.prefixIcon = value;
-					this.updateSample();
-				})
-			)
 			.addButton(btn => btn
-				.setIcon("select")
+				.setButtonText("Icon...")
 				.onClick(() => {
 					new IconSelectionModal(this.app, this.result.prefixIcon, async (selectedIcon: string) => {
 						this.result.prefixIcon = selectedIcon;
+						btn.setIcon(selectedIcon);
+						this.updateSample();
 					}).open();
 				})
 			);
