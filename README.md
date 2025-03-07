@@ -28,10 +28,13 @@ configure a new Inline Admonition.
 
 ![admonition-modal.png](admonition-modal.png)
 
+Common settings:
+
 - **Background Color** is the color of the Inline Admonition "bubble"
 - **Color** is the text color
 - **Type** defines how an Inline Admonition is triggered.  See the [types](#types) documentation for more details.
-- **Icon** allows you to select an icon to include at the beginning of the inline admonition.
+- **Prefix Icon** allows you to select an icon to include at the beginning of the inline admonition.
+- **Suffix Icon** allows you to select an icon to include at the end of the inline admonition.
 
 ## Types
 
@@ -50,7 +53,6 @@ Prefix Inline Admonitions trigger when a codeblock starts with specific text.
 
 - `Prefix` defines the text at the start of the codeblock to trigger the Inline Admonition.
 - `Hide prefix text` - if enabled, the triggering prefix text will not show in the Inline Admonition.
-- `Icon` allows you to select an icon to include at the beginning of the inline admonition.
 
 ### Suffix Type
 
@@ -60,7 +62,6 @@ Suffix Inline Admonitions trigger when a codeblock ends with specific text.
 
 - `Suffix` defines the text at the end of the codeblock to trigger the Inline Admonition.
 - `Hide suffix text` - if enabled, the triggering suffix text will not show in the Inline Admonition.
-- `Icon` allows you to select an icon to include at the beginning of the inline admonition.
 
 ### Contains Type
 
@@ -69,7 +70,6 @@ Contains Inline Admonitions trigger when a codeblock contains specific text anyw
 **Settings**
 
 - `contains` defines the text within the codeblock to trigger the Inline Admonition.
-- `Icon` allows you to select an icon to include at the beginning of the inline admonition.
 
 ## Notes
 
