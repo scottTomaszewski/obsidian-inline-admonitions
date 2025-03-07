@@ -162,6 +162,11 @@ export class EditInlineAdmonitionModal extends Modal {
 	private updateSample() {
 		this.sample.setText(this.result.sampleText());
 		this.result.process(this.sample);
+
+		// at this point the css has not saved, so need to manually set a few things...
+		this.sample.setAttr("style", `
+			background-color: ${this.result.backgroundColor}; 
+			color: ${this.result.color};`);
 	}
 
 	private clearTypeSettings() {

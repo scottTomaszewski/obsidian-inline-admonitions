@@ -9,6 +9,8 @@ code.iad {
 	font-family: var(--font-text);
 	text-decoration: var(--tag-decoration);
 	padding: var(--tag-padding-y) var(--tag-padding-x);
+	/* its off by 1 px? */
+	padding-bottom: calc(var(--tag-padding-y) + 1px);
 	line-height: 1;
 	display: inline-flex;
 	align-items: center;
