@@ -13,18 +13,21 @@ export abstract class InlineAdmonition {
 	colorOpacityPercent: number;
 	type: InlineAdmonitionType;
 	slug: string;
+	prefixIcon: string;
 
 	protected constructor(
 		backgroundColor: string,
 		bgColorOpacityPercent: number,
 		color: string,
 		colorOpacityPercent: number,
-		slug: string) {
+		slug: string,
+		icon: string) {
 		this.backgroundColor = backgroundColor;
 		this.bgColorOpacityPercent = bgColorOpacityPercent;
 		this.color = color;
 		this.colorOpacityPercent = colorOpacityPercent;
 		this.slug = slug;
+		this.prefixIcon = icon;
 	}
 
 	public abstract process(codeElement: HTMLElement): void;

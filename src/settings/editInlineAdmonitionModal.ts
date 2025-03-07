@@ -2,6 +2,7 @@ import {App, Modal, Setting} from "obsidian";
 import {InlineAdmonition} from "../InlineAdmonitions/inlineAdmonition";
 import {PrefixInlineAdmonition} from "../InlineAdmonitions/prefixInlineAdmonition";
 import {InlineAdmonitionType, TypeTooltipModal} from "../InlineAdmonitions/inlineAdmonitionType";
+import {IconSelectionModal} from "./IconSelectionModal";
 
 export class EditInlineAdmonitionModal extends Modal {
 	result: InlineAdmonition;
@@ -111,10 +112,18 @@ export class EditInlineAdmonitionModal extends Modal {
 			.setDesc("Select an icon to include at the beginning of the inline admonition")
 			.addText(text => text
 				.setPlaceholder("Enter icon name")
-				.setValue(this.result.icon || "")
+				.setValue(this.result.prefixIcon || "")
 				.onChange(value => {
-					this.result.icon = value;
+					this.result.prefixIcon = value;
 					this.updateSample();
+				})
+			)
+			.addButton(btn => btn
+				.setIcon("select")
+				.onClick(() => {
+					new IconSelectionModal(this.app, this.result.prefixIcon, async (selectedIcon: string) => {
+						this.result.prefixIcon = selectedIcon;
+					}).open();
 				})
 			);
 
@@ -124,8 +133,8 @@ export class EditInlineAdmonitionModal extends Modal {
 	private updateSample() {
 		this.sample.setText(this.result.sampleText());
 		this.sample.setAttr("style", this.result.simpleStyle() + `margin: 0.5em;`);
-		if (this.result.icon) {
-			this.sample.prepend(createSpan({ cls: "admonition-icon", text: this.result.icon }));
+		if (this.result.prefixIcon) {
+			this.sample.prepend(createSpan({cls: "admonition-icon", text: this.result.prefixIcon}));
 		}
 	}
 

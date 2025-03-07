@@ -8,7 +8,7 @@ import {Decoration} from "@codemirror/view";
 
 export class ContainsInlineAdmonition extends InlineAdmonition {
 	contains: string;
-	icon: string; // New property for icon
+	prefixIcon: string; // New property for icon
 	type = InlineAdmonitionType.Contains;
 
 	// TODO - I dont like this...
@@ -46,17 +46,17 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 				slug: string) {
 		super(backgroundColor, bgColorOpacityPercent, color, colorOpacityPercent, slug);
 		this.contains = contains;
-		this.icon = icon;
+		this.prefixIcon = icon;
 	}
 
 	process(codeElement: HTMLElement) {
 		if (codeElement.innerText.contains(this.contains)) {
 			this.cssClasses().forEach(c => codeElement.classList.add(c));
 			// codeElement.setAttribute("style", this.simpleStyle());
-			if (this.icon) {
+			if (this.prefixIcon) {
 				const iconElement = document.createElement("span");
 				iconElement.classList.add("admonition-icon");
-				iconElement.innerText = this.icon;
+				iconElement.innerText = this.prefixIcon;
 				codeElement.prepend(iconElement);
 			}
 		}
@@ -74,7 +74,7 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 				})
 			);
 			// Add the icon if necessary
-			if (this.icon) {
+			if (this.prefixIcon) {
 				builder.add(
 					node.from,
 					node.from,
@@ -83,7 +83,7 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 							toDOM: () => {
 								const iconElement = document.createElement("span");
 								iconElement.classList.add("admonition-icon");
-								iconElement.innerText = this.icon;
+								iconElement.innerText = this.prefixIcon;
 								return iconElement;
 							}
 						}
@@ -122,9 +122,9 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 			.setDesc("Select an icon to include at the beginning of the inline admonition")
 			.addText(text => text
 				.setPlaceholder("Enter icon name")
-				.setValue(this.icon || "")
+				.setValue(this.prefixIcon || "")
 				.onChange(value => {
-					this.icon = value;
+					this.prefixIcon = value;
 					updateSampleFunction();
 				})
 			));

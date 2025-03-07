@@ -1,15 +1,15 @@
 import {sanitizeClassName, slugify} from "../utils";
 import {InlineAdmonition} from "./inlineAdmonition";
-import {Setting} from "obsidian";
+import {setIcon, Setting} from "obsidian";
 import {InlineAdmonitionType} from "./inlineAdmonitionType";
 import {SyntaxNodeRef} from "@lezer/common";
 import {RangeSetBuilder} from "@codemirror/state";
 import {Decoration} from "@codemirror/view";
+import {MarkdownRendererSingleton} from "../io/MarkdownRenderer";
 
 export class PrefixInlineAdmonition extends InlineAdmonition {
 	prefix: string;
 	hideTriggerString: boolean;
-	icon: string; // New property for icon
 	type = InlineAdmonitionType.Prefix;
 
 	// TODO - I dont like this...
@@ -17,12 +17,12 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 		return new PrefixInlineAdmonition(
 			"",
 			false,
-			 "",
 			"#f1f1f1",
 			100,
 			"#000000",
 			100,
-			InlineAdmonition.generateSlug());
+			InlineAdmonition.generateSlug(),
+			"");
 	}
 
 	static unmarshal(data: any): PrefixInlineAdmonition {
@@ -32,40 +32,46 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 		return new PrefixInlineAdmonition(
 			data.prefix,
 			data.hideTriggerString,
-			data.icon,
 			data.backgroundColor,
 			data.bgColorOpacityPercent,
 			data.color,
 			data.colorOpacityPercent,
-			data.slug);
+			data.slug,
+			data.icon);
 	}
 
 	constructor(prefix: string,
 				hideTriggerString: boolean,
-				icon: string,
 				backgroundColor: string,
 				bgColorOpacityPercent: number,
 				color: string,
 				colorOpacityPercent: number,
-				slug: string) {
-		super(backgroundColor, bgColorOpacityPercent, color, colorOpacityPercent, slug);
+				slug: string,
+				prefixIcon: string) {
+		super(backgroundColor, bgColorOpacityPercent, color, colorOpacityPercent, slug, prefixIcon);
 		this.prefix = prefix;
 		this.hideTriggerString = hideTriggerString;
-		this.icon = icon;
+		this.prefixIcon = prefixIcon;
 	}
 
-	process(codeElement: HTMLElement) {
+	process(codeElement: HTMLElement, sourcePath: string) {
 		if (codeElement.innerText.startsWith(this.prefix)) {
 			this.cssClasses().forEach(c => codeElement.classList.add(c));
 			// codeElement.setAttribute("style", this.simpleStyle());
 			if (this.hideTriggerString) {
 				codeElement.setText(codeElement.getText().replace(this.prefix, ""));
 			}
-			if (this.icon) {
+
+			if (this.prefixIcon) {
 				const iconElement = document.createElement("span");
 				iconElement.classList.add("admonition-icon");
-				iconElement.innerText = this.icon;
+				setIcon(iconElement, this.prefixIcon);
 				codeElement.prepend(iconElement);
+
+				// let contents = codeElement.getText();
+				// codeElement.empty();
+				// contents = ":" + this.prefixIcon + ": " + contents;
+				// MarkdownRendererSingleton.getInstance().renderMD(contents, codeElement, sourcePath);
 			}
 		}
 	}
@@ -94,7 +100,7 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 				);
 			}
 			// Add the icon if necessary
-			if (this.icon) {
+			if (this.prefixIcon) {
 				builder.add(
 					node.from,
 					node.from,
@@ -102,8 +108,8 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 						widget: {
 							toDOM: () => {
 								const iconElement = document.createElement("span");
-								iconElement.classList.add("admonition-icon");
-								iconElement.innerText = this.icon;
+								iconElement.classList.add("iad-icon");
+								iconElement.innerText = ":" + this.prefixIcon + ": ";
 								return iconElement;
 							}
 						}
