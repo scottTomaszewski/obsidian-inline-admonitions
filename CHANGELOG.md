@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.6.0
+
+- Adds mobile support (beta)
+  - I dont have an apple device to test on, so please let me know if it works or not
+    - Does anyone actually read the changelog?
+
 ## 1.5.2
 
 - Corrects hide-trigger rending bug in settings preview

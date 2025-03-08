@@ -1,10 +1,10 @@
 {
 	"id": "inline-admonitions",
 	"name": "Inline Admonitions",
-	"version": "1.5.2",
+	"version": "1.6.0",
 	"minAppVersion": "0.15.0",
 	"description": "Inline callouts to make text pop.",
 	"author": "Scott Tomaszewski (Xentis)",
 	"authorUrl": "https://github.com/scottTomaszewski",
-	"isDesktopOnly": true
+	"isDesktopOnly": false
 }
