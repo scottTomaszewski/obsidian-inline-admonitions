@@ -65,7 +65,7 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 			if (this.prefixIcon) {
 				const iconElement = document.createElement("span");
 				iconElement.classList.add("admonition-icon-left");
-				iconElement.innerText = this.prefixIcon;
+				setIcon(iconElement, this.prefixIcon);
 				codeElement.prepend(iconElement);
 			}
 			if (this.suffixIcon) {
