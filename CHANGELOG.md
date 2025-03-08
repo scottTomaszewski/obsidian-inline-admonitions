@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.2
+
+- Corrects hide-trigger rending bug in settings preview
+
 ## 1.5.1
 
 - Corrects opacity rendering bug in settings preview

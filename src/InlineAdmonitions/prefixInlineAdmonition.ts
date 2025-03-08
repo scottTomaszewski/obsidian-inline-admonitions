@@ -113,9 +113,10 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 	}
 
 	sampleText() {
-		if (this.hideTriggerString) {
-			return "sample text";
-		}
+		//  Need to include the trigger so the process method actually triggers
+		// if (this.hideTriggerString) {
+		// 	return "sample text";
+		// }
 		return this.prefix + " sample text";
 	}
 

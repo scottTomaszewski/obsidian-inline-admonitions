@@ -111,9 +111,10 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 	}
 
 	sampleText() {
-		if (this.hideTriggerString) {
-			return "sample text";
-		}
+		//  Need to include the trigger so the process method actually triggers
+		// if (this.hideTriggerString) {
+		// 	return "sample text";
+		// }
 		return "sample text " + this.suffix;
 	}
 
