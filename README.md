@@ -34,7 +34,9 @@ Common settings:
 - **Color** is the text color
 - **Type** defines how an Inline Admonition is triggered.  See the [types](#types) documentation for more details.
 - **Prefix Icon** allows you to select an icon to include at the beginning of the inline admonition.
+  - Note: Prefix Icons are not supported in Live Preview mode because it causes cursor navigation issues.
 - **Suffix Icon** allows you to select an icon to include at the end of the inline admonition.
+  - Note: Suffix Icons are not supported in Live Preview mode because it causes cursor navigation issues.
 
 ## Types
 

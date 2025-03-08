@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.5.0
+
+- Adds support for Prefix Icons and Suffix Icons
+- Corrects some rendering issues
+
 ## 1.4.6
 
 - Attempts to fix Inline-Admonitions failing in Live Preview on first install
