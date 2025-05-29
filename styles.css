@@ -69,3 +69,7 @@ code.iad > p {
 	/*height: 1em;*/
 	/*width: 1em;*/
 }
+
+.cm-s-obsidian .cm-inline-code:has(> .iad) {
+	background-color: transparent;
+}

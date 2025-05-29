@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6.1
+
+- Corrects an issue with a background color appearing on inline-admonitions in live preview
+
 ## 1.6.0
 
 - Adds mobile support (beta)
