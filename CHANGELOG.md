@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7.0
+
+- Adds support for Regex Inline Admonitions
+
 ## 1.6.1
 
 - Corrects an issue with a background color appearing on inline-admonitions in live preview

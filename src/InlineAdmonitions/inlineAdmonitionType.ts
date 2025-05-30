@@ -3,11 +3,13 @@ import {SuffixInlineAdmonition} from "./suffixInlineAdmonition";
 import {InlineAdmonition} from "./inlineAdmonition";
 import {ContainsInlineAdmonition} from "./containsInlineAdmonition";
 import {Modal} from "obsidian";
+import { RegexInlineAdmonition } from "./regexInlineAdmonition";
 
 export enum InlineAdmonitionType {
 	Prefix = "prefix",
 	Suffix = "suffix",
 	Contains = "contains",
+	Regex = "regex"
 }
 
 export namespace InlineAdmonitionType {
@@ -19,6 +21,8 @@ export namespace InlineAdmonitionType {
 				return SuffixInlineAdmonition.create();
 			case InlineAdmonitionType.Contains:
 				return ContainsInlineAdmonition.create();
+			case InlineAdmonitionType.Regex:
+				return RegexInlineAdmonition.create();
 			default:
 				throw new Error("Cannot create, invalid Inline Admonition type")
 		}
@@ -32,6 +36,8 @@ export namespace InlineAdmonitionType {
 				return InlineAdmonitionType.Suffix
 			case InlineAdmonitionType.Contains:
 				return InlineAdmonitionType.Contains
+			case InlineAdmonitionType.Regex:
+				return InlineAdmonitionType.Regex
 			default:
 				throw new Error("Invalid Inline Admonition type: " + type)
 		}
@@ -51,6 +57,8 @@ export namespace InlineAdmonitionType {
 				return SuffixInlineAdmonition.unmarshal(data);
 			case InlineAdmonitionType.Contains:
 				return ContainsInlineAdmonition.unmarshal(data);
+			case InlineAdmonitionType.Regex:
+				return RegexInlineAdmonition.unmarshal(data);
 			default:
 				throw new Error("Cannot Unmarshal, invalid Inline Admonition type: " + type)
 		}
@@ -63,6 +71,7 @@ The "type" defines what triggers an Inline Admonition
  - Prefix: Triggered if a codeblock starts with the string.
  - Suffix: Triggered if a codeblock ends with the string.
  - Contains: Triggered if a codeblock contains the string anywhere within it.
+ - Regex: Triggered if a codeblock matches the regular expression.
  `
 	}
 }

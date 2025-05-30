@@ -141,6 +141,7 @@ export class EditInlineAdmonitionModal extends Modal {
 				.addOption(InlineAdmonitionType.Prefix, InlineAdmonitionType.Prefix)
 				.addOption(InlineAdmonitionType.Suffix, InlineAdmonitionType.Suffix)
 				.addOption(InlineAdmonitionType.Contains, InlineAdmonitionType.Contains)
+				.addOption(InlineAdmonitionType.Regex, InlineAdmonitionType.Regex)
 				.setValue(this.result.type)
 				.onChange(value => {
 					this.clearTypeSettings();
