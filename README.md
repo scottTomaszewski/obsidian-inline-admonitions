@@ -46,6 +46,7 @@ Types are:
 - [Prefix Type](#prefix-type)
 - [Suffix Type](#suffix-type)
 - [Contains Type](#contains-type)
+- [Regex Type](#regex-type)
 
 ### Prefix Type
 
@@ -72,6 +73,15 @@ Contains Inline Admonitions trigger when a codeblock contains specific text anyw
 **Settings**
 
 - `contains` defines the text within the codeblock to trigger the Inline Admonition.
+
+### Regex Type
+
+Regex Inline Admonitions trigger when a codeblock matches a specific regular expression.
+
+**Settings**
+
+- `Regex` defines the regular expression to match against the codeblock content to trigger the Inline Admonition.
+- `Sample Input` is used to help test your regex and also helps the settings display the sample.
 
 ## Notes
 
