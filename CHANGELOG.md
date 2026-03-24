@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.8.0
+
+- Adds search/filter to the icon picker
+- Improves icon centering in the icon picker
+
 ## 1.7.0
 
 - Adds support for Regex Inline Admonitions
