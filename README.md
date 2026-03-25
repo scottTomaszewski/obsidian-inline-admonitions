@@ -28,6 +28,7 @@ configure a new Inline Admonition.
 
 ![admonition-modal.png](admonition-modal.png)
 
+
 Common settings:
 
 - **Background Color** is the color of the Inline Admonition "bubble"
