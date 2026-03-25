@@ -156,4 +156,8 @@ export class RegexInlineAdmonition extends InlineAdmonition {
 	public toString = (): string => {
 		return "RegexInlineAdmonition(/" + this.regex + "/)";
 	}
+
+	public asTitle() {
+		return "Regex Type (trigger: /" + this.regex + "/)"
+	}
 } 

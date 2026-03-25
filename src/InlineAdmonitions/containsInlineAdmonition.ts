@@ -121,4 +121,8 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 	public toString = (): string => {
 		return "ContainsInlineAdmonition(" + this.contains + ")"
 	}
+
+	public asTitle() {
+		return "Contains Type (trigger: " + this.contains + ")"
+	}
 }

@@ -159,4 +159,8 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 	public toString = (): string => {
 		return "PrefixInlineAdmonition(" + this.prefix + ", hidePrefix: " + this.hideTriggerString + ")";
 	}
+
+	public asTitle() {
+		return "Prefix Type (trigger: " + this.prefix + ")"
+	}
 }

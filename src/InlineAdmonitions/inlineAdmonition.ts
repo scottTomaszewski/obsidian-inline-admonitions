@@ -47,6 +47,8 @@ export abstract class InlineAdmonition {
 
 	abstract buildSettings(contentEl: HTMLElement, updateSampleFunction: () => void): Array<Setting>;
 
+	public abstract asTitle(): string;
+
 	public cssClasses(): string[] {
 		return ["iad"];
 	}

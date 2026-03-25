@@ -45,7 +45,7 @@ export class InlineAdmonitionSettingTab extends PluginSettingTab {
 		row.addClass("iad-setting-row")
 
 		row.createSpan({
-			text: iad.type + " Type",
+			text: iad.asTitle(),
 			cls: "iad-setting-row-title"
 		});
 

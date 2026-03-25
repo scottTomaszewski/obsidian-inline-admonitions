@@ -3,6 +3,7 @@
 ## 1.10.0
 
 - Adds support for hiding the background (including spacing)
+- Shows the admonition trigger in the settings
 
 ## 1.9.0
 

@@ -157,4 +157,8 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 	public toString = (): string => {
 		return "SuffixInlineAdmonition(" + this.suffix + ", hidePrefix: " + this.hideTriggerString + ")";
 	}
+
+	public asTitle() {
+		return "Suffix Type (trigger: " + this.suffix + ")"
+	}
 }
