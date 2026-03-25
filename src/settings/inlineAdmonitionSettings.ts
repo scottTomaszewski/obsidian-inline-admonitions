@@ -73,6 +73,21 @@ export namespace InlineAdmonitionSettingsIO {
 			dataMigrated = true;
 		}
 
+		// Migrate to version 3
+		// Adds fontFamily to all types
+		if (settings.version === 2) {
+			console.log("[Inline Admonitions] Migrating settings from version 2 to 3");
+			for (const identifier in settings?.inlineAdmonitions) {
+				const iad = settings.inlineAdmonitions[identifier];
+				if (!iad.hasOwnProperty("fontFamily")) {
+					iad.fontFamily = "";
+				}
+				settings.inlineAdmonitions[identifier] = iad;
+			}
+			settings.version = 3;
+			dataMigrated = true;
+		}
+
 		return [settings, dataMigrated];
 	}
 }

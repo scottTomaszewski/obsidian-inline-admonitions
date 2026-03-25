@@ -22,6 +22,7 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 			100,
 			InlineAdmonition.generateSlug(),
 			"",
+			"",
 			"");
 	}
 
@@ -38,7 +39,8 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 			data.colorOpacityPercent,
 			data.slug,
 			data.prefixIcon,
-			data.suffixIcon);
+			data.suffixIcon,
+			data.fontFamily || "");
 	}
 
 	constructor(suffix: string,
@@ -49,8 +51,9 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 				colorOpacityPercent: number,
 				slug: string,
 				prefixIcon: string,
-				suffixIcon: string) {
-		super(backgroundColor, bgColorOpacityPercent, color, colorOpacityPercent, slug, prefixIcon, suffixIcon);
+				suffixIcon: string,
+				fontFamily: string) {
+		super(backgroundColor, bgColorOpacityPercent, color, colorOpacityPercent, slug, prefixIcon, suffixIcon, fontFamily);
 		this.suffix = suffix;
 		this.hideTriggerString = hideTriggerString;
 	}

@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.0
+
+- Adds font selection support
+
 ## 1.8.0
 
 - Adds search/filter to the icon picker

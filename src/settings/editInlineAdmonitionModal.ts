@@ -3,6 +3,7 @@ import {InlineAdmonition} from "../InlineAdmonitions/inlineAdmonition";
 import {PrefixInlineAdmonition} from "../InlineAdmonitions/prefixInlineAdmonition";
 import {InlineAdmonitionType, TypeTooltipModal} from "../InlineAdmonitions/inlineAdmonitionType";
 import {IconSelectionModal} from "./IconSelectionModal";
+import {FontSelectionModal} from "./FontSelectionModal";
 
 export class EditInlineAdmonitionModal extends Modal {
 	result: InlineAdmonition;
@@ -133,6 +134,28 @@ export class EditInlineAdmonitionModal extends Modal {
 						});
 				}
 			);
+		new Setting(contentEl)
+			.setName("Font family")
+			.setDesc("Font used for this inline admonition")
+			.addButton(btn => {
+				if (this.result.fontFamily) {
+					btn.setButtonText(this.result.fontFamily);
+				} else {
+					btn.setButtonText("Font...");
+				}
+				return btn
+					.onClick(() => {
+						new FontSelectionModal(this.app, this.result.fontFamily, (selectedFont: string) => {
+							this.result.fontFamily = selectedFont;
+							if (selectedFont) {
+								btn.setButtonText(selectedFont);
+							} else {
+								btn.setButtonText("Font...");
+							}
+							this.updateSample();
+						}).open();
+					});
+			});
 		new Setting(contentEl)
 			.setName("Type")
 			.setDesc("The way the Inline Admonition is triggered")
