@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.10.0
+
+- Adds support for hiding the background (including spacing)
+
 ## 1.9.0
 
 - Adds font selection support

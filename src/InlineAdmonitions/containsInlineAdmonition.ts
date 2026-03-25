@@ -21,7 +21,8 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 			InlineAdmonition.generateSlug(),
 			"",
 			"",
-			"");
+			"",
+			false);
 	}
 
 	static unmarshal(data: any): ContainsInlineAdmonition {
@@ -37,7 +38,8 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 			data.slug,
 			data.prefixIcon,
 			data.suffixIcon,
-			data.fontFamily || "");
+			data.fontFamily || "",
+			data.hideBackground || false);
 	}
 
 	constructor(contains: string,
@@ -48,8 +50,9 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 				slug: string,
 				prefixIcon: string,
 				suffixIcon: string,
-				fontFamily: string) {
-		super(backgroundColor, bgColorOpacityPercent, color, colorOpacityPercent, slug, prefixIcon, suffixIcon, fontFamily);
+				fontFamily: string,
+				hideBackground: boolean) {
+		super(backgroundColor, bgColorOpacityPercent, color, colorOpacityPercent, slug, prefixIcon, suffixIcon, fontFamily, hideBackground);
 		this.contains = contains;
 	}
 

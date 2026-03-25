@@ -23,7 +23,8 @@ export class RegexInlineAdmonition extends InlineAdmonition {
 			InlineAdmonition.generateSlug(),
 			"",
 			"",
-			"");
+			"",
+			false);
 	}
 
 	static unmarshal(data: any): RegexInlineAdmonition {
@@ -40,7 +41,8 @@ export class RegexInlineAdmonition extends InlineAdmonition {
 			data.slug,
 			data.prefixIcon,
 			data.suffixIcon,
-			data.fontFamily || "");
+			data.fontFamily || "",
+			data.hideBackground || false);
 	}
 
 	constructor(regex: string,
@@ -52,8 +54,9 @@ export class RegexInlineAdmonition extends InlineAdmonition {
 				slug: string,
 				prefixIcon: string,
 				suffixIcon: string,
-				fontFamily: string) {
-		super(backgroundColor, bgColorOpacityPercent, color, colorOpacityPercent, slug, prefixIcon, suffixIcon, fontFamily);
+				fontFamily: string,
+				hideBackground: boolean) {
+		super(backgroundColor, bgColorOpacityPercent, color, colorOpacityPercent, slug, prefixIcon, suffixIcon, fontFamily, hideBackground);
 		this.regex = regex;
 		this.sampleInput = sampleInput;
 	}

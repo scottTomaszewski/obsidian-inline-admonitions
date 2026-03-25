@@ -23,7 +23,8 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 			InlineAdmonition.generateSlug(),
 			"",
 			"",
-			"");
+			"",
+			false);
 	}
 
 	static unmarshal(data: any): PrefixInlineAdmonition {
@@ -40,7 +41,8 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 			data.slug,
 			data.prefixIcon,
 			data.suffixIcon,
-			data.fontFamily || "");
+			data.fontFamily || "",
+			data.hideBackground || false);
 	}
 
 	constructor(prefix: string,
@@ -52,8 +54,9 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 				slug: string,
 				prefixIcon: string,
 				suffixIcon: string,
-				fontFamily: string) {
-		super(backgroundColor, bgColorOpacityPercent, color, colorOpacityPercent, slug, prefixIcon, suffixIcon, fontFamily);
+				fontFamily: string,
+				hideBackground: boolean) {
+		super(backgroundColor, bgColorOpacityPercent, color, colorOpacityPercent, slug, prefixIcon, suffixIcon, fontFamily, hideBackground);
 		this.prefix = prefix;
 		this.hideTriggerString = hideTriggerString;
 	}

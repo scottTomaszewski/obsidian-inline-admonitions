@@ -25,6 +25,8 @@ code.iad > p {
 .iad-setting-row {
 	display: flex;
 	justify-content: end;
+	height: 2.5em;
+	align-items: center;
 }
 
 .iad-setting-row > * {

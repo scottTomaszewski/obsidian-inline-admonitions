@@ -88,6 +88,21 @@ export namespace InlineAdmonitionSettingsIO {
 			dataMigrated = true;
 		}
 
+		// Migrate to version 4
+		// Adds hideBackground to all types
+		if (settings.version === 3) {
+			console.log("[Inline Admonitions] Migrating settings from version 3 to 4");
+			for (const identifier in settings?.inlineAdmonitions) {
+				const iad = settings.inlineAdmonitions[identifier];
+				if (!iad.hasOwnProperty("hideBackground")) {
+					iad.hideBackground = false;
+				}
+				settings.inlineAdmonitions[identifier] = iad;
+			}
+			settings.version = 4;
+			dataMigrated = true;
+		}
+
 		return [settings, dataMigrated];
 	}
 }

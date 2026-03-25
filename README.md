@@ -3,7 +3,7 @@
 This plugin will allow you to format inline codeblocks to better stand out on the page.  For example, you may want to 
 have all inline codeblocks that start with "IMPORTANT" to have a red background like this. 
 
-![img.png](admonition.png)
+![img.png](sample.png)
 
 [inlineAdmonition_1.2.0.webm](https://github.com/scottTomaszewski/obsidian-inline-admonitions/assets/5295276/2a781588-cba0-4665-98c2-16d896cd2abe)
 
@@ -31,12 +31,16 @@ configure a new Inline Admonition.
 Common settings:
 
 - **Background Color** is the color of the Inline Admonition "bubble"
-- **Color** is the text color
+- **Background Opacity** supports transparency of the background
+- **Hide Background** allows the background (including spacing) to be hidden
+- **Text Color** is the text color
+- **Text Opacity** supports transparency of the text
 - **Type** defines how an Inline Admonition is triggered.  See the [types](#types) documentation for more details.
 - **Prefix Icon** allows you to select an icon to include at the beginning of the inline admonition.
   - Note: Prefix Icons are not supported in Live Preview mode because it causes cursor navigation issues.
 - **Suffix Icon** allows you to select an icon to include at the end of the inline admonition.
   - Note: Suffix Icons are not supported in Live Preview mode because it causes cursor navigation issues.
+- **Font** allows selection of the font
 
 ## Types
 
@@ -91,7 +95,6 @@ Regex Inline Admonitions trigger when a codeblock matches a specific regular exp
 
 ## Future work
 
-- Regex to trigger Inline Admonitions
 - Additional admonitions styles (rounded corners, etc)
 - More comprehensive CSS editing in the settings UI
 

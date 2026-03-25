@@ -63,6 +63,16 @@ export class EditInlineAdmonitionModal extends Modal {
 					this.updateSample();
 				}));
 		new Setting(contentEl)
+			.setName("Hide background")
+			.setDesc("Remove background color, padding, and border radius so the admonition blends inline with surrounding text")
+			.addToggle(toggle => toggle
+				.setValue(this.result.hideBackground)
+				.onChange(val => {
+					this.result.hideBackground = val;
+					this.updateSample();
+				})
+			);
+		new Setting(contentEl)
 			.setName("Text color")
 			.setDesc("Color of the text of the inline admonition")
 			.addColorPicker(cp => cp

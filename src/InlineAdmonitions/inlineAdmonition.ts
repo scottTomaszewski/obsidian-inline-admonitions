@@ -16,6 +16,7 @@ export abstract class InlineAdmonition {
 	prefixIcon: string;
 	suffixIcon: string;
 	fontFamily: string;
+	hideBackground: boolean;
 
 	protected constructor(
 		backgroundColor: string,
@@ -25,7 +26,8 @@ export abstract class InlineAdmonition {
 		slug: string,
 		prefixIcon: string,
 		suffixIcon: string,
-		fontFamily: string) {
+		fontFamily: string,
+		hideBackground: boolean) {
 		this.backgroundColor = backgroundColor;
 		this.bgColorOpacityPercent = bgColorOpacityPercent;
 		this.color = color;
@@ -34,6 +36,7 @@ export abstract class InlineAdmonition {
 		this.prefixIcon = prefixIcon;
 		this.suffixIcon = suffixIcon;
 		this.fontFamily = fontFamily;
+		this.hideBackground = hideBackground;
 	}
 
 	public abstract process(codeElement: HTMLElement): void;
@@ -49,7 +52,13 @@ export abstract class InlineAdmonition {
 	}
 
 	public simpleStyle() {
-		let style = `background-color: ${this.evalBackgroundColor()}; color: ${this.evalColor()};`;
+		let style = "";
+		if (this.hideBackground) {
+			style += "background-color: transparent; border: none; padding: 0; border-radius: 0;";
+		} else {
+			style += `background-color: ${this.evalBackgroundColor()};`;
+		}
+		style += ` color: ${this.evalColor()};`;
 		if (this.fontFamily) {
 			style += ` font-family: ${this.fontFamily};`;
 		}
@@ -64,6 +73,7 @@ export abstract class InlineAdmonition {
 		other.prefixIcon = this.prefixIcon;
 		other.suffixIcon = this.suffixIcon;
 		other.fontFamily = this.fontFamily;
+		other.hideBackground = this.hideBackground;
 	}
 
 	public toString = (): string => {
