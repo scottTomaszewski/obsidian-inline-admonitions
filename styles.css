@@ -39,9 +39,12 @@ code.iad > p {
 	display: flex;
 }
 
-.iad-sample-editor {
+.iad-sample {
 	margin: 0.5em;
-	display: inline-block;
+}
+
+.iad-pre-wrap {
+	white-space: pre-wrap;
 }
 
 .iad-hidden {
@@ -50,6 +53,81 @@ code.iad > p {
 
 .cm-active .iad-hidden {
 	display: inline;
+}
+
+/* Icon / font selection modals */
+.iad-search-container {
+	margin-bottom: var(--size-4-2);
+}
+
+.iad-search-input {
+	width: 100%;
+	padding: var(--size-4-2);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: var(--radius-s);
+	background: var(--background-primary);
+	color: var(--text-normal);
+	font-size: var(--font-ui-medium);
+}
+
+.iad-icon-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+	gap: var(--size-4-2);
+	margin-top: var(--size-4-4);
+	height: 400px;
+	overflow-y: auto;
+}
+
+.iad-icon-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: none;
+	border: none;
+	padding: var(--size-4-2);
+	cursor: pointer;
+}
+
+.iad-icon-button:hover {
+	background-color: var(--background-modifier-hover);
+}
+
+.iad-icon {
+	width: 24px;
+	height: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.iad-font-list {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	margin-top: var(--size-4-2);
+	max-height: 400px;
+	overflow-y: auto;
+}
+
+.iad-font-button {
+	display: block;
+	text-align: left;
+	background: none;
+	border: none;
+	padding: var(--size-4-1) var(--size-4-2);
+	cursor: pointer;
+	font-size: var(--font-ui-medium);
+	border-radius: var(--radius-s);
+}
+
+.iad-font-button:hover {
+	background-color: var(--background-modifier-hover);
+}
+
+.iad-icon-button.iad-hidden,
+.iad-font-button.iad-hidden {
+	display: none;
 }
 
 .admonition-icon-left {

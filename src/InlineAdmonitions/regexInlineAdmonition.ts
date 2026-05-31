@@ -1,6 +1,6 @@
 import {sanitizeClassName} from "../utils";
-import {InlineAdmonition} from "./inlineAdmonition";
-import {removeIcon, setIcon, Setting} from "obsidian";
+import {InlineAdmonition, SerializedInlineAdmonition} from "./inlineAdmonition";
+import {setIcon, Setting} from "obsidian";
 import {InlineAdmonitionType} from "./inlineAdmonitionType";
 import {SyntaxNodeRef} from "@lezer/common";
 import {RangeSetBuilder} from "@codemirror/state";
@@ -27,18 +27,18 @@ export class RegexInlineAdmonition extends InlineAdmonition {
 			false);
 	}
 
-	static unmarshal(data: any): RegexInlineAdmonition {
+	static unmarshal(data: SerializedInlineAdmonition): RegexInlineAdmonition {
 		if (data.type != InlineAdmonitionType.Regex) {
 			throw new Error("Cannot unmarshal data into RegexInlineAdmonition: Wrong type: " + data.type);
 		}
 		return new RegexInlineAdmonition(
-			data.regex,
-			data.sampleInput,
+			data.regex ?? "",
+			data.sampleInput ?? "",
 			data.backgroundColor,
 			data.bgColorOpacityPercent,
 			data.color,
 			data.colorOpacityPercent,
-			data.slug,
+			data.slug ?? InlineAdmonition.generateSlug(),
 			data.prefixIcon,
 			data.suffixIcon,
 			data.fontFamily || "",
@@ -68,16 +68,13 @@ export class RegexInlineAdmonition extends InlineAdmonition {
 				this.cssClasses().forEach(c => codeElement.classList.add(c));
 				// codeElement.setAttribute("style", this.simpleStyle());
 
-				// TODO - margin on left vs right
 				if (this.prefixIcon) {
-					const iconElement = document.createElement("span");
-					iconElement.classList.add("admonition-icon-left");
+					const iconElement = createSpan({cls: "admonition-icon-left"});
 					setIcon(iconElement, this.prefixIcon);
 					codeElement.prepend(iconElement);
 				}
 				if (this.suffixIcon) {
-					const iconElement = document.createElement("span");
-					iconElement.classList.add("admonition-icon-right");
+					const iconElement = createSpan({cls: "admonition-icon-right"});
 					setIcon(iconElement, this.suffixIcon);
 					codeElement.append(iconElement);
 				}
@@ -158,6 +155,6 @@ export class RegexInlineAdmonition extends InlineAdmonition {
 	}
 
 	public asTitle() {
-		return "Regex Type (trigger: /" + this.regex + "/)"
+		return "Regex type (trigger: /" + this.regex + "/)"
 	}
 } 

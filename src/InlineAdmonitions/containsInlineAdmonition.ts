@@ -1,5 +1,5 @@
-import {sanitizeClassName, slugify} from "../utils";
-import {InlineAdmonition} from "./inlineAdmonition";
+import {sanitizeClassName} from "../utils";
+import {InlineAdmonition, SerializedInlineAdmonition} from "./inlineAdmonition";
 import {setIcon, Setting} from "obsidian";
 import {InlineAdmonitionType} from "./inlineAdmonitionType";
 import {SyntaxNodeRef} from "@lezer/common";
@@ -25,17 +25,17 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 			false);
 	}
 
-	static unmarshal(data: any): ContainsInlineAdmonition {
+	static unmarshal(data: SerializedInlineAdmonition): ContainsInlineAdmonition {
 		if (data.type != InlineAdmonitionType.Contains) {
 			throw new Error("Cannot unmarshal data into ContainsInlineAdmonition: Wrong type: " + data.type);
 		}
 		return new ContainsInlineAdmonition(
-			data.contains,
+			data.contains ?? "",
 			data.backgroundColor,
 			data.bgColorOpacityPercent,
 			data.color,
 			data.colorOpacityPercent,
-			data.slug,
+			data.slug ?? InlineAdmonition.generateSlug(),
 			data.prefixIcon,
 			data.suffixIcon,
 			data.fontFamily || "",
@@ -61,16 +61,13 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 			this.cssClasses().forEach(c => codeElement.classList.add(c));
 			// codeElement.setAttribute("style", this.simpleStyle());
 
-			// TODO - margin on left vs right
 			if (this.prefixIcon) {
-				const iconElement = document.createElement("span");
-				iconElement.classList.add("admonition-icon-left");
+				const iconElement = createSpan({cls: "admonition-icon-left"});
 				setIcon(iconElement, this.prefixIcon);
 				codeElement.prepend(iconElement);
 			}
 			if (this.suffixIcon) {
-				const iconElement = document.createElement("span");
-				iconElement.classList.add("admonition-icon-right");
+				const iconElement = createSpan({cls: "admonition-icon-right"});
 				setIcon(iconElement, this.suffixIcon);
 				codeElement.append(iconElement);
 			}
@@ -123,6 +120,6 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 	}
 
 	public asTitle() {
-		return "Contains Type (trigger: " + this.contains + ")"
+		return "Contains type (trigger: " + this.contains + ")"
 	}
 }

@@ -1,5 +1,5 @@
-import {sanitizeClassName, slugify} from "../utils";
-import {InlineAdmonition} from "./inlineAdmonition";
+import {sanitizeClassName} from "../utils";
+import {InlineAdmonition, SerializedInlineAdmonition} from "./inlineAdmonition";
 import {setIcon, Setting} from "obsidian";
 import {InlineAdmonitionType} from "./inlineAdmonitionType";
 import {SyntaxNodeRef} from "@lezer/common";
@@ -27,18 +27,18 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 			false);
 	}
 
-	static unmarshal(data: any): PrefixInlineAdmonition {
+	static unmarshal(data: SerializedInlineAdmonition): PrefixInlineAdmonition {
 		if (data.type != InlineAdmonitionType.Prefix) {
 			throw new Error("Cannot unmarshal data into PrefixInlineAdmonition: Wrong type: " + data.type);
 		}
 		return new PrefixInlineAdmonition(
-			data.prefix,
-			data.hideTriggerString,
+			data.prefix ?? "",
+			data.hideTriggerString ?? false,
 			data.backgroundColor,
 			data.bgColorOpacityPercent,
 			data.color,
 			data.colorOpacityPercent,
-			data.slug,
+			data.slug ?? InlineAdmonition.generateSlug(),
 			data.prefixIcon,
 			data.suffixIcon,
 			data.fontFamily || "",
@@ -61,7 +61,7 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 		this.hideTriggerString = hideTriggerString;
 	}
 
-	process(codeElement: HTMLElement, sourcePath: string) {
+	process(codeElement: HTMLElement) {
 		if (codeElement.innerText.startsWith(this.prefix)) {
 			this.cssClasses().forEach(c => codeElement.classList.add(c));
 			// codeElement.setAttribute("style", this.simpleStyle());
@@ -70,14 +70,12 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 			}
 
 			if (this.prefixIcon) {
-				const iconElement = document.createElement("span");
-				iconElement.classList.add("admonition-icon-left");
+				const iconElement = createSpan({cls: "admonition-icon-left"});
 				setIcon(iconElement, this.prefixIcon);
 				codeElement.prepend(iconElement);
 			}
 			if (this.suffixIcon) {
-				const iconElement = document.createElement("span");
-				iconElement.classList.add("admonition-icon-right");
+				const iconElement = createSpan({cls: "admonition-icon-right"});
 				setIcon(iconElement, this.suffixIcon);
 				codeElement.append(iconElement);
 			}
@@ -143,7 +141,7 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 
 		results.push(new Setting(contentEl)
 			.setName("Hide prefix text")
-			.setDesc("If enabled, the 'prefix' text will not show in resulting Inline Admonition")
+			.setDesc("If enabled, the 'prefix' text will not show in resulting inline admonition")
 			.addToggle((toggle) => toggle
 				.setValue(this.hideTriggerString)
 				.onChange((val) => {
@@ -161,6 +159,6 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 	}
 
 	public asTitle() {
-		return "Prefix Type (trigger: " + this.prefix + ")"
+		return "Prefix type (trigger: " + this.prefix + ")"
 	}
 }

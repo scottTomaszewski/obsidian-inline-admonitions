@@ -1,4 +1,4 @@
-import {InlineAdmonition} from "../InlineAdmonitions/inlineAdmonition";
+import {InlineAdmonition, SerializedInlineAdmonition} from "../InlineAdmonitions/inlineAdmonition";
 import {InlineAdmonitionType} from "../InlineAdmonitions/inlineAdmonitionType";
 
 export interface InlineAdmonitionSettings {
@@ -6,68 +6,68 @@ export interface InlineAdmonitionSettings {
 	inlineAdmonitions: Map<string, InlineAdmonition>;
 }
 
+// The shape persisted to data.json: admonitions are a plain record keyed by
+// slug rather than the runtime Map.
+interface PersistedInlineAdmonitionSettings {
+	version: number;
+	inlineAdmonitions: Record<string, SerializedInlineAdmonition>;
+}
+
 export namespace InlineAdmonitionSettingsIO {
-	export function marshal(settings: InlineAdmonitionSettings) {
-		const settingData = Object.assign({}, DEFAULT_SETTINGS, settings);
-		settingData.inlineAdmonitions = Object.fromEntries(settings.inlineAdmonitions.entries());
-		return settingData;
+	export function marshal(settings: InlineAdmonitionSettings): PersistedInlineAdmonitionSettings {
+		const inlineAdmonitions: Record<string, SerializedInlineAdmonition> = {};
+		for (const [slug, iad] of settings.inlineAdmonitions.entries()) {
+			inlineAdmonitions[slug] = iad;
+		}
+		return {version: settings.version, inlineAdmonitions};
 	}
 
-	export function unmarshalAndMigrate(data: any): [InlineAdmonitionSettings, boolean] {
-		let settings: InlineAdmonitionSettings = Object.assign({}, DEFAULT_SETTINGS, data);
+	export function unmarshalAndMigrate(data: unknown): [InlineAdmonitionSettings, boolean] {
+		const persisted: PersistedInlineAdmonitionSettings = Object.assign(
+			{},
+			defaultPersistedSettings(),
+			(data as Partial<PersistedInlineAdmonitionSettings> | null) ?? {}
+		);
 
-		const [newSettings, dataMigrated] = migrateData(settings);
-		settings = newSettings;
+		const [migrated, dataMigrated] = migrateData(persisted);
 
 		const iads = new Map<string, InlineAdmonition>();
-		for (const identifier in settings.inlineAdmonitions) {
-			const iad = settings.inlineAdmonitions[identifier];
-			const typedIAD = InlineAdmonitionType.unmarshal(iad);
+		for (const identifier in migrated.inlineAdmonitions) {
+			const typedIAD = InlineAdmonitionType.unmarshal(migrated.inlineAdmonitions[identifier]);
 			iads.set(typedIAD.slug, typedIAD);
 		}
-		settings.inlineAdmonitions = iads;
-		return [settings, dataMigrated];
+		return [{version: migrated.version, inlineAdmonitions: iads}, dataMigrated];
 	}
 
-	export function migrateData(settings: InlineAdmonitionSettings): [any, boolean] {
+	function migrateData(settings: PersistedInlineAdmonitionSettings): [PersistedInlineAdmonitionSettings, boolean] {
 		let dataMigrated = false;
 
 		// Migrate to version 1
 		if (settings.version == undefined || settings.version === 0) {
-			console.log("[Inline Admonitions] Migrating settings from version 0 to 1");
-			const iads = new Map<string, InlineAdmonition>();
-			for (const identifier in settings?.inlineAdmonitions) {
+			const iads: Record<string, SerializedInlineAdmonition> = {};
+			for (const identifier in settings.inlineAdmonitions) {
 				const iad = settings.inlineAdmonitions[identifier];
 				if (iad.type === undefined) {
-					console.log("[Inline Admonitions] Setting InlineAdmonition " + identifier + " to Prefix type")
 					iad.type = InlineAdmonitionType.Prefix;
 				}
 				if (iad.slug === undefined) {
 					iad.slug = InlineAdmonition.generateSlug();
 				}
-
-				const ia = InlineAdmonitionType.unmarshal(iad);
-				iads.set(ia.slug, ia);
+				iads[iad.slug] = iad;
 			}
 			settings.inlineAdmonitions = iads;
-			settings['mySetting'] = undefined;
 			settings.version = 1;
 			dataMigrated = true;
 		}
 
 		// Migrate to version 2
-		// Adds hideTiggerString to prefix and suffix types, overhauls code
+		// Adds hideTriggerString to prefix and suffix types, overhauls code
 		if (settings.version === 1) {
-			console.log("[Inline Admonitions] Migrating settings from version 1 to 2");
-			for (const identifier in settings?.inlineAdmonitions) {
+			for (const identifier in settings.inlineAdmonitions) {
 				const iad = settings.inlineAdmonitions[identifier];
-				if (iad.type === "prefix" && !iad.hasOwnProperty("hideTriggerString")) {
+				if ((iad.type === InlineAdmonitionType.Prefix || iad.type === InlineAdmonitionType.Suffix) && iad.hideTriggerString === undefined) {
 					iad.hideTriggerString = false;
 				}
-				if (iad.type === "suffix" && !iad.hasOwnProperty("hideTriggerString")) {
-					iad.hideTriggerString = false;
-				}
-				settings.inlineAdmonitions[identifier] = iad;
 			}
 			settings.version = 2;
 			dataMigrated = true;
@@ -76,13 +76,11 @@ export namespace InlineAdmonitionSettingsIO {
 		// Migrate to version 3
 		// Adds fontFamily to all types
 		if (settings.version === 2) {
-			console.log("[Inline Admonitions] Migrating settings from version 2 to 3");
-			for (const identifier in settings?.inlineAdmonitions) {
+			for (const identifier in settings.inlineAdmonitions) {
 				const iad = settings.inlineAdmonitions[identifier];
-				if (!iad.hasOwnProperty("fontFamily")) {
+				if (iad.fontFamily === undefined) {
 					iad.fontFamily = "";
 				}
-				settings.inlineAdmonitions[identifier] = iad;
 			}
 			settings.version = 3;
 			dataMigrated = true;
@@ -91,19 +89,21 @@ export namespace InlineAdmonitionSettingsIO {
 		// Migrate to version 4
 		// Adds hideBackground to all types
 		if (settings.version === 3) {
-			console.log("[Inline Admonitions] Migrating settings from version 3 to 4");
-			for (const identifier in settings?.inlineAdmonitions) {
+			for (const identifier in settings.inlineAdmonitions) {
 				const iad = settings.inlineAdmonitions[identifier];
-				if (!iad.hasOwnProperty("hideBackground")) {
+				if (iad.hideBackground === undefined) {
 					iad.hideBackground = false;
 				}
-				settings.inlineAdmonitions[identifier] = iad;
 			}
 			settings.version = 4;
 			dataMigrated = true;
 		}
 
 		return [settings, dataMigrated];
+	}
+
+	function defaultPersistedSettings(): PersistedInlineAdmonitionSettings {
+		return {version: 0, inlineAdmonitions: {}};
 	}
 }
 

@@ -1,4 +1,4 @@
-import {App, Modal, setIcon, Setting} from "obsidian";
+import {App, Modal, Setting} from "obsidian";
 import {InlineAdmonition} from "../InlineAdmonitions/inlineAdmonition";
 import {PrefixInlineAdmonition} from "../InlineAdmonitions/prefixInlineAdmonition";
 import {InlineAdmonitionType, TypeTooltipModal} from "../InlineAdmonitions/inlineAdmonitionType";
@@ -39,7 +39,7 @@ export class EditInlineAdmonitionModal extends Modal {
 					this.onSubmit(this.result);
 				}))
 
-		this.sample = submitSetting.nameEl.createEl("code", {attr: {"style": `margin: 0.5em;`}});
+		this.sample = submitSetting.nameEl.createEl("code", {cls: "iad-sample"});
 		this.updateSample();
 
 		new Setting(contentEl)
@@ -93,7 +93,7 @@ export class EditInlineAdmonitionModal extends Modal {
 					this.updateSample();
 				}));
 		new Setting(contentEl)
-			.setName("Prefix Icon")
+			.setName("Prefix icon")
 			.setDesc("Select an icon to include at the beginning of the inline admonition")
 			.addButton(btn => {
 					if (this.result.prefixIcon) {
@@ -109,7 +109,7 @@ export class EditInlineAdmonitionModal extends Modal {
 									btn.setIcon(selectedIcon);
 									this.updateSample();
 								} else {
-									this.result.prefixIcon = undefined;
+									this.result.prefixIcon = "";
 									btn.setButtonText("Icon...")
 									this.updateSample();
 								}
@@ -119,7 +119,7 @@ export class EditInlineAdmonitionModal extends Modal {
 				}
 			);
 		new Setting(contentEl)
-			.setName("Suffix Icon")
+			.setName("Suffix icon")
 			.setDesc("Select an icon to include at the end of the inline admonition")
 			.addButton(btn => {
 					if (this.result.suffixIcon) {
@@ -135,7 +135,7 @@ export class EditInlineAdmonitionModal extends Modal {
 									btn.setIcon(selectedIcon);
 									this.updateSample();
 								} else {
-									this.result.suffixIcon = undefined;
+									this.result.suffixIcon = "";
 									btn.setButtonText("Icon...")
 									this.updateSample();
 								}
@@ -168,7 +168,7 @@ export class EditInlineAdmonitionModal extends Modal {
 			});
 		new Setting(contentEl)
 			.setName("Type")
-			.setDesc("The way the Inline Admonition is triggered")
+			.setDesc("The way the inline admonition is triggered")
 			.setTooltip(InlineAdmonitionType.tooltip())
 			.addDropdown(dc => dc
 				.addOption(InlineAdmonitionType.Prefix, InlineAdmonitionType.Prefix)

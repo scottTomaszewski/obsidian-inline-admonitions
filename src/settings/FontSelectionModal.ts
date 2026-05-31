@@ -26,13 +26,13 @@ export class FontSelectionModal extends Modal {
 	async onOpen() {
 		const {contentEl} = this;
 		contentEl.empty();
-		contentEl.createEl("h2", {text: "Select a Font"});
+		contentEl.createEl("h2", {text: "Select a font"});
 
-		const searchContainer = contentEl.createDiv({cls: "font-search-container"});
+		const searchContainer = contentEl.createDiv({cls: "iad-search-container"});
 		const searchInput = searchContainer.createEl("input", {
 			type: "text",
 			placeholder: "Search fonts...",
-			cls: "font-search-input",
+			cls: "iad-search-input",
 		});
 
 		contentEl.createEl("button", {text: "Default (no custom font)"})
@@ -41,18 +41,16 @@ export class FontSelectionModal extends Modal {
 				this.close();
 			});
 
-		const fontList = contentEl.createDiv({cls: "font-list"});
+		const fontList = contentEl.createDiv({cls: "iad-font-list"});
 
 		const systemFonts = await this.getSystemFonts();
 		const allFonts = [...GENERIC_FAMILIES, ...systemFonts];
 
 		const fontButtons: Map<string, HTMLElement> = new Map();
 		for (const fontName of allFonts) {
-			const fontButton = fontList.createEl("button", {cls: "font-button"});
-			fontButton.createSpan({
-				text: fontName,
-				attr: {style: `font-family: ${fontName};`},
-			});
+			const fontButton = fontList.createEl("button", {cls: "iad-font-button"});
+			const label = fontButton.createSpan({text: fontName});
+			label.style.setProperty("font-family", fontName);
 
 			fontButton.addEventListener("click", () => {
 				this.onSelect(fontName);
@@ -65,49 +63,11 @@ export class FontSelectionModal extends Modal {
 		searchInput.addEventListener("input", () => {
 			const query = searchInput.value.toLowerCase().trim();
 			fontButtons.forEach((button, name) => {
-				button.style.display = name.toLowerCase().includes(query) ? "" : "none";
+				button.toggleClass("iad-hidden", !name.toLowerCase().includes(query));
 			});
 		});
 
 		searchInput.focus();
-
-		const style = document.createElement("style");
-		style.textContent = `
-			.font-search-container {
-				margin-bottom: 10px;
-			}
-			.font-search-input {
-				width: 100%;
-				padding: 8px;
-				border: 1px solid var(--background-modifier-border);
-				border-radius: 4px;
-				background: var(--background-primary);
-				color: var(--text-normal);
-				font-size: 14px;
-			}
-			.font-list {
-				display: flex;
-				flex-direction: column;
-				gap: 2px;
-				margin-top: 10px;
-				max-height: 400px;
-				overflow-y: auto;
-			}
-			.font-button {
-				display: block;
-				text-align: left;
-				background: none;
-				border: none;
-				padding: 6px 10px;
-				cursor: pointer;
-				font-size: 14px;
-				border-radius: 4px;
-			}
-			.font-button:hover {
-				background-color: var(--background-modifier-hover);
-			}
-		`;
-		contentEl.appendChild(style);
 	}
 
 	onClose() {
@@ -117,8 +77,13 @@ export class FontSelectionModal extends Modal {
 
 	private async getSystemFonts(): Promise<string[]> {
 		try {
-			// @ts-ignore - queryLocalFonts is available in Electron/Chromium
-			const fonts: FontData[] = await window.queryLocalFonts();
+			const queryLocalFonts = (window as unknown as {
+				queryLocalFonts?: () => Promise<Array<{family: string}>>
+			}).queryLocalFonts;
+			if (!queryLocalFonts) {
+				return [];
+			}
+			const fonts = await queryLocalFonts();
 			const families = new Set<string>();
 			for (const font of fonts) {
 				families.add(font.family);

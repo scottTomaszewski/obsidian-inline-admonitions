@@ -1,6 +1,6 @@
 import {PrefixInlineAdmonition} from "./prefixInlineAdmonition";
 import {SuffixInlineAdmonition} from "./suffixInlineAdmonition";
-import {InlineAdmonition} from "./inlineAdmonition";
+import {InlineAdmonition, SerializedInlineAdmonition} from "./inlineAdmonition";
 import {ContainsInlineAdmonition} from "./containsInlineAdmonition";
 import {Modal} from "obsidian";
 import { RegexInlineAdmonition } from "./regexInlineAdmonition";
@@ -29,7 +29,7 @@ export namespace InlineAdmonitionType {
 	}
 
 	export function from(type: string): InlineAdmonitionType {
-		switch (type) {
+		switch (type as InlineAdmonitionType) {
 			case InlineAdmonitionType.Prefix:
 				return InlineAdmonitionType.Prefix
 			case InlineAdmonitionType.Suffix:
@@ -48,7 +48,7 @@ export namespace InlineAdmonitionType {
 		return create(from(type));
 	}
 
-	export function unmarshal(data: any) {
+	export function unmarshal(data: SerializedInlineAdmonition) {
 		const type = from(data.type)
 		switch (type) {
 			case InlineAdmonitionType.Prefix:
@@ -60,7 +60,7 @@ export namespace InlineAdmonitionType {
 			case InlineAdmonitionType.Regex:
 				return RegexInlineAdmonition.unmarshal(data);
 			default:
-				throw new Error("Cannot Unmarshal, invalid Inline Admonition type: " + type)
+				throw new Error("Cannot Unmarshal, invalid Inline Admonition type: " + String(type))
 		}
 	}
 
@@ -78,11 +78,10 @@ The "type" defines what triggers an Inline Admonition
 
 export class TypeTooltipModal extends Modal {
 	onOpen() {
-		super.onOpen();
 		const {contentEl} = this;
 		contentEl.createDiv({
 			text: InlineAdmonitionType.tooltip(),
-			attr: {"style": "white-space: pre-wrap;"}
+			cls: "iad-pre-wrap"
 		});
 	}
 }

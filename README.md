@@ -98,14 +98,27 @@ Regex Inline Admonitions trigger when a codeblock matches a specific regular exp
 
 - Additional admonitions styles (rounded corners, etc)
 - More comprehensive CSS editing in the settings UI
+- Rework the CSS-snippet generation so it no longer relies on Obsidian's private
+  `app.customCss` API or writing a snippet file into the vault
+
+See [FOLLOWUP.md](FOLLOWUP.md) for the detailed list of remaining work and context.
 
 ### Known Issues
 
 - Newly created inline admonitions might not render in Live Preview.  Reload the app as a workaround
+- Prefix/suffix icons are not rendered in Live Preview (they caused cursor-navigation issues)
 
 ## Development
 
-See the [changelog](CHANGELOG.md) for changes 
+See the [changelog](CHANGELOG.md) for changes and [FOLLOWUP.md](FOLLOWUP.md) for outstanding work.
+
+### Requirements
+
+- Requires Obsidian `1.1.0` or newer (see `minAppVersion` in `manifest.json`)
+
+### Linting
+
+- `npm run lint` runs ESLint with `eslint-plugin-obsidianmd` (flat config in `eslint.config.mjs`)
 
 ### Build
 

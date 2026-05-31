@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+- Maintenance: brought the plugin up to current Obsidian community standards
+  - Migrated to ESLint flat config with `eslint-plugin-obsidianmd` (`npm run lint`)
+  - Type-safety cleanup (typed settings serialization; removed `any` usage)
+  - Removed dead code and replaced direct DOM/style manipulation with Obsidian helpers and `styles.css`
+  - Raised `minAppVersion` to `1.1.0` to match the APIs actually used
+- Fix: Suffix "hide suffix text" no longer hides text when the suffix does not match in Live Preview
+- See [FOLLOWUP.md](FOLLOWUP.md) for remaining work
+
 ## 1.10.0
 
 - Adds support for hiding the background (including spacing)

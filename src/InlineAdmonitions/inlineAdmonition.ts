@@ -6,6 +6,28 @@ import {Decoration} from "@codemirror/view";
 import {RangeSetBuilder} from "@codemirror/state";
 import {appendOpacityToHexColor} from "../utils";
 
+// The shape of an InlineAdmonition as persisted in data.json. All
+// type-specific fields are optional since they only exist for some types,
+// and older versions may be missing fields that migrations backfill.
+export interface SerializedInlineAdmonition {
+	type: InlineAdmonitionType;
+	slug?: string;
+	backgroundColor: string;
+	bgColorOpacityPercent: number;
+	color: string;
+	colorOpacityPercent: number;
+	prefixIcon: string;
+	suffixIcon: string;
+	fontFamily?: string;
+	hideBackground?: boolean;
+	hideTriggerString?: boolean;
+	prefix?: string;
+	suffix?: string;
+	contains?: string;
+	regex?: string;
+	sampleInput?: string;
+}
+
 export abstract class InlineAdmonition {
 	backgroundColor: string;
 	bgColorOpacityPercent: number;

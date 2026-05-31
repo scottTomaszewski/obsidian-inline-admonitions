@@ -37,7 +37,7 @@ export async function readSnippetFile(app: App, filename: string): Promise<strin
 }
 
 export async function createSnippetFile(app: App, filename: string, data = ""): Promise<void> {
-	await _validatefilename(filename);
+	await _validatefilename(app, filename);
 	await _createSnippetDirectoryIfNotExists(app);
 	await app.vault.adapter.write(`${snippetPath(app, filename)}`, data);
 }
@@ -55,12 +55,14 @@ export async function snippetExists(app: App, filename: string): Promise<boolean
 }
 
 async function _createSnippetDirectoryIfNotExists(app: App) {
-	await app.vault.adapter.exists(snippetDir(app)) || await app.vault.adapter.mkdir(snippetDir(app));
+	if (!(await app.vault.adapter.exists(snippetDir(app)))) {
+		await app.vault.adapter.mkdir(snippetDir(app));
+	}
 }
 
-async function _validatefilename(value: string) {
+async function _validatefilename(app: App, value: string) {
 	const errors = {exists: "", regex: "",};
-	if (value.length > 0 && (await snippetExists(this.app, value))) {
+	if (value.length > 0 && (await snippetExists(app, value))) {
 		errors.exists = "File already exists.";
 	}
 	const regex = /^[0-9a-zA-Z\-_ ]+\.css$/;
