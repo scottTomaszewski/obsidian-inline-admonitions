@@ -7,6 +7,7 @@
   - Type-safety cleanup (typed settings serialization; removed `any` usage)
   - Removed dead code and replaced direct DOM/style manipulation with Obsidian helpers and `styles.css`
   - Raised `minAppVersion` to `1.1.0` to match the APIs actually used
+  - Housekeeping pass: removed the unused `getCssForClass` snippet helpers, enabled `esModuleInterop` (clears the ts-jest warning), excluded the generated `data.json` from linting, and verified the remaining ESLint carve-outs are still required
 - Fix: Suffix "hide suffix text" no longer hides text when the suffix does not match in Live Preview
 - See [FOLLOWUP.md](FOLLOWUP.md) for remaining work
 

@@ -1,9 +1,10 @@
 # Follow-up Work
 
 Remaining work after the May 2026 standards pass (ESLint flat-config migration,
-type-safety cleanup, correctness fixes). Build, lint (`eslint-plugin-obsidianmd`),
-type-check, and the jest suite all pass. The items below are intentionally
-deferred or could not be verified in this pass.
+type-safety cleanup, correctness fixes) and a follow-up housekeeping pass (dead-code
+removal, `esModuleInterop`, ESLint carve-out verification). Build, lint
+(`eslint-plugin-obsidianmd`), type-check, and the jest suite all pass. The items
+below are intentionally deferred or could not be verified in this pass.
 
 ## High priority
 
@@ -46,15 +47,7 @@ the `css` npm dependency used to parse/stringify the snippet file.
 
 ## Medium priority
 
-### 3. Dead/unused public function
-
-`getCssForClass` (and its helper `_getCssForClass`) in
-`src/io/inlineAdmonitionCss.ts` are exported but never called anywhere in the
-codebase. ESLint doesn't flag them because they're exported (assumed public API).
-Confirm they're not intended as a public surface, then delete both — they only add
-maintenance weight to the snippet code that item #2 wants to remove anyway.
-
-### 4. Known Live Preview issues (pre-existing, carried over)
+### 3. Known Live Preview issues (pre-existing, carried over)
 
 Documented in the README but unresolved:
 
@@ -63,31 +56,3 @@ Documented in the README but unresolved:
 - Prefix/suffix icons are intentionally **not** rendered in Live Preview because
   they caused cursor-navigation issues. If item #2 reworks rendering, revisit
   whether icons can be supported there.
-
-## Low priority / housekeeping
-
-### 5. ESLint config carve-outs to revisit
-
-`eslint.config.mjs` disables a few rules with rationale comments. Revisit if the
-underlying code changes:
-
-- `@typescript-eslint/no-misused-promises` has `checksVoidReturn.arguments: false`
-  so async Obsidian callbacks (`onClick`/`onChange`) don't get flagged. If those
-  handlers are ever refactored, consider tightening this back.
-- The `**/*.json` override disables four type-aware `obsidianmd/*` rules because
-  JSON files have no type information under `projectService`. Harmless, but if the
-  obsidianmd plugin gains JSON-aware handling this can be dropped.
-- `depend/ban-dependencies` is off for `package.json` (the `builtin-modules` entry
-  is a build-time esbuild external marker, not a runtime dep).
-
-### 6. `minAppVersion` is now `1.1.0`
-
-Bumped from `0.15.0` because the settings UI uses `ColorComponent` (1.0.0) and
-`ButtonComponent.setIcon` / `.setTooltip` (1.1.0). If you ever need to support older
-Obsidian, those API usages would have to be replaced. Otherwise leave as-is.
-
-### 7. Tooling versions
-
-`typescript` was bumped 4.7.4 → 5.4.x and ESLint to v9 (flat config). `ts-jest`
-emits a warning suggesting `esModuleInterop: true` in `tsconfig.json` — harmless
-today (tests pass), but worth setting if import-interop issues ever appear.

@@ -16,6 +16,8 @@ export default tseslint.config(
 			"manifest.json",
 			"package-lock.json",
 			"devbox.json",
+			// Plugin runtime settings written by Obsidian, not source.
+			"data.json",
 		],
 	},
 	...obsidianmd.configs.recommended,
