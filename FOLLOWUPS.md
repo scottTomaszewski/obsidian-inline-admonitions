@@ -1,6 +1,11 @@
 # Follow-up Work
 
-Remaining work after the May 2026 standards pass (ESLint flat-config migration,
+In-scope tangents found while working — important to fix, but they'd derail the task
+at hand. Add an entry here instead of chasing them now, and **clear these before
+starting a new feature.** Brand-new features and larger planned efforts go in a
+`ROADMAP.md`, not here.
+
+Current items remain from the May 2026 standards pass (ESLint flat-config migration,
 type-safety cleanup, correctness fixes) and a follow-up housekeeping pass (dead-code
 removal, `esModuleInterop`, ESLint carve-out verification). Build, lint
 (`eslint-plugin-obsidianmd`), type-check, and the jest suite all pass. The items
