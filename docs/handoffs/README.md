@@ -1,0 +1,1 @@
+Per-session handoff notes live here as `HANDOFF.md` (written/consumed by the `creating-handoffs` skill). This is ephemeral session state, not architecture docs — for those see [../index.md](../index.md).

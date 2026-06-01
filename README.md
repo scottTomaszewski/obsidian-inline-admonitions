@@ -101,7 +101,7 @@ Regex Inline Admonitions trigger when a codeblock matches a specific regular exp
 - Rework the CSS-snippet generation so it no longer relies on Obsidian's private
   `app.customCss` API or writing a snippet file into the vault
 
-See [FOLLOWUP.md](FOLLOWUP.md) for the detailed list of remaining work and context.
+See [FOLLOWUPS.md](FOLLOWUPS.md) for the detailed list of remaining work and context.
 
 ### Known Issues
 
@@ -110,7 +110,7 @@ See [FOLLOWUP.md](FOLLOWUP.md) for the detailed list of remaining work and conte
 
 ## Development
 
-See the [changelog](CHANGELOG.md) for changes and [FOLLOWUP.md](FOLLOWUP.md) for outstanding work.
+See the [changelog](CHANGELOG.md) for changes and [FOLLOWUPS.md](FOLLOWUPS.md) for outstanding work.
 
 ### Requirements
 
