@@ -6,6 +6,8 @@ export default tseslint.config(
 		ignores: [
 			"main.js",
 			"node_modules/**",
+			// Local devbox state artifacts (git-ignored), not plugin source.
+			".devbox/**",
 			"esbuild.config.mjs",
 			"version-bump.mjs",
 			"jest.config.js",
@@ -39,13 +41,6 @@ export default tseslint.config(
 				"error",
 				{ checksVoidReturn: { arguments: false } },
 			],
-		},
-	},
-	{
-		files: ["package.json"],
-		rules: {
-			// builtin-modules is a build-time external marker for esbuild.
-			"depend/ban-dependencies": "off",
 		},
 	},
 	{

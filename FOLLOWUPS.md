@@ -48,7 +48,9 @@ checks). A cleaner design would generate styles without the snippet file — e.g
 inject a managed `<style>` element's rules dynamically, or push per-admonition CSS
 through the existing CodeMirror decoration path so the editor extension and the
 reading-mode post-processor are the single source of truth. This would also remove
-the `css` npm dependency used to parse/stringify the snippet file.
+the `@adobe/css-tools` npm dependency used to parse/stringify the snippet file. (The
+parser was switched from `css` to `@adobe/css-tools` to drop a bundled `require("fs")`
+that the community scanner flagged — see [docs/css-rendering.md](docs/css-rendering.md).)
 
 ## Medium priority
 

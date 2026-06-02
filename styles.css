@@ -149,6 +149,17 @@ code.iad > p {
 	/*width: 1em;*/
 }
 
+/*
+ * In Live Preview our decoration nests `.iad` INSIDE Obsidian's `.cm-inline-code`
+ * span, so the code span's background leaks around the bubble. We neutralize the
+ * parent only when it actually contains an admonition. This is the cheap variant of
+ * `:has()` (a direct-child test scoped to `.cm-inline-code`, re-evaluated only when an
+ * inline-code span's children change) — not the broad ancestor `:has()` the perf
+ * guidance warns about. CSS has no other way to style a parent by its child, and the
+ * alternatives don't work here: CodeMirror forces `.cm-inline-code` to be the outer
+ * element (decoration precedence can't flip the nesting), and tagging the parent from
+ * JS is reverted by CodeMirror's DOM observer.
+ */
 .cm-s-obsidian .cm-inline-code:has(> .iad) {
 	background-color: transparent;
 }

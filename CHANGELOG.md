@@ -9,6 +9,12 @@
   - Raised `minAppVersion` to `1.1.0` to match the APIs actually used
   - Housekeeping pass: removed the unused `getCssForClass` snippet helpers, enabled `esModuleInterop` (clears the ts-jest warning), excluded the generated `data.json` from linting, and verified the remaining ESLint carve-outs are still required
 - Fix: Suffix "hide suffix text" no longer hides text when the suffix does not match in Live Preview
+- Maintenance: resolved community plugin-scan findings
+  - Replaced the `css` dependency with `@adobe/css-tools` to drop a bundled
+    `require("fs")` (the scanner's "direct filesystem access" flag); all file I/O still
+    goes through the Obsidian vault API
+  - Replaced the `builtin-modules` build dependency with Node's built-in
+    `module.builtinModules` in the esbuild config
 - See [FOLLOWUPS.md](FOLLOWUPS.md) for remaining work
 
 ## 1.10.0

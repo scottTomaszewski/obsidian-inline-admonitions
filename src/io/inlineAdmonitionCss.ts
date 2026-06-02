@@ -1,6 +1,7 @@
 import {createSnippetFile, readSnippetFile, snippetExists, writeSnippetFile} from "./snippets";
 import {App} from "obsidian";
-import * as css from "css";
+import {CssTypes, parse, stringify} from "@adobe/css-tools";
+import type {CssRuleAST} from "@adobe/css-tools";
 
 // Obsidian's snippet management API is not part of the public typings.
 interface CustomCssApp extends App {
@@ -47,18 +48,17 @@ async function cssFileContents(app: App): Promise<string> {
 // Sets the css declarations for the className to cssClassContent within the cssFileContent
 export function _setCssForClass(className: string, cssClassDeclarations: string, cssFileContent: string): string {
 	// TODO - add source
-	const fileObj = css.parse(cssFileContent, {});
+	const fileObj = parse(cssFileContent);
 	const rules = fileObj.stylesheet?.rules ?? [];
 
 	for (const rule of rules) {
-		const r = rule as css.Rule;
-		if (r.selectors?.contains("." + className)) {
-			r.declarations = _makeCssRule(className, cssClassDeclarations).declarations;
-			return css.stringify(fileObj);
+		if (rule.type === CssTypes.rule && rule.selectors?.contains("." + className)) {
+			rule.declarations = _makeCssRule(className, cssClassDeclarations).declarations;
+			return stringify(fileObj);
 		}
 	}
 	rules.push(_makeCssRule(className, cssClassDeclarations));
-	return css.stringify(fileObj);
+	return stringify(fileObj);
 }
 
 function _makeCssRuleString(className: string, cssDeclarations: string): string {
@@ -66,7 +66,11 @@ function _makeCssRuleString(className: string, cssDeclarations: string): string 
 	return ".iad." + className + " {\n" + cssDeclarations + "\n}";
 }
 
-function _makeCssRule(className: string, cssDeclarations: string): css.Rule {
+function _makeCssRule(className: string, cssDeclarations: string): CssRuleAST {
 	const cssString = _makeCssRuleString(className, cssDeclarations);
-	return (css.parse(cssString, {}).stylesheet?.rules ?? [])[0];
+	const rule = (parse(cssString).stylesheet?.rules ?? [])[0];
+	if (rule?.type !== CssTypes.rule) {
+		throw new Error("Failed to construct CSS rule for class " + className);
+	}
+	return rule;
 }
