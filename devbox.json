@@ -1,15 +1,31 @@
-{
-  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.16.0/.schema/devbox.schema.json",
-  "packages": [
-    "github-cli@latest",
-    "jq@latest"
-  ],
-  "shell": {
-    "init_hook": [
-      "echo 'Welcome to devbox!' > /dev/null"
-    ],
-    "scripts": {
-      "release": "just release $@"
-    }
-  }
+{                                                                                                                                                             
+        "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.17.2/.schema/devbox.schema.json",                                                   
+        "packages": [                                                                                                                                         
+                "nodejs@22",                                                                                                                                  
+                "just@latest",                                                                                                                                
+                "github-cli@latest",                                                                                                                          
+                "jq@latest"                                                                                                                                   
+        ],                                                                                                                                                    
+        "shell": {                                                                                                                                            
+                "init_hook": [                                                                                                                                
+                        "npm install --no-audit --no-fund"                                                                                                    
+                ],                                                                                                                                            
+                "scripts": {                                                                                                                                  
+                        "build": [                                                                                                                            
+                                "npm run build"                                                                                                               
+                        ],                                                                                                                                    
+                        "dev": [                                                                                                                              
+                                "npm run dev"                                                                                                                 
+                        ],                                                                                                                                    
+                        "test": [                                                                                                                             
+                                "npm run test"                                                                                                                
+                        ],                                                                                                                                    
+                        "release": [                                                                                                                          
+                                "just release $@"                                                                                                             
+                        ],                                                                                                                                    
+                        "run": [                                                                                                                              
+                                "$@"                                                                                                                          
+                        ]                                                                                                                                     
+                }                                                                                                                                             
+        }                                                                                                                                                     
 }
