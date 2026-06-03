@@ -4,7 +4,7 @@ import {v4 as uuidv4} from "uuid";
 import {SyntaxNodeRef} from "@lezer/common";
 import {Decoration} from "@codemirror/view";
 import {RangeSetBuilder} from "@codemirror/state";
-import {appendOpacityToHexColor} from "../utils";
+import {appendOpacityToHexColor, borderCss, textStyleCss} from "../utils";
 
 // The shape of an InlineAdmonition as persisted in data.json. All
 // type-specific fields are optional since they only exist for some types,
@@ -161,11 +161,13 @@ export abstract class InlineAdmonition {
 			style += "background-color: transparent; border: none; padding: 0; border-radius: 0;";
 		} else {
 			style += `background-color: ${this.evalBackgroundColor()};`;
+			style += borderCss(this.borderStyle, this.borderWidth, this.borderColor, this.borderRadius);
 		}
 		style += ` color: ${this.evalColor()};`;
 		if (this.fontFamily) {
 			style += ` font-family: ${this.fontFamily};`;
 		}
+		style += textStyleCss(this.bold, this.italic, this.underline);
 		return style;
 	}
 
