@@ -9,7 +9,10 @@ An **Inline Admonition** is a user-defined rule that restyles an Obsidian
 when its text matches a trigger. There are four trigger types — **Prefix**,
 **Suffix**, **Contains**, **Regex** — each a subclass of the abstract
 `InlineAdmonition`. A rule carries styling (background/text color + opacity, font,
-hide-background, prefix/suffix icon) plus its trigger-specific fields.
+hide-background, border color/width/style, corner radius, bold/italic/underline,
+prefix/suffix icon) plus its trigger-specific fields. The shared styling fields are
+passed to constructors as a single `SharedAdmonitionFields` object
+(`defaultSharedFields()` / `sharedFieldsFromData()` build it).
 
 Obsidian renders notes in two completely separate engines, so every admonition must
 know how to style itself **twice** — once for each engine. That duality is the single

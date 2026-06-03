@@ -30,8 +30,11 @@ see [css-rendering.md](css-rendering.md).
 3. Add the enum case in `inlineAdmonitionType.ts` (`enum`, `create`, `from`, `unmarshal`).
    Enum values are **string literals** (e.g. `"prefix"`) that must match the persisted
    `type` field in `data.json`.
-4. If you add a persisted field, add it to `SerializedInlineAdmonition` **and** a new
-   migration step in `inlineAdmonitionSettings.ts` (bump `version`).
+4. If you add a persisted field, add it to `SerializedInlineAdmonition` **and**
+   `SharedAdmonitionFields` (+ `defaultSharedFields()` / `sharedFieldsFromData()`) if it
+   is a shared styling field, **and** a new migration step in
+   `inlineAdmonitionSettings.ts` (bump `version`). The current schema version is **5**
+   (v5 added border color/width/style, corner radius, and bold/italic/underline).
 
 ## Known Live Preview limitations (intentional)
 

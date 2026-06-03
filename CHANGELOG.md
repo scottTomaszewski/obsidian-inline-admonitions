@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Feature: richer per-rule styling — border color/width/style, rounded corners, and
+  bold/italic/underline text. Existing rules are migrated (settings v4→v5) with
+  theme-default border and corners, so they look unchanged until edited.
+
 ## 1.12.0
 
 - Maintenance: resolved community plugin-scan findings
