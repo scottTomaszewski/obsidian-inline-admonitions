@@ -1,4 +1,4 @@
-import {App, Modal} from "obsidian";
+import {App, FuzzyMatch, FuzzySuggestModal} from "obsidian";
 
 const GENERIC_FAMILIES: string[] = [
 	"serif",
@@ -13,69 +13,49 @@ const GENERIC_FAMILIES: string[] = [
 	"ui-rounded",
 ];
 
-export class FontSelectionModal extends Modal {
-	currentFont: string;
-	onSelect: (font: string) => void;
+// Sentinel item representing "no custom font"; selecting it clears the font (empty
+// string) so the admonition falls back to the theme font.
+const DEFAULT_FONT = "";
 
-	constructor(app: App, currentFont: string, onSelect: (font: string) => void) {
+export class FontSelectionModal extends FuzzySuggestModal<string> {
+	private items: string[];
+	private onSelect: (font: string) => void;
+
+	private constructor(app: App, items: string[], onSelect: (font: string) => void) {
 		super(app);
-		this.currentFont = currentFont;
+		this.items = items;
 		this.onSelect = onSelect;
+		this.setPlaceholder("Search fonts…");
 	}
 
-	async onOpen() {
-		const {contentEl} = this;
-		contentEl.empty();
-		contentEl.createEl("h2", {text: "Select a font"});
+	// System fonts are queried asynchronously, so build the item list first, then open.
+	static async open(app: App, currentFont: string, onSelect: (font: string) => void) {
+		const systemFonts = await FontSelectionModal.getSystemFonts();
+		const items = [DEFAULT_FONT, ...GENERIC_FAMILIES, ...systemFonts];
+		new FontSelectionModal(app, items, onSelect).open();
+	}
 
-		const searchContainer = contentEl.createDiv({cls: "iad-search-container"});
-		const searchInput = searchContainer.createEl("input", {
-			type: "text",
-			placeholder: "Search fonts...",
-			cls: "iad-search-input",
-		});
+	getItems(): string[] {
+		return this.items;
+	}
 
-		contentEl.createEl("button", {text: "Default (no custom font)"})
-			.addEventListener("click", () => {
-				this.onSelect("");
-				this.close();
-			});
+	getItemText(item: string): string {
+		return item === DEFAULT_FONT ? "Default (theme font)" : item;
+	}
 
-		const fontList = contentEl.createDiv({cls: "iad-font-list"});
-
-		const systemFonts = await this.getSystemFonts();
-		const allFonts = [...GENERIC_FAMILIES, ...systemFonts];
-
-		const fontButtons: Map<string, HTMLElement> = new Map();
-		for (const fontName of allFonts) {
-			const fontButton = fontList.createEl("button", {cls: "iad-font-button"});
-			const label = fontButton.createSpan({text: fontName});
-			label.style.setProperty("font-family", fontName);
-
-			fontButton.addEventListener("click", () => {
-				this.onSelect(fontName);
-				this.close();
-			});
-
-			fontButtons.set(fontName, fontButton);
+	renderSuggestion(match: FuzzyMatch<string>, el: HTMLElement) {
+		const font = match.item;
+		const label = el.createSpan({text: this.getItemText(font)});
+		if (font !== DEFAULT_FONT) {
+			label.style.setProperty("font-family", font);
 		}
-
-		searchInput.addEventListener("input", () => {
-			const query = searchInput.value.toLowerCase().trim();
-			fontButtons.forEach((button, name) => {
-				button.toggleClass("iad-hidden", !name.toLowerCase().includes(query));
-			});
-		});
-
-		searchInput.focus();
 	}
 
-	onClose() {
-		const {contentEl} = this;
-		contentEl.empty();
+	onChooseItem(item: string) {
+		this.onSelect(item);
 	}
 
-	private async getSystemFonts(): Promise<string[]> {
+	private static async getSystemFonts(): Promise<string[]> {
 		try {
 			const queryLocalFonts = (window as unknown as {
 				queryLocalFonts?: () => Promise<Array<{family: string}>>

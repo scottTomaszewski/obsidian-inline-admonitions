@@ -95,7 +95,7 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 
 		results.push(new Setting(contentEl)
 			.setName("Suffix")
-			.setDesc("Inline codeblock suffix to trigger this formatting")
+			.setDesc("Text the code span must end with to match.")
 			.addText((text) => text
 				.setPlaceholder("Enter suffix")
 				.setValue(this.suffix)
@@ -107,7 +107,7 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 
 		results.push(new Setting(contentEl)
 			.setName("Hide suffix text")
-			.setDesc("If enabled, the 'suffix' text will not show in resulting inline admonition")
+			.setDesc("Remove the suffix from the displayed admonition.")
 			.addToggle((toggle) => toggle
 				.setValue(this.hideTriggerString)
 				.onChange((val) => {

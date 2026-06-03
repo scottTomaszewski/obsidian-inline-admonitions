@@ -55,79 +55,73 @@ code.iad > p {
 	display: inline;
 }
 
-/* Icon / font selection modals */
-.iad-search-container {
-	margin-bottom: var(--size-4-2);
-}
-
-.iad-search-input {
-	width: 100%;
-	padding: var(--size-4-2);
-	border: 1px solid var(--background-modifier-border);
-	border-radius: var(--radius-s);
-	background: var(--background-primary);
-	color: var(--text-normal);
-	font-size: var(--font-ui-medium);
-}
-
-.iad-icon-grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
-	gap: var(--size-4-2);
-	margin-top: var(--size-4-4);
-	height: 400px;
-	overflow-y: auto;
-}
-
-.iad-icon-button {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background: none;
-	border: none;
-	padding: var(--size-4-2);
-	cursor: pointer;
-}
-
-.iad-icon-button:hover {
-	background-color: var(--background-modifier-hover);
-}
-
-.iad-icon {
-	width: 24px;
-	height: 24px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.iad-font-list {
+/* Edit modal: header stays fixed; only the body below it scrolls, so the sample
+   and the modal close button never scroll away. */
+.iad-edit-modal .modal-content {
 	display: flex;
 	flex-direction: column;
-	gap: 2px;
-	margin-top: var(--size-4-2);
-	max-height: 400px;
+	overflow: hidden;
+}
+
+.iad-modal-header {
+	flex: 0 0 auto;
+	background-color: var(--background-primary);
+	border-bottom: 1px solid var(--background-modifier-border);
+	/* Keep the Submit button clear of the modal's close (X) button. */
+	padding-right: var(--size-4-8);
+	margin-bottom: var(--size-4-3);
+}
+
+.iad-modal-header .setting-item {
+	border-top: none;
+	padding: var(--size-4-1) 0;
+}
+
+.iad-modal-body {
+	flex: 1 1 auto;
+	min-height: 0;
 	overflow-y: auto;
 }
 
-.iad-font-button {
-	display: block;
-	text-align: left;
-	background: none;
-	border: none;
-	padding: var(--size-4-1) var(--size-4-2);
+/* Edit modal: collapsible setting sections */
+.iad-section + .iad-section {
+	border-top: 1px solid var(--background-modifier-border);
+}
+
+.iad-section-title {
 	cursor: pointer;
-	font-size: var(--font-ui-medium);
+	color: var(--text-accent);
+	font-size: var(--font-ui-small);
+	font-weight: var(--font-semibold);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	padding: var(--size-4-3) var(--size-4-2) var(--size-4-2);
 	border-radius: var(--radius-s);
 }
 
-.iad-font-button:hover {
+.iad-section-title:hover {
 	background-color: var(--background-modifier-hover);
 }
 
-.iad-icon-button.iad-hidden,
-.iad-font-button.iad-hidden {
-	display: none;
+.iad-section-label {
+	margin-left: var(--size-4-2);
+}
+
+.iad-section-body {
+	padding: 0 var(--size-4-3) var(--size-4-4);
+}
+
+/* The section header already separates content; drop the first row's top border
+   so it doesn't read as a second divider under the header. */
+.iad-section-body .setting-item:first-child {
+	border-top: none;
+}
+
+/* Icon suggestion rows in the icon picker */
+.iad-suggest-icon {
+	display: inline-flex;
+	align-items: center;
+	margin-right: var(--size-4-2);
 }
 
 .admonition-icon-left {

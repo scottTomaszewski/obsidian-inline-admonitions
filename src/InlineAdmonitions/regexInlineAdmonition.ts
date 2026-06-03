@@ -86,7 +86,7 @@ export class RegexInlineAdmonition extends InlineAdmonition {
 		const results = new Array<Setting>();
 		results.push(new Setting(contentEl)
 			.setName("Regex")
-			.setDesc("Inline codeblock matches this regex to trigger this formatting")
+			.setDesc("Code span matches this regular expression to trigger this formatting.")
 			.addText((text) => text
 				.setPlaceholder("Enter regex")
 				.setValue(this.regex)
@@ -97,7 +97,7 @@ export class RegexInlineAdmonition extends InlineAdmonition {
 			));
 		results.push(new Setting(contentEl)
 			.setName("Sample input")
-			.setDesc("Use this for testing your regex and for assisting the sample display")
+			.setDesc("Test text for your regex; also drives the sample preview.")
 			.addText((text) => text
 				.setPlaceholder("Text match for regex")
 				.setValue(this.sampleInput)

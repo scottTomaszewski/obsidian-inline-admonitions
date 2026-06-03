@@ -96,7 +96,7 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 
 		results.push(new Setting(contentEl)
 			.setName("Prefix")
-			.setDesc("Inline codeblock prefix to trigger this formatting")
+			.setDesc("Text the code span must start with to match.")
 			.addText((text) => text
 				.setPlaceholder("Enter prefix")
 				.setValue(this.prefix)
@@ -108,7 +108,7 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 
 		results.push(new Setting(contentEl)
 			.setName("Hide prefix text")
-			.setDesc("If enabled, the 'prefix' text will not show in resulting inline admonition")
+			.setDesc("Remove the prefix from the displayed admonition.")
 			.addToggle((toggle) => toggle
 				.setValue(this.hideTriggerString)
 				.onChange((val) => {

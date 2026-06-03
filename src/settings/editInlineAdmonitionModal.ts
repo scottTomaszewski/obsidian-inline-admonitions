@@ -9,6 +9,8 @@ export class EditInlineAdmonitionModal extends Modal {
 	result: InlineAdmonition;
 	onSubmit: (result: InlineAdmonition) => void;
 	sample: HTMLElement;
+	private body: HTMLElement;
+	private triggerBody: HTMLElement;
 	private typeSettings: Array<Setting> = new Array<Setting>();
 
 	static edit(app: App, toEdit: InlineAdmonition, onSubmit: (result: InlineAdmonition) => void) {
@@ -27,10 +29,12 @@ export class EditInlineAdmonitionModal extends Modal {
 
 	onOpen() {
 		const {contentEl} = this;
+		this.modalEl.addClass("iad-edit-modal");
 
-		contentEl.createEl("br");
-
-		const submitSetting = new Setting(contentEl)
+		// Fixed header (outside the scroll area) keeps the live sample and Submit
+		// visible while only the body below it scrolls.
+		const header = contentEl.createDiv({cls: "iad-modal-header"});
+		const submitSetting = new Setting(header)
 			.addButton((btn) => btn
 				.setButtonText("Submit")
 				.setCta()
@@ -42,203 +46,13 @@ export class EditInlineAdmonitionModal extends Modal {
 		this.sample = submitSetting.nameEl.createEl("code", {cls: "iad-sample"});
 		this.updateSample();
 
-		new Setting(contentEl)
-			.setName("Background color")
-			.setDesc("Color of the background of the inline admonition")
-			.addColorPicker(cp => cp
-				.setValue(this.result.backgroundColor)
-				.onChange(val => {
-					this.result.backgroundColor = val;
-					this.updateSample();
-				})
-			);
-		new Setting(contentEl)
-			.setName("Background opacity (0% - 100%)")
-			.setDesc("Percentage of opacity to apply to the background color. 0% is fully transparent.")
-			.addSlider(s => s
-				.setLimits(0, 100, 1)
-				.setValue(this.result.bgColorOpacityPercent)
-				.onChange(val => {
-					this.result.bgColorOpacityPercent = val;
-					this.updateSample();
-				}));
-		new Setting(contentEl)
-			.setName("Hide background")
-			.setDesc("Remove background color, padding, and border radius so the admonition blends inline with surrounding text")
-			.addToggle(toggle => toggle
-				.setValue(this.result.hideBackground)
-				.onChange(val => {
-					this.result.hideBackground = val;
-					this.updateSample();
-				})
-			);
-		new Setting(contentEl)
-			.setName("Text color")
-			.setDesc("Color of the text of the inline admonition")
-			.addColorPicker(cp => cp
-				.setValue(this.result.color)
-				.onChange(val => {
-					this.result.color = val;
-					this.updateSample();
-				})
-			);
-		new Setting(contentEl)
-			.setName("Text color opacity (0% - 100%)")
-			.setDesc("Percentage of opacity to apply to the text color. 0% is fully transparent.")
-			.addSlider(s => s
-				.setLimits(0, 100, 1)
-				.setValue(this.result.colorOpacityPercent)
-				.onChange(val => {
-					this.result.colorOpacityPercent = val;
-					this.updateSample();
-				}));
-		new Setting(contentEl)
-			.setName("Prefix icon")
-			.setDesc("Select an icon to include at the beginning of the inline admonition")
-			.addButton(btn => {
-					if (this.result.prefixIcon) {
-						btn.setIcon(this.result.prefixIcon);
-					} else {
-						btn.setButtonText("Icon...");
-					}
-					return btn
-						.onClick(() => {
-							new IconSelectionModal(this.app, this.result.prefixIcon, async (selectedIcon: string) => {
-								if (selectedIcon !== "") {
-									this.result.prefixIcon = selectedIcon;
-									btn.setIcon(selectedIcon);
-									this.updateSample();
-								} else {
-									this.result.prefixIcon = "";
-									btn.setButtonText("Icon...")
-									this.updateSample();
-								}
+		this.body = contentEl.createDiv({cls: "iad-modal-body"});
 
-							}).open();
-						});
-				}
-			);
-		new Setting(contentEl)
-			.setName("Suffix icon")
-			.setDesc("Select an icon to include at the end of the inline admonition")
-			.addButton(btn => {
-					if (this.result.suffixIcon) {
-						btn.setIcon(this.result.suffixIcon);
-					} else {
-						btn.setButtonText("Icon...");
-					}
-					return btn
-						.onClick(() => {
-							new IconSelectionModal(this.app, this.result.suffixIcon, async (selectedIcon: string) => {
-								if (selectedIcon !== "") {
-									this.result.suffixIcon = selectedIcon;
-									btn.setIcon(selectedIcon);
-									this.updateSample();
-								} else {
-									this.result.suffixIcon = "";
-									btn.setButtonText("Icon...")
-									this.updateSample();
-								}
-
-							}).open();
-						});
-				}
-			);
-		new Setting(contentEl)
-			.setName("Font family")
-			.setDesc("Font used for this inline admonition")
-			.addButton(btn => {
-				if (this.result.fontFamily) {
-					btn.setButtonText(this.result.fontFamily);
-				} else {
-					btn.setButtonText("Font...");
-				}
-				return btn
-					.onClick(() => {
-						new FontSelectionModal(this.app, this.result.fontFamily, (selectedFont: string) => {
-							this.result.fontFamily = selectedFont;
-							if (selectedFont) {
-								btn.setButtonText(selectedFont);
-							} else {
-								btn.setButtonText("Font...");
-							}
-							this.updateSample();
-						}).open();
-					});
-			});
-		new Setting(contentEl)
-			.setName("Border style")
-			.setDesc("Line style for the border")
-			.addDropdown(dc => dc
-				.addOption("", "Default (theme)")
-				.addOption("none", "None")
-				.addOption("solid", "Solid")
-				.addOption("dashed", "Dashed")
-				.addOption("dotted", "Dotted")
-				.setValue(this.result.borderStyle)
-				.onChange(val => {
-					this.result.borderStyle = val;
-					this.updateSample();
-				}));
-		new Setting(contentEl)
-			.setName("Border width")
-			.setDesc("Width of the border in pixels. Applies when a border style is selected.")
-			.addSlider(s => s
-				.setLimits(0, 10, 1)
-				.setValue(this.result.borderWidth)
-				.onChange(val => {
-					this.result.borderWidth = val;
-					this.updateSample();
-				}));
-		new Setting(contentEl)
-			.setName("Border color")
-			.setDesc("Color of the border")
-			.addColorPicker(cp => cp
-				.setValue(this.result.borderColor)
-				.onChange(val => {
-					this.result.borderColor = val;
-					this.updateSample();
-				}));
-		new Setting(contentEl)
-			.setName("Corner radius")
-			.setDesc("Rounded corner radius in pixels")
-			.addSlider(s => s
-				.setLimits(0, 20, 1)
-				.setValue(this.result.borderRadius)
-				.onChange(val => {
-					this.result.borderRadius = val;
-					this.updateSample();
-				}));
-		new Setting(contentEl)
-			.setName("Bold")
-			.setDesc("Display the admonition text in bold")
-			.addToggle(toggle => toggle
-				.setValue(this.result.bold)
-				.onChange(val => {
-					this.result.bold = val;
-					this.updateSample();
-				}));
-		new Setting(contentEl)
-			.setName("Italic")
-			.setDesc("Display the admonition text in italics")
-			.addToggle(toggle => toggle
-				.setValue(this.result.italic)
-				.onChange(val => {
-					this.result.italic = val;
-					this.updateSample();
-				}));
-		new Setting(contentEl)
-			.setName("Underline")
-			.setDesc("Underline the admonition text")
-			.addToggle(toggle => toggle
-				.setValue(this.result.underline)
-				.onChange(val => {
-					this.result.underline = val;
-					this.updateSample();
-				}));
-		new Setting(contentEl)
-			.setName("Type")
-			.setDesc("The way the inline admonition is triggered")
+		// --- Trigger ---
+		const trigger = this.section("Trigger", true);
+		new Setting(trigger)
+			.setName("Trigger type")
+			.setDesc("What text turns an inline code span into this admonition.")
 			.setTooltip(InlineAdmonitionType.tooltip())
 			.addDropdown(dc => dc
 				.addOption(InlineAdmonitionType.Prefix, InlineAdmonitionType.Prefix)
@@ -251,7 +65,7 @@ export class EditInlineAdmonitionModal extends Modal {
 					const old = this.result;
 					this.result = InlineAdmonitionType.createFrom(value);
 					old.copySettingsTo(this.result)
-					this.appendTypeSettings(contentEl);
+					this.appendTypeSettings();
 				}))
 			.addButton(btn => btn
 				.setIcon("help-circle")
@@ -259,8 +73,196 @@ export class EditInlineAdmonitionModal extends Modal {
 					new TypeTooltipModal(this.app).open()
 				})
 			);
+		this.triggerBody = trigger;
+		this.appendTypeSettings();
 
-		this.appendTypeSettings(contentEl);
+		// --- Background ---
+		const background = this.section("Background");
+		new Setting(background)
+			.setName("Background color")
+			.setDesc("Fill color behind the text.")
+			.addColorPicker(cp => cp
+				.setValue(this.result.backgroundColor)
+				.onChange(val => {
+					this.result.backgroundColor = val;
+					this.updateSample();
+				})
+			);
+		new Setting(background)
+			.setName("Background opacity")
+			.setDesc("How opaque the fill is. 0% is fully transparent.")
+			.addSlider(s => s
+				.setLimits(0, 100, 1)
+				.setValue(this.result.bgColorOpacityPercent)
+				.setDynamicTooltip()
+				.onChange(val => {
+					this.result.bgColorOpacityPercent = val;
+					this.updateSample();
+				}));
+		new Setting(background)
+			.setName("Blend into text")
+			.setDesc("Drop the fill, padding, and rounded corners so it flows inline with surrounding text.")
+			.addToggle(toggle => toggle
+				.setValue(this.result.hideBackground)
+				.onChange(val => {
+					this.result.hideBackground = val;
+					this.updateSample();
+				})
+			);
+
+		// --- Text & font ---
+		const text = this.section("Text & font");
+		new Setting(text)
+			.setName("Text color")
+			.setDesc("Color of the admonition text.")
+			.addColorPicker(cp => cp
+				.setValue(this.result.color)
+				.onChange(val => {
+					this.result.color = val;
+					this.updateSample();
+				})
+			);
+		new Setting(text)
+			.setName("Text opacity")
+			.setDesc("How opaque the text is. 0% is fully transparent.")
+			.addSlider(s => s
+				.setLimits(0, 100, 1)
+				.setValue(this.result.colorOpacityPercent)
+				.setDynamicTooltip()
+				.onChange(val => {
+					this.result.colorOpacityPercent = val;
+					this.updateSample();
+				}));
+		new Setting(text)
+			.setName("Font")
+			.setDesc("Font for the admonition text.")
+			.addButton(btn => {
+				btn.setButtonText(this.result.fontFamily || "Font…");
+				return btn
+					.onClick(async () => {
+						await FontSelectionModal.open(this.app, this.result.fontFamily, (selectedFont: string) => {
+							this.result.fontFamily = selectedFont;
+							btn.setButtonText(selectedFont || "Font…");
+							this.updateSample();
+						});
+					});
+			});
+		new Setting(text)
+			.setName("Bold")
+			.setDesc("Bold the text.")
+			.addToggle(toggle => toggle
+				.setValue(this.result.bold)
+				.onChange(val => {
+					this.result.bold = val;
+					this.updateSample();
+				}));
+		new Setting(text)
+			.setName("Italic")
+			.setDesc("Italicize the text.")
+			.addToggle(toggle => toggle
+				.setValue(this.result.italic)
+				.onChange(val => {
+					this.result.italic = val;
+					this.updateSample();
+				}));
+		new Setting(text)
+			.setName("Underline")
+			.setDesc("Underline the text.")
+			.addToggle(toggle => toggle
+				.setValue(this.result.underline)
+				.onChange(val => {
+					this.result.underline = val;
+					this.updateSample();
+				}));
+
+		// --- Border ---
+		const border = this.section("Border");
+		new Setting(border)
+			.setName("Border style")
+			.setDesc("Line style for the border.")
+			.addDropdown(dc => dc
+				.addOption("", "Default (theme)")
+				.addOption("none", "None")
+				.addOption("solid", "Solid")
+				.addOption("dashed", "Dashed")
+				.addOption("dotted", "Dotted")
+				.setValue(this.result.borderStyle)
+				.onChange(val => {
+					this.result.borderStyle = val;
+					this.updateSample();
+				}));
+		new Setting(border)
+			.setName("Border width")
+			.setDesc("Border thickness in pixels (when a style is set).")
+			.addSlider(s => s
+				.setLimits(0, 10, 1)
+				.setValue(this.result.borderWidth)
+				.setDynamicTooltip()
+				.onChange(val => {
+					this.result.borderWidth = val;
+					this.updateSample();
+				}));
+		new Setting(border)
+			.setName("Border color")
+			.setDesc("Color of the border.")
+			.addColorPicker(cp => cp
+				.setValue(this.result.borderColor)
+				.onChange(val => {
+					this.result.borderColor = val;
+					this.updateSample();
+				}));
+		new Setting(border)
+			.setName("Corner radius")
+			.setDesc("Roundness of the corners, in pixels.")
+			.addSlider(s => s
+				.setLimits(0, 20, 1)
+				.setValue(this.result.borderRadius)
+				.setDynamicTooltip()
+				.onChange(val => {
+					this.result.borderRadius = val;
+					this.updateSample();
+				}));
+
+		// --- Icons ---
+		const icons = this.section("Icons");
+		this.addIconSetting(icons, "Leading icon", "Icon shown before the text.",
+			() => this.result.prefixIcon, val => this.result.prefixIcon = val);
+		this.addIconSetting(icons, "Trailing icon", "Icon shown after the text.",
+			() => this.result.suffixIcon, val => this.result.suffixIcon = val);
+	}
+
+	// Builds a collapsible <details> section and returns its body element for rows.
+	private section(title: string, open = false): HTMLElement {
+		const details = this.body.createEl("details", {cls: "iad-section"});
+		if (open) details.setAttr("open", "");
+		const summary = details.createEl("summary", {cls: "iad-section-title"});
+		summary.createSpan({cls: "iad-section-label", text: title});
+		return details.createDiv({cls: "iad-section-body"});
+	}
+
+	// A row whose button opens the icon picker; get/set read and write the chosen icon.
+	private addIconSetting(parent: HTMLElement, name: string, desc: string,
+						   get: () => string, set: (val: string) => void) {
+		new Setting(parent)
+			.setName(name)
+			.setDesc(desc)
+			.addButton(btn => {
+				const render = () => {
+					if (get()) {
+						btn.setIcon(get());
+					} else {
+						btn.setButtonText("Icon…");
+					}
+				};
+				render();
+				return btn.onClick(() => {
+					new IconSelectionModal(this.app, get(), (selectedIcon: string) => {
+						set(selectedIcon);
+						render();
+						this.updateSample();
+					}).open();
+				});
+			});
 	}
 
 	private updateSample() {
@@ -269,7 +271,7 @@ export class EditInlineAdmonitionModal extends Modal {
 
 		// at this point the css has not saved, so need to manually set a few things...
 		this.sample.setAttr("style", `
-			background-color: ${this.result.backgroundColor}; 
+			background-color: ${this.result.backgroundColor};
 			color: ${this.result.color};
 			${this.result.simpleStyle()}`);
 	}
@@ -278,8 +280,8 @@ export class EditInlineAdmonitionModal extends Modal {
 		this.typeSettings.forEach(value => value.settingEl.remove());
 	}
 
-	private appendTypeSettings(contentEl: HTMLElement) {
-		this.typeSettings = this.result.buildSettings(contentEl, () => this.updateSample());
+	private appendTypeSettings() {
+		this.typeSettings = this.result.buildSettings(this.triggerBody, () => this.updateSample());
 	}
 
 	onClose() {

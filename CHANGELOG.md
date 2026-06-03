@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- Improvement: redesigned the edit/new admonition modal. Settings are now grouped into
+  collapsible sections (Trigger, Background, Text & font, Border, Icons), and the live
+  sample sits in a fixed header that stays visible (along with the close button) while
+  the settings below it scroll. Names and descriptions were rewritten to be clearer and
+  more concise.
+- Improvement: the icon and font pickers now use Obsidian's native fuzzy-search picker
+  (with icons rendered inline) instead of the bespoke grid/list modals.
 - Feature: richer per-rule styling — border color/width/style, rounded corners, and
   bold/italic/underline text. Corner radius is a literal pixel value (0 = square,
   higher = rounder); new and migrated rules default to a lightly rounded 4px. Existing

@@ -73,7 +73,7 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 		const results = new Array<Setting>();
 		results.push(new Setting(contentEl)
 			.setName("Contains")
-			.setDesc("Inline codeblock contains this string to trigger this formatting")
+			.setDesc("Text the code span must contain to match.")
 			.addText((text) => text
 				.setPlaceholder("Enter contains")
 				.setValue(this.contains)
