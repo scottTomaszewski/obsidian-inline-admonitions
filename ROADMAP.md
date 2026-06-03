@@ -21,7 +21,7 @@ What it is, why it matters, and a rough approach. Code blocks and links are fine
 
 ## 1. Richer styling: borders, shape & text weight
 
-**Status:** open
+**Status:** done
 **Theme:** features
 
 Add rounded corners, border color/width/style, and bold/italic/underline to the
