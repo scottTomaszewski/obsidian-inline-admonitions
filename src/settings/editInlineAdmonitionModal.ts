@@ -167,6 +167,76 @@ export class EditInlineAdmonitionModal extends Modal {
 					});
 			});
 		new Setting(contentEl)
+			.setName("Border style")
+			.setDesc("Line style for the border")
+			.addDropdown(dc => dc
+				.addOption("", "Default (theme)")
+				.addOption("none", "None")
+				.addOption("solid", "Solid")
+				.addOption("dashed", "Dashed")
+				.addOption("dotted", "Dotted")
+				.setValue(this.result.borderStyle)
+				.onChange(val => {
+					this.result.borderStyle = val;
+					this.updateSample();
+				}));
+		new Setting(contentEl)
+			.setName("Border width")
+			.setDesc("Width of the border in pixels. Applies when a border style is selected.")
+			.addSlider(s => s
+				.setLimits(0, 10, 1)
+				.setValue(this.result.borderWidth)
+				.onChange(val => {
+					this.result.borderWidth = val;
+					this.updateSample();
+				}));
+		new Setting(contentEl)
+			.setName("Border color")
+			.setDesc("Color of the border")
+			.addColorPicker(cp => cp
+				.setValue(this.result.borderColor)
+				.onChange(val => {
+					this.result.borderColor = val;
+					this.updateSample();
+				}));
+		new Setting(contentEl)
+			.setName("Corner radius")
+			.setDesc("Rounded corner radius in pixels")
+			.addSlider(s => s
+				.setLimits(0, 20, 1)
+				.setValue(this.result.borderRadius)
+				.onChange(val => {
+					this.result.borderRadius = val;
+					this.updateSample();
+				}));
+		new Setting(contentEl)
+			.setName("Bold")
+			.setDesc("Display the admonition text in bold")
+			.addToggle(toggle => toggle
+				.setValue(this.result.bold)
+				.onChange(val => {
+					this.result.bold = val;
+					this.updateSample();
+				}));
+		new Setting(contentEl)
+			.setName("Italic")
+			.setDesc("Display the admonition text in italics")
+			.addToggle(toggle => toggle
+				.setValue(this.result.italic)
+				.onChange(val => {
+					this.result.italic = val;
+					this.updateSample();
+				}));
+		new Setting(contentEl)
+			.setName("Underline")
+			.setDesc("Underline the admonition text")
+			.addToggle(toggle => toggle
+				.setValue(this.result.underline)
+				.onChange(val => {
+					this.result.underline = val;
+					this.updateSample();
+				}));
+		new Setting(contentEl)
 			.setName("Type")
 			.setDesc("The way the inline admonition is triggered")
 			.setTooltip(InlineAdmonitionType.tooltip())

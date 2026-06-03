@@ -1,5 +1,5 @@
 import {sanitizeClassName} from "../utils";
-import {InlineAdmonition, SerializedInlineAdmonition} from "./inlineAdmonition";
+import {InlineAdmonition, SerializedInlineAdmonition, SharedAdmonitionFields, defaultSharedFields, sharedFieldsFromData} from "./inlineAdmonition";
 import {setIcon, Setting} from "obsidian";
 import {InlineAdmonitionType} from "./inlineAdmonitionType";
 import {SyntaxNodeRef} from "@lezer/common";
@@ -10,49 +10,19 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 	contains: string;
 	type = InlineAdmonitionType.Contains;
 
-	// TODO - I dont like this...
 	static create() {
-		return new ContainsInlineAdmonition(
-			"",
-			"#f1f1f1",
-			100,
-			"#000000",
-			100,
-			InlineAdmonition.generateSlug(),
-			"",
-			"",
-			"",
-			false);
+		return new ContainsInlineAdmonition("", defaultSharedFields());
 	}
 
 	static unmarshal(data: SerializedInlineAdmonition): ContainsInlineAdmonition {
 		if (data.type != InlineAdmonitionType.Contains) {
 			throw new Error("Cannot unmarshal data into ContainsInlineAdmonition: Wrong type: " + data.type);
 		}
-		return new ContainsInlineAdmonition(
-			data.contains ?? "",
-			data.backgroundColor,
-			data.bgColorOpacityPercent,
-			data.color,
-			data.colorOpacityPercent,
-			data.slug ?? InlineAdmonition.generateSlug(),
-			data.prefixIcon,
-			data.suffixIcon,
-			data.fontFamily || "",
-			data.hideBackground || false);
+		return new ContainsInlineAdmonition(data.contains ?? "", sharedFieldsFromData(data));
 	}
 
-	constructor(contains: string,
-				backgroundColor: string,
-				bgColorOpacityPercent: number,
-				color: string,
-				colorOpacityPercent: number,
-				slug: string,
-				prefixIcon: string,
-				suffixIcon: string,
-				fontFamily: string,
-				hideBackground: boolean) {
-		super(backgroundColor, bgColorOpacityPercent, color, colorOpacityPercent, slug, prefixIcon, suffixIcon, fontFamily, hideBackground);
+	constructor(contains: string, fields: SharedAdmonitionFields) {
+		super(fields);
 		this.contains = contains;
 	}
 

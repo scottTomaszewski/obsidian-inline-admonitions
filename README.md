@@ -42,6 +42,11 @@ Common settings:
 - **Suffix Icon** allows you to select an icon to include at the end of the inline admonition.
   - Note: Suffix Icons are not supported in Live Preview mode because it causes cursor navigation issues.
 - **Font** allows selection of the font
+- **Border style** chooses the border line: Default (theme), None, Solid, Dashed, or Dotted
+- **Border width** sets the border thickness in pixels (applies when a border style is selected)
+- **Border color** sets the border color
+- **Corner radius** rounds the bubble corners (in pixels; 0 keeps the theme default — an explicit square 0px corner is not configurable)
+- **Bold**, **Italic**, **Underline** toggle the text weight, slant, and underline
 
 ## Types
 
@@ -96,7 +101,7 @@ Regex Inline Admonitions trigger when a codeblock matches a specific regular exp
 
 ## Future work
 
-- Additional admonitions styles (rounded corners, etc)
+- Additional admonition styles
 - More comprehensive CSS editing in the settings UI
 - Rework the CSS-snippet generation so it no longer relies on Obsidian's private
   `app.customCss` API or writing a snippet file into the vault
