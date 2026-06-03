@@ -50,9 +50,16 @@ rule warns against; it is knowingly accepted for now.
 `_makeCssRuleString` emits `.iad.<className> { ... }` — the leading `.iad` is repeated
 deliberately to raise CSS specificity so the rule wins over Obsidian's tag styling.
 The base `.iad` style in the static `styles.css` intentionally **rides on Obsidian's
-`--tag-*` CSS variables** (background, border, radius, padding), so admonitions inherit
+`--tag-*` CSS variables** (background, border, padding), so admonitions inherit
 the theme's tag look. The author flagged both as cleanup-worthy
 (`// I dont like it`) — they work, but are not the intended long-term design.
+
+**Exception — corner radius is no longer inherited.** `simpleStyle()` (via
+`borderCss()` in `utils.ts`) **always** emits a literal `border-radius: Npx`, so the
+per-rule value overrides the base `var(--tag-radius)` whenever the background is shown.
+`N` is the rule's `borderRadius` field: `0` = square, higher = rounder (default `4`).
+This is deliberate — an earlier "`0` = inherit theme radius" sentinel made the settings
+slider non-monotonic (`0` rounded, `1px` square), so the plugin now owns radius outright.
 
 ## Gotcha 4 — `hideBackground` produces different declarations
 

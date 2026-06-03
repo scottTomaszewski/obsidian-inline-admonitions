@@ -66,7 +66,7 @@ the new rule set without reloading the app.
 | Path | Responsibility |
 |------|----------------|
 | `main.ts` | Plugin entry. Lifecycle, wires both render paths + settings tab, owns `loadSettings`/`saveSettings`/`refreshCss`. |
-| `src/InlineAdmonitions/inlineAdmonition.ts` | Abstract base class + `SerializedInlineAdmonition` (the data.json shape). Defines `process()`/`applyTo()` contract, `cssClasses()`, `simpleStyle()`. |
+| `src/InlineAdmonitions/inlineAdmonition.ts` | Abstract base class + `SerializedInlineAdmonition` (the data.json shape) + `SharedAdmonitionFields` (the shared-field options object subclass constructors take; `defaultSharedFields()`/`sharedFieldsFromData()` build it). Defines `process()`/`applyTo()` contract, `cssClasses()`, `simpleStyle()`. |
 | `src/InlineAdmonitions/inlineAdmonitionType.ts` | `InlineAdmonitionType` enum + namespace: factory (`create`), `unmarshal` dispatch, type tooltip. |
 | `src/InlineAdmonitions/{prefix,suffix,contains,regex}InlineAdmonition.ts` | The four trigger types. Each implements `process()` (reading mode) **and** `applyTo()` (Live Preview), plus its settings UI. |
 | `src/InlineAdmonitions/inlineAdmonitionsPostProcessor.ts` | Reading-mode post-processor: finds `code` elements, calls `process()` on each rule. |

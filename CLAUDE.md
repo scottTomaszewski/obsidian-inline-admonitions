@@ -49,7 +49,11 @@ token because devbox's bundled `gh` can't read the host keyring.
 - **`main.js` and `data.json` are gitignored** — build output and Obsidian-written
   runtime settings, not source. `data.json` is also excluded from lint.
 - Only `src/utils.ts` has unit tests; everything else is verified by build/lint and a
-  manual in-vault smoke test.
+  manual in-vault smoke test. **Why so little is unit-tested:** the `obsidian` npm
+  package is types-only (`"main": ""`), so any module that imports a value from it
+  (`Setting`, `setIcon`, …) can't be loaded under jest. Keep genuinely testable logic
+  in `src/utils.ts` (pure, no `obsidian` import); verify settings migration via the
+  `tests/resources/` fixture pairs (see that dir's `README.md`), not jest.
   This repo *is* the installed plugin (it sits in the demo vault's plugins dir), so to
   smoke-test: `npm run dev` to rebuild `main.js`, then reload Obsidian (or toggle the
   plugin off/on) to pick up the new build.
