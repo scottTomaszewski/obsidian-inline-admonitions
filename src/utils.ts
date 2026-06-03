@@ -59,3 +59,43 @@ export function convertAlphaToHex(alphaDecimal: number) {
 
 	return paddedAlphaHex;
 }
+
+/**
+ * Builds the border + corner-radius CSS declarations for an admonition.
+ * - borderStyle "" (default) emits no border declaration, so the rule inherits
+ *   the base `.iad` theme border.
+ * - borderStyle "none" emits `border: none`.
+ * - borderStyle solid/dashed/dotted emits a full `border` shorthand.
+ * - borderRadius > 0 emits `border-radius`; 0 inherits the theme default.
+ * Returns a string of declarations, each prefixed with a leading space.
+ */
+export function borderCss(borderStyle: string, borderWidth: number, borderColor: string, borderRadius: number): string {
+	let css = "";
+	if (borderStyle === "none") {
+		css += " border: none;";
+	} else if (borderStyle === "solid" || borderStyle === "dashed" || borderStyle === "dotted") {
+		css += ` border: ${borderWidth}px ${borderStyle} ${borderColor};`;
+	}
+	if (borderRadius > 0) {
+		css += ` border-radius: ${borderRadius}px;`;
+	}
+	return css;
+}
+
+/**
+ * Builds the text weight/style/decoration declarations for an admonition.
+ * Each enabled option appends one declaration prefixed with a leading space.
+ */
+export function textStyleCss(bold: boolean, italic: boolean, underline: boolean): string {
+	let css = "";
+	if (bold) {
+		css += " font-weight: bold;";
+	}
+	if (italic) {
+		css += " font-style: italic;";
+	}
+	if (underline) {
+		css += " text-decoration: underline;";
+	}
+	return css;
+}
