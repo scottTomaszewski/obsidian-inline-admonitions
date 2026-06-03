@@ -116,7 +116,7 @@ export namespace InlineAdmonitionSettingsIO {
 					iad.borderStyle = "";
 				}
 				if (iad.borderRadius === undefined) {
-					iad.borderRadius = 0;
+					iad.borderRadius = 4;
 				}
 				if (iad.bold === undefined) {
 					iad.bold = false;

@@ -45,7 +45,7 @@ Common settings:
 - **Border style** chooses the border line: Default (theme), None, Solid, Dashed, or Dotted
 - **Border width** sets the border thickness in pixels (applies when a border style is selected)
 - **Border color** sets the border color
-- **Corner radius** rounds the bubble corners (in pixels; 0 keeps the theme default — an explicit square 0px corner is not configurable)
+- **Corner radius** rounds the bubble corners (in pixels; 0 is square, higher is rounder)
 - **Bold**, **Italic**, **Underline** toggle the text weight, slant, and underline
 
 ## Types

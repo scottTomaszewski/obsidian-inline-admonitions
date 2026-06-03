@@ -3,8 +3,9 @@
 ## Unreleased
 
 - Feature: richer per-rule styling — border color/width/style, rounded corners, and
-  bold/italic/underline text. Existing rules are migrated (settings v4→v5) with
-  theme-default border and corners, so they look unchanged until edited.
+  bold/italic/underline text. Corner radius is a literal pixel value (0 = square,
+  higher = rounder); new and migrated rules default to a lightly rounded 4px. Existing
+  rules are migrated (settings v4→v5) with a default border and corner radius.
 
 ## 1.12.0
 

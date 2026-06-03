@@ -66,7 +66,9 @@ export function convertAlphaToHex(alphaDecimal: number) {
  *   the base `.iad` theme border.
  * - borderStyle "none" emits `border: none`.
  * - borderStyle solid/dashed/dotted emits a full `border` shorthand.
- * - borderRadius > 0 emits `border-radius`; 0 inherits the theme default.
+ * - borderRadius is always emitted as a literal pixel value: 0 = square corners,
+ *   higher = rounder. The plugin owns corner radius rather than inheriting the
+ *   theme's `--tag-radius`, so the slider reads predictably (square → round).
  * Returns a string of declarations, each prefixed with a leading space.
  */
 export function borderCss(borderStyle: string, borderWidth: number, borderColor: string, borderRadius: number): string {
@@ -76,9 +78,7 @@ export function borderCss(borderStyle: string, borderWidth: number, borderColor:
 	} else if (borderStyle === "solid" || borderStyle === "dashed" || borderStyle === "dotted") {
 		css += ` border: ${borderWidth}px ${borderStyle} ${borderColor};`;
 	}
-	if (borderRadius > 0) {
-		css += ` border-radius: ${borderRadius}px;`;
-	}
+	css += ` border-radius: ${borderRadius}px;`;
 	return css;
 }
 

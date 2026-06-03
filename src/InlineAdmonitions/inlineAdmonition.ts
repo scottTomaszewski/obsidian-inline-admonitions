@@ -58,7 +58,8 @@ export interface SharedAdmonitionFields {
 }
 
 // Defaults for a brand-new rule. Border defaults to "" (inherit theme border) and
-// radius 0 (inherit theme radius) so a fresh rule looks identical to pre-feature rules.
+// radius 4 (a lightly rounded chip). Corner radius is a literal pixel value, so a
+// fresh rule reads as gently rounded; set it to 0 for square corners.
 export function defaultSharedFields(): SharedAdmonitionFields {
 	return {
 		slug: InlineAdmonition.generateSlug(),
@@ -73,7 +74,7 @@ export function defaultSharedFields(): SharedAdmonitionFields {
 		borderColor: "#000000",
 		borderWidth: 1,
 		borderStyle: "",
-		borderRadius: 0,
+		borderRadius: 4,
 		bold: false,
 		italic: false,
 		underline: false,
@@ -96,7 +97,7 @@ export function sharedFieldsFromData(data: SerializedInlineAdmonition): SharedAd
 		borderColor: data.borderColor ?? "#000000",
 		borderWidth: data.borderWidth ?? 1,
 		borderStyle: data.borderStyle ?? "",
-		borderRadius: data.borderRadius ?? 0,
+		borderRadius: data.borderRadius ?? 4,
 		bold: data.bold ?? false,
 		italic: data.italic ?? false,
 		underline: data.underline ?? false,

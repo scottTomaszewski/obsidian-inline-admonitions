@@ -41,14 +41,14 @@ describe('testing convertAlphaToHex', () => {
 });
 
 describe('testing borderCss', () => {
-	test('default (theme) style emits no border', () => {
-		expect(borderCss("", 1, "#000000", 0)).toBe("");
+	test('default (theme) border style emits only the radius', () => {
+		expect(borderCss("", 1, "#000000", 0)).toBe(" border-radius: 0px;");
 	});
-	test('none style emits border: none', () => {
-		expect(borderCss("none", 1, "#000000", 0)).toBe(" border: none;");
+	test('none style emits border: none plus radius', () => {
+		expect(borderCss("none", 1, "#000000", 0)).toBe(" border: none; border-radius: 0px;");
 	});
-	test('solid style emits full border', () => {
-		expect(borderCss("solid", 2, "#ff0000", 0)).toBe(" border: 2px solid #ff0000;");
+	test('solid style emits full border plus radius', () => {
+		expect(borderCss("solid", 2, "#ff0000", 0)).toBe(" border: 2px solid #ff0000; border-radius: 0px;");
 	});
 	test('dashed style with radius emits border and radius', () => {
 		expect(borderCss("dashed", 1, "#000000", 5)).toBe(" border: 1px dashed #000000; border-radius: 5px;");
@@ -56,8 +56,8 @@ describe('testing borderCss', () => {
 	test('radius alone (default border) emits only radius', () => {
 		expect(borderCss("", 0, "#000000", 8)).toBe(" border-radius: 8px;");
 	});
-	test('zero radius emits no radius', () => {
-		expect(borderCss("dotted", 3, "#123456", 0)).toBe(" border: 3px dotted #123456;");
+	test('zero radius is emitted as a literal 0px (square corners)', () => {
+		expect(borderCss("dotted", 3, "#123456", 0)).toBe(" border: 3px dotted #123456; border-radius: 0px;");
 	});
 });
 
