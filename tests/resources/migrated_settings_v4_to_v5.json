@@ -1,0 +1,46 @@
+{
+  "version": 5,
+  "inlineAdmonitions": {
+    "814452b0-694a-462a-94d9-b00832807908": {
+      "type": "prefix",
+      "slug": "814452b0-694a-462a-94d9-b00832807908",
+      "backgroundColor": "#002bad",
+      "bgColorOpacityPercent": 100,
+      "color": "#ffffff",
+      "colorOpacityPercent": 100,
+      "prefixIcon": "",
+      "suffixIcon": "",
+      "fontFamily": "",
+      "hideBackground": false,
+      "borderColor": "#000000",
+      "borderWidth": 1,
+      "borderStyle": "",
+      "borderRadius": 0,
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "prefix": "DC",
+      "hideTriggerString": false
+    },
+    "05671b61-ce27-4570-8263-6916bb388a36": {
+      "type": "contains",
+      "slug": "05671b61-ce27-4570-8263-6916bb388a36",
+      "backgroundColor": "#eb0000",
+      "bgColorOpacityPercent": 100,
+      "color": "#ffffff",
+      "colorOpacityPercent": 100,
+      "prefixIcon": "",
+      "suffixIcon": "",
+      "fontFamily": "",
+      "hideBackground": false,
+      "borderColor": "#000000",
+      "borderWidth": 1,
+      "borderStyle": "",
+      "borderRadius": 0,
+      "bold": false,
+      "italic": false,
+      "underline": false,
+      "contains": "sky"
+    }
+  }
+}

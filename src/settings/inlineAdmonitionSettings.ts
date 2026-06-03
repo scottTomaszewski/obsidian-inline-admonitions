@@ -99,6 +99,39 @@ export namespace InlineAdmonitionSettingsIO {
 			dataMigrated = true;
 		}
 
+		// Migrate to version 5
+		// Adds richer styling fields (border color/width/style, corner radius, and
+		// bold/italic/underline) to all types. Defaults preserve the pre-feature look:
+		// empty border style and 0 radius inherit the base `.iad` theme border/radius.
+		if (settings.version === 4) {
+			for (const identifier in settings.inlineAdmonitions) {
+				const iad = settings.inlineAdmonitions[identifier];
+				if (iad.borderColor === undefined) {
+					iad.borderColor = "#000000";
+				}
+				if (iad.borderWidth === undefined) {
+					iad.borderWidth = 1;
+				}
+				if (iad.borderStyle === undefined) {
+					iad.borderStyle = "";
+				}
+				if (iad.borderRadius === undefined) {
+					iad.borderRadius = 0;
+				}
+				if (iad.bold === undefined) {
+					iad.bold = false;
+				}
+				if (iad.italic === undefined) {
+					iad.italic = false;
+				}
+				if (iad.underline === undefined) {
+					iad.underline = false;
+				}
+			}
+			settings.version = 5;
+			dataMigrated = true;
+		}
+
 		return [settings, dataMigrated];
 	}
 
