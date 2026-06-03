@@ -1,5 +1,5 @@
 import {sanitizeClassName} from "../utils";
-import {InlineAdmonition, SerializedInlineAdmonition} from "./inlineAdmonition";
+import {InlineAdmonition, SerializedInlineAdmonition, SharedAdmonitionFields, defaultSharedFields, sharedFieldsFromData} from "./inlineAdmonition";
 import {setIcon, Setting} from "obsidian";
 import {InlineAdmonitionType} from "./inlineAdmonitionType";
 import {SyntaxNodeRef} from "@lezer/common";
@@ -11,52 +11,19 @@ export class RegexInlineAdmonition extends InlineAdmonition {
 	sampleInput: string;
 	type = InlineAdmonitionType.Regex;
 
-	// TODO - I dont like this...
 	static create() {
-		return new RegexInlineAdmonition(
-			"",
-			"",
-			"#f1f1f1",
-			100,
-			"#000000",
-			100,
-			InlineAdmonition.generateSlug(),
-			"",
-			"",
-			"",
-			false);
+		return new RegexInlineAdmonition("", "", defaultSharedFields());
 	}
 
 	static unmarshal(data: SerializedInlineAdmonition): RegexInlineAdmonition {
 		if (data.type != InlineAdmonitionType.Regex) {
 			throw new Error("Cannot unmarshal data into RegexInlineAdmonition: Wrong type: " + data.type);
 		}
-		return new RegexInlineAdmonition(
-			data.regex ?? "",
-			data.sampleInput ?? "",
-			data.backgroundColor,
-			data.bgColorOpacityPercent,
-			data.color,
-			data.colorOpacityPercent,
-			data.slug ?? InlineAdmonition.generateSlug(),
-			data.prefixIcon,
-			data.suffixIcon,
-			data.fontFamily || "",
-			data.hideBackground || false);
+		return new RegexInlineAdmonition(data.regex ?? "", data.sampleInput ?? "", sharedFieldsFromData(data));
 	}
 
-	constructor(regex: string,
-				sampleInput: string,
-				backgroundColor: string,
-				bgColorOpacityPercent: number,
-				color: string,
-				colorOpacityPercent: number,
-				slug: string,
-				prefixIcon: string,
-				suffixIcon: string,
-				fontFamily: string,
-				hideBackground: boolean) {
-		super(backgroundColor, bgColorOpacityPercent, color, colorOpacityPercent, slug, prefixIcon, suffixIcon, fontFamily, hideBackground);
+	constructor(regex: string, sampleInput: string, fields: SharedAdmonitionFields) {
+		super(fields);
 		this.regex = regex;
 		this.sampleInput = sampleInput;
 	}

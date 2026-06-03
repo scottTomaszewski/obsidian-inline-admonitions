@@ -1,5 +1,5 @@
 import {sanitizeClassName} from "../utils";
-import {InlineAdmonition, SerializedInlineAdmonition} from "./inlineAdmonition";
+import {InlineAdmonition, SerializedInlineAdmonition, SharedAdmonitionFields, defaultSharedFields, sharedFieldsFromData} from "./inlineAdmonition";
 import {setIcon, Setting} from "obsidian";
 import {InlineAdmonitionType} from "./inlineAdmonitionType";
 import {SyntaxNodeRef} from "@lezer/common";
@@ -11,52 +11,19 @@ export class SuffixInlineAdmonition extends InlineAdmonition {
 	hideTriggerString: boolean;
 	type = InlineAdmonitionType.Suffix;
 
-	// TODO - I dont like this...
 	static create() {
-		return new SuffixInlineAdmonition(
-			"",
-			false,
-			"#f1f1f1",
-			100,
-			"#000000",
-			100,
-			InlineAdmonition.generateSlug(),
-			"",
-			"",
-			"",
-			false);
+		return new SuffixInlineAdmonition("", false, defaultSharedFields());
 	}
 
 	static unmarshal(data: SerializedInlineAdmonition): SuffixInlineAdmonition {
 		if (data.type != InlineAdmonitionType.Suffix) {
 			throw new Error("Cannot unmarshal data into SuffixInlineAdmonition: Wrong type: " + data.type);
 		}
-		return new SuffixInlineAdmonition(
-			data.suffix ?? "",
-			data.hideTriggerString ?? false,
-			data.backgroundColor,
-			data.bgColorOpacityPercent,
-			data.color,
-			data.colorOpacityPercent,
-			data.slug ?? InlineAdmonition.generateSlug(),
-			data.prefixIcon,
-			data.suffixIcon,
-			data.fontFamily || "",
-			data.hideBackground || false);
+		return new SuffixInlineAdmonition(data.suffix ?? "", data.hideTriggerString ?? false, sharedFieldsFromData(data));
 	}
 
-	constructor(suffix: string,
-				hideTriggerString: boolean,
-				backgroundColor: string,
-				bgColorOpacityPercent: number,
-				color: string,
-				colorOpacityPercent: number,
-				slug: string,
-				prefixIcon: string,
-				suffixIcon: string,
-				fontFamily: string,
-				hideBackground: boolean) {
-		super(backgroundColor, bgColorOpacityPercent, color, colorOpacityPercent, slug, prefixIcon, suffixIcon, fontFamily, hideBackground);
+	constructor(suffix: string, hideTriggerString: boolean, fields: SharedAdmonitionFields) {
+		super(fields);
 		this.suffix = suffix;
 		this.hideTriggerString = hideTriggerString;
 	}
