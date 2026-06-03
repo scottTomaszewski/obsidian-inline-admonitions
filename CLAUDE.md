@@ -21,6 +21,7 @@ but **the git repo root is this directory** (`obsidian-inline-admonitions/`).
 - [README.md](README.md) — user-facing feature/usage docs (don't restate it).
 - [CHANGELOG.md](CHANGELOG.md) — release history.
 - [FOLLOWUPS.md](FOLLOWUPS.md) — deferred work & known issues (CSS rework, Live Preview issues).
+- [ROADMAP.md](ROADMAP.md) — new features & larger planned efforts (numbered `## N.` items).
 - [docs/handoffs/](docs/handoffs/) — ephemeral per-session handoffs (`creating-handoffs`).
 
 ## Commands
@@ -59,8 +60,10 @@ token because devbox's bundled `gh` can't read the host keyring.
 
 - **New trigger type / persisted field** → update the module map in `ARCHITECTURE.md`
   and the "adding a trigger type" steps + migration note in `docs/rendering-paths.md`.
-- **New deferred work or a punt** → add an entry to `FOLLOWUPS.md` (don't leave it only
-  in code or your head).
+- **New deferred work or a punt** → add a numbered `## N.` section to `FOLLOWUPS.md`
+  (don't leave it only in code or your head).
+- **New feature idea or larger planned effort** → add a numbered `## N.` section to
+  `ROADMAP.md` (not `FOLLOWUPS.md` — different lifespan).
 - **New non-obvious workaround** → inline comment if local; a `docs/*.md` entry (and a
   row in `docs/index.md`) if cross-cutting.
 - **New command / build step** → update the Commands table above.
