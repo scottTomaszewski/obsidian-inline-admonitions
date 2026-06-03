@@ -20,7 +20,7 @@ but **the git repo root is this directory** (`obsidian-inline-admonitions/`).
   - [docs/css-rendering.md](docs/css-rendering.md) — generated CSS, vault snippet file, **private `customCss` API**, specificity hack.
 - [README.md](README.md) — user-facing feature/usage docs (don't restate it).
 - [CHANGELOG.md](CHANGELOG.md) — release history.
-- [FOLLOWUPS.md](FOLLOWUPS.md) — deferred work & known issues (manual smoke test, CSS rework).
+- [FOLLOWUPS.md](FOLLOWUPS.md) — deferred work & known issues (CSS rework, Live Preview issues).
 - [docs/handoffs/](docs/handoffs/) — ephemeral per-session handoffs (`creating-handoffs`).
 
 ## Commands
@@ -48,7 +48,7 @@ token because devbox's bundled `gh` can't read the host keyring.
 - **`main.js` and `data.json` are gitignored** — build output and Obsidian-written
   runtime settings, not source. `data.json` is also excluded from lint.
 - Only `src/utils.ts` has unit tests; everything else is verified by build/lint and a
-  manual in-vault smoke test (see [FOLLOWUPS.md](FOLLOWUPS.md) — **not yet done**).
+  manual in-vault smoke test.
   This repo *is* the installed plugin (it sits in the demo vault's plugins dir), so to
   smoke-test: `npm run dev` to rebuild `main.js`, then reload Obsidian (or toggle the
   plugin off/on) to pick up the new build.

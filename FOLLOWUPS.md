@@ -13,24 +13,7 @@ below are intentionally deferred or could not be verified in this pass.
 
 ## High priority
 
-### 1. Manual in-vault smoke test (NOT done)
-
-The standards pass verified that the code compiles, type-checks, lints clean, and
-passes the unit tests — but the plugin was **not** loaded in a live Obsidian vault.
-Nothing here confirms actual rendering behavior. Before any release, manually
-verify in a real vault:
-
-- All four trigger types render: Prefix, Suffix, Contains, Regex.
-- Reading mode **and** Live Preview both apply styling.
-- "Hide prefix text" / "Hide suffix text" toggles hide the trigger correctly.
-  - Note: the Suffix `applyTo` hide-decoration was buggy (applied unconditionally)
-    and was fixed in this pass — this path specifically needs eyes on it in Live
-    Preview. See `src/InlineAdmonitions/suffixInlineAdmonition.ts`.
-- Prefix/suffix icons appear in Reading mode.
-- Background opacity, text opacity, hide-background, and font selection all apply.
-- Settings preview sample updates live as you edit.
-
-### 2. Rework the CSS-snippet architecture (deliberately left as-is)
+### 1. Rework the CSS-snippet architecture (deliberately left as-is)
 
 This was scoped out of the standards pass ("leave it for now") but is the largest
 piece of technical debt. Current approach in `src/io/inlineAdmonitionCss.ts`:
@@ -54,12 +37,12 @@ that the community scanner flagged — see [docs/css-rendering.md](docs/css-rend
 
 ## Medium priority
 
-### 3. Known Live Preview issues (pre-existing, carried over)
+### 2. Known Live Preview issues (pre-existing, carried over)
 
 Documented in the README but unresolved:
 
 - Newly created inline admonitions may not render in Live Preview until the app is
   reloaded.
 - Prefix/suffix icons are intentionally **not** rendered in Live Preview because
-  they caused cursor-navigation issues. If item #2 reworks rendering, revisit
+  they caused cursor-navigation issues. If item #1 reworks rendering, revisit
   whether icons can be supported there.
