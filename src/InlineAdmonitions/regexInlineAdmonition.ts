@@ -31,9 +31,8 @@ export class RegexInlineAdmonition extends InlineAdmonition {
 	process(codeElement: HTMLElement) {
 		try {
 			const regex = new RegExp(this.regex);
-			if (regex.test(codeElement.innerText)) {
+			if (regex.test(codeElement.getText())) {
 				this.cssClasses().forEach(c => codeElement.classList.add(c));
-				// codeElement.setAttribute("style", this.simpleStyle());
 
 				if (this.prefixIcon) {
 					const iconElement = createSpan({cls: "admonition-icon-left"});

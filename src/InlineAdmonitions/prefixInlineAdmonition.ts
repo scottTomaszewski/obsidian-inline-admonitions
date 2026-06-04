@@ -29,9 +29,8 @@ export class PrefixInlineAdmonition extends InlineAdmonition {
 	}
 
 	process(codeElement: HTMLElement) {
-		if (codeElement.innerText.startsWith(this.prefix)) {
+		if (codeElement.getText().startsWith(this.prefix)) {
 			this.cssClasses().forEach(c => codeElement.classList.add(c));
-			// codeElement.setAttribute("style", this.simpleStyle());
 			if (this.hideTriggerString) {
 				codeElement.setText(codeElement.getText().replace(this.prefix, ""));
 			}

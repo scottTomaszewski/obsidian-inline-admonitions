@@ -27,9 +27,8 @@ export class ContainsInlineAdmonition extends InlineAdmonition {
 	}
 
 	process(codeElement: HTMLElement) {
-		if (codeElement.innerText.contains(this.contains)) {
+		if (codeElement.getText().contains(this.contains)) {
 			this.cssClasses().forEach(c => codeElement.classList.add(c));
-			// codeElement.setAttribute("style", this.simpleStyle());
 
 			if (this.prefixIcon) {
 				const iconElement = createSpan({cls: "admonition-icon-left"});

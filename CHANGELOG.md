@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.13.0
 
 - Improvement: redesigned the edit/new admonition modal. Settings are now grouped into
   collapsible sections (Trigger, Background, Text & font, Border, Icons), and the live

@@ -266,14 +266,20 @@ export class EditInlineAdmonitionModal extends Modal {
 	}
 
 	private updateSample() {
+		// Reset to a clean slate each render. process() only ever *adds* classes
+		// and icons, and we reuse the same element across every edit, so without
+		// this, stale per-trigger classes (iad-prefix-<old>, …) accumulate as the
+		// trigger or type changes. setText() clears child nodes (old icons); the
+		// className reset clears those accumulated classes.
+		this.sample.className = "iad-sample";
 		this.sample.setText(this.result.sampleText());
 		this.result.process(this.sample);
 
-		// at this point the css has not saved, so need to manually set a few things...
-		this.sample.setAttr("style", `
-			background-color: ${this.result.backgroundColor};
-			color: ${this.result.color};
-			${this.result.simpleStyle()}`);
+		// The generated CSS classes aren't saved while the modal is open, so apply
+		// the styling inline. simpleStyle() already emits background and text color
+		// (with opacity / hideBackground handling), so it's the single source of
+		// truth here.
+		this.sample.setAttr("style", this.result.simpleStyle());
 	}
 
 	private clearTypeSettings() {
