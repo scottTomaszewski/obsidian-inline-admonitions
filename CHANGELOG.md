@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+- Fix: the edit/new admonition modal sometimes failed to update the live sample (icons
+  not appearing, "hide trigger" not taking effect). Trigger matching now reads the code
+  span's raw text instead of the rendered `innerText`, which could intermittently come
+  back empty or whitespace-trimmed, and the sample is reset cleanly on each change so
+  stale classes no longer accumulate.
+
 ## 1.13.0
 
 - Improvement: redesigned the edit/new admonition modal. Settings are now grouped into
