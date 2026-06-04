@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.14.0
 
 - Fix: the edit/new admonition modal sometimes failed to update the live sample (icons
   not appearing, "hide trigger" not taking effect). Trigger matching now reads the code
